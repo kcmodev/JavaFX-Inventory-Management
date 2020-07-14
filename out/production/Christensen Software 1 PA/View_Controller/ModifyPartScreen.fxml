@@ -4,22 +4,26 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="480.0" prefWidth="440.0" style="-fx-background-color: a9a9a9;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View_Controller.ModifyPartScreen">
+<AnchorPane prefHeight="480.0" prefWidth="440.0" style="-fx-background-color: a9a9a9;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View_Controller.ModifyPartScreenController">
     <children>
         <Label layoutX="7.0" layoutY="48.0" prefHeight="30.0" prefWidth="102.0" text="Modify Part">
             <font>
                 <Font name="System Bold" size="18.0" />
             </font>
         </Label>
-        <RadioButton layoutX="123.0" layoutY="50.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="138.0" text="   In-House">
+        <RadioButton fx:id="inHouseModifyRadioButton" layoutX="123.0" layoutY="50.0" mnemonicParsing="false" onAction="#setInHouseModifyRadioButton" prefHeight="25.0" prefWidth="138.0" text="   In-House">
             <font>
                 <Font size="16.0" />
             </font>
+         <toggleGroup>
+            <ToggleGroup fx:id="modPartToggleGroup" />
+         </toggleGroup>
         </RadioButton>
-        <RadioButton layoutX="261.0" layoutY="50.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="138.0" text="   Outsourced">
+        <RadioButton fx:id="outsourcedModifyRadioButton" layoutX="261.0" layoutY="50.0" mnemonicParsing="false" onAction="#setOutsourcedModifyRadioButton" prefHeight="25.0" prefWidth="138.0" text="   Outsourced" toggleGroup="$modPartToggleGroup">
             <font>
                 <Font size="16.0" />
             </font>
@@ -28,7 +32,7 @@
             <children>
                 <AnchorPane layoutY="14.0">
                     <children>
-                        <TextField layoutX="98.0" prefHeight="37.0" prefWidth="158.0" promptText="Enter Part ID">
+                        <TextField fx:id="modPartIDTextField" disable="true" layoutX="98.0" prefHeight="37.0" prefWidth="158.0" promptText="Enter Part ID">
                             <font>
                                 <Font name="System Italic" size="16.0" />
                             </font>
@@ -42,7 +46,7 @@
                 </AnchorPane>
                 <AnchorPane layoutX="-1.0" layoutY="68.0">
                     <children>
-                        <TextField layoutX="100.0" prefHeight="37.0" prefWidth="158.0" promptText="Enter Part Name">
+                        <TextField fx:id="modPartNameTextField" disable="true" layoutX="100.0" prefHeight="37.0" prefWidth="158.0" promptText="Enter Part Name">
                             <font>
                                 <Font name="System Italic" size="16.0" />
                             </font>
@@ -56,7 +60,7 @@
                 </AnchorPane>
                 <AnchorPane layoutX="-2.0" layoutY="113.0">
                     <children>
-                        <TextField layoutX="100.0" prefHeight="37.0" prefWidth="158.0" promptText="Enter Inv. Level">
+                        <TextField fx:id="modPartInventoryTextField" disable="true" layoutX="100.0" prefHeight="37.0" prefWidth="158.0" promptText="Enter Inv. Level">
                             <font>
                                 <Font name="System Italic" size="16.0" />
                             </font>
@@ -70,7 +74,7 @@
                 </AnchorPane>
                 <AnchorPane layoutX="-1.0" layoutY="162.0">
                     <children>
-                        <TextField layoutX="100.0" prefHeight="37.0" prefWidth="158.0" promptText="Enter Price">
+                        <TextField fx:id="modPartPriceTextField" disable="true" layoutX="100.0" prefHeight="37.0" prefWidth="158.0" promptText="Enter Price">
                             <font>
                                 <Font name="System Italic" size="16.0" />
                             </font>
@@ -84,12 +88,12 @@
                 </AnchorPane>
                 <AnchorPane layoutY="214.0" prefHeight="37.0" prefWidth="256.0">
                     <children>
-                        <TextField layoutX="100.0" prefHeight="37.0" prefWidth="66.0" promptText="Max">
+                        <TextField fx:id="modPartInvMaxTextField" disable="true" layoutX="100.0" prefHeight="37.0" prefWidth="66.0" promptText="Max">
                             <font>
                                 <Font name="System Italic" size="16.0" />
                             </font>
                         </TextField>
-                        <TextField layoutX="190.0" prefHeight="37.0" prefWidth="66.0" promptText="Min">
+                        <TextField fx:id="modPartInvMinTextField" disable="true" layoutX="190.0" prefHeight="37.0" prefWidth="66.0" promptText="Min">
                             <font>
                                 <Font name="System Italic" size="16.0" />
                             </font>
@@ -103,12 +107,12 @@
                 </AnchorPane>
                 <AnchorPane layoutY="265.0">
                     <children>
-                        <TextField layoutX="98.0" prefHeight="37.0" prefWidth="158.0" promptText="(Variable)">
+                        <TextField fx:id="modPartChangedLabelTextField" disable="true" layoutX="98.0" prefHeight="37.0" prefWidth="158.0" promptText="(Variable)">
                             <font>
                                 <Font name="System Italic" size="16.0" />
                             </font>
                         </TextField>
-                        <Label layoutY="6.0" prefHeight="25.0" prefWidth="90.0" text="(Variable)">
+                        <Label fx:id="modifyRadioButtonLabelChanger" layoutY="6.0" prefHeight="25.0" prefWidth="95.0" text="-">
                             <font>
                                 <Font name="System Bold" size="16.0" />
                             </font>

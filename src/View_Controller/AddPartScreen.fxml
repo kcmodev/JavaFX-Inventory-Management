@@ -4,22 +4,26 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="480.0" prefWidth="440.0" style="-fx-background-color: a9a9a9;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View_Controller.AddPartScreen">
+<AnchorPane prefHeight="480.0" prefWidth="379.0" style="-fx-background-color: a9a9a9;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View_Controller.AddPartScreenController">
    <children>
       <Label layoutX="14.0" layoutY="47.0" prefHeight="30.0" prefWidth="90.0" text="Add Part">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <RadioButton layoutX="123.0" layoutY="50.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="138.0" text="   In-House">
+      <RadioButton fx:id="inHouseRadioButton" layoutX="123.0" layoutY="50.0" mnemonicParsing="false" onAction="#setInHouseRadioButton" prefHeight="25.0" prefWidth="138.0" text="   In-House">
          <font>
             <Font size="16.0" />
          </font>
+         <toggleGroup>
+            <ToggleGroup fx:id="inOrOutToggle" />
+         </toggleGroup>
       </RadioButton>
-      <RadioButton layoutX="261.0" layoutY="50.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="138.0" text="   Outsourced">
+      <RadioButton fx:id="outsourcedRadioButton" layoutX="261.0" layoutY="50.0" mnemonicParsing="false" onAction="#setOutsourcedRadioButton" prefHeight="25.0" prefWidth="138.0" text="   Outsourced" toggleGroup="$inOrOutToggle">
          <font>
             <Font size="16.0" />
          </font>
@@ -28,7 +32,7 @@
          <children>
             <AnchorPane layoutY="14.0">
                <children>
-                  <TextField layoutX="98.0" prefHeight="37.0" prefWidth="158.0" promptText="Enter Part ID">
+                  <TextField fx:id="addPartIDTextField" disable="true" layoutX="98.0" prefHeight="37.0" prefWidth="158.0" promptText="Enter Part ID">
                      <font>
                         <Font name="System Italic" size="16.0" />
                      </font>
@@ -42,7 +46,7 @@
             </AnchorPane>
             <AnchorPane layoutX="-1.0" layoutY="68.0">
                <children>
-                  <TextField layoutX="100.0" prefHeight="37.0" prefWidth="158.0" promptText="Enter Part Name">
+                  <TextField fx:id="addPartNameTextField" disable="true" layoutX="100.0" prefHeight="37.0" prefWidth="158.0" promptText="Enter Part Name">
                      <font>
                         <Font name="System Italic" size="16.0" />
                      </font>
@@ -56,7 +60,7 @@
             </AnchorPane>
             <AnchorPane layoutX="-2.0" layoutY="113.0">
                <children>
-                  <TextField layoutX="100.0" prefHeight="37.0" prefWidth="158.0" promptText="Enter Inv. Level">
+                  <TextField fx:id="addPartInventoryTextField" disable="true" layoutX="100.0" prefHeight="37.0" prefWidth="158.0" promptText="Enter Inv. Level">
                      <font>
                         <Font name="System Italic" size="16.0" />
                      </font>
@@ -70,7 +74,7 @@
             </AnchorPane>
             <AnchorPane layoutX="-1.0" layoutY="162.0">
                <children>
-                  <TextField layoutX="100.0" prefHeight="37.0" prefWidth="158.0" promptText="Enter Price">
+                  <TextField fx:id="addPartPriceTextField" disable="true" layoutX="100.0" prefHeight="37.0" prefWidth="158.0" promptText="Enter Price">
                      <font>
                         <Font name="System Italic" size="16.0" />
                      </font>
@@ -84,12 +88,12 @@
             </AnchorPane>
             <AnchorPane layoutY="214.0" prefHeight="37.0" prefWidth="256.0">
                <children>
-                  <TextField layoutX="100.0" prefHeight="37.0" prefWidth="66.0" promptText="Max">
+                  <TextField fx:id="addPartInvMaxTextField" disable="true" layoutX="100.0" prefHeight="37.0" prefWidth="66.0" promptText="Max">
                      <font>
                         <Font name="System Italic" size="16.0" />
                      </font>
                   </TextField>
-                  <TextField layoutX="190.0" prefHeight="37.0" prefWidth="66.0" promptText="Min">
+                  <TextField fx:id="addPartInvMinTextField" disable="true" layoutX="190.0" prefHeight="37.0" prefWidth="66.0" promptText="Min">
                      <font>
                         <Font name="System Italic" size="16.0" />
                      </font>
@@ -103,12 +107,12 @@
             </AnchorPane>
             <AnchorPane layoutY="265.0">
                <children>
-                  <TextField layoutX="98.0" prefHeight="37.0" prefWidth="158.0" promptText="(Variable)">
+                  <TextField fx:id="changedLabelTextField" disable="true" layoutX="98.0" prefHeight="37.0" prefWidth="158.0">
                      <font>
                         <Font name="System Italic" size="16.0" />
                      </font>
                   </TextField>
-                  <Label layoutY="6.0" prefHeight="25.0" prefWidth="90.0" text="(Variable)">
+                  <Label fx:id="radioButtonLabelChanger" layoutY="6.0" prefHeight="25.0" prefWidth="97.0" text="-" textAlignment="CENTER">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
@@ -117,12 +121,12 @@
             </AnchorPane>
          </children>
       </AnchorPane>
-      <Button fx:id="addPartScreenCancelButton" layoutX="337.0" layoutY="418.0" mnemonicParsing="false" onAction="#setAddPartScreenCancelButton" prefHeight="37.0" prefWidth="66.0" text="Cancel">
+      <Button fx:id="addPartScreenCancelButton" layoutX="297.0" layoutY="418.0" mnemonicParsing="false" onAction="#setAddPartScreenCancelButton" prefHeight="37.0" prefWidth="66.0" text="Cancel">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <Button fx:id="addPartScreenSaveButton" layoutX="250.0" layoutY="418.0" mnemonicParsing="false" onAction="#setAddPartScreenSaveButton" prefHeight="37.0" prefWidth="66.0" text="Save">
+      <Button fx:id="addPartScreenSaveButton" layoutX="220.0" layoutY="418.0" mnemonicParsing="false" onAction="#setAddPartScreenSaveButton" prefHeight="37.0" prefWidth="66.0" text="Save">
          <font>
             <Font size="14.0" />
          </font>

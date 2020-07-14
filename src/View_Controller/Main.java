@@ -12,7 +12,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("MainScreen.fxml"));
 
-        primaryStage.setTitle("Christensen Software 1 Performance Assessment");
+        primaryStage.setTitle(MainScreenController.MAIN_SCREEN_TITLE);
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
