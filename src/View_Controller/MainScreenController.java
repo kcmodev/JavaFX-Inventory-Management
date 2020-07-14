@@ -28,9 +28,9 @@ public class MainScreenController {
             System.exit(-1);
         }
     }
-    public void setExitButtonClicked() {
+    public void setExitButtonClicked(ActionEvent event) {
         System.out.println("Exit button clicked");
-        System.exit(1);
+        windowManager(event, "ExitWarningPopup.fxml", ExitWarningPopupController.EXIT_POPUP_TITLE);
     }
 
     public void setAddPartClicked(ActionEvent event) {
@@ -57,8 +57,9 @@ public class MainScreenController {
         windowManager(event, "AddProductScreen.fxml", AddProductScreenController.ADD_PRODUCT_SCREEN_TITLE);
     }
 
-    public void setModifyProductButton() {
+    public void setModifyProductButton(ActionEvent event) {
         System.out.println("Modify product button clicked");
+        windowManager(event, "ModifyProductScreen.fxml", ModifyProductScreenController.MOD_PRODUCT_SCREEN_TITLE);
     }
 
     public void setDeleteProductButton() {
