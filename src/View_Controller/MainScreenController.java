@@ -29,12 +29,14 @@ public class MainScreenController implements Initializable {
 
     static final String MAIN_SCREEN_TITLE = "Christensen Software 1 Performance Assessment";
 
+    // defines structure for main screen part table
     @FXML private TableView<Part> mainPartTableView;
     @FXML private TableColumn<Part, Integer> mainPartIDTableColumn;
     @FXML private TableColumn<Part, SimpleStringProperty> mainPartNameTableColumn;
     @FXML private TableColumn<Part, Integer> mainPartInventoryTableColumn;
     @FXML private TableColumn<Part, Double> mainPartPriceTableColumn;
 
+    // defintes structure for main screen product table
     @FXML private TableView<Product> mainScreenProductTableView;
     @FXML private TableColumn<Product, Integer> mainScreenProductIDTableColumn;
     @FXML private TableColumn<Product, SimpleStringProperty> mainScreenProductNameTableColumn;
