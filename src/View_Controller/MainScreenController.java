@@ -2,6 +2,8 @@ package View_Controller;
 
 import Model.InHousePart;
 import Model.Inventory;
+import Model.Part;
+import static Model.Inventory.getAllParts;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
@@ -12,12 +14,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 
@@ -25,11 +30,11 @@ public class MainScreenController implements Initializable {
 
     static final String MAIN_SCREEN_TITLE = "Christensen Software 1 Performance Assessment";
 
-    @FXML private TableView<InHousePart> mainPartTableView;
-    @FXML private TableColumn<Object, Integer> mainPartIDTableColumn;
-    @FXML private TableColumn<Object, SimpleStringProperty> mainPartNameTableColumn;
-    @FXML private TableColumn<Object, Integer> mainPartInventoryTableColumn;
-    @FXML private TableColumn<Object, Double> mainPartPriceTableColumn;
+    @FXML private TableView<Part> mainPartTableView;
+    @FXML private TableColumn<Part, Integer> mainPartIDTableColumn;
+    @FXML private TableColumn<Part, SimpleStringProperty> mainPartNameTableColumn;
+    @FXML private TableColumn<Part, Integer> mainPartInventoryTableColumn;
+    @FXML private TableColumn<Part, Double> mainPartPriceTableColumn;
 
     public void windowManager(ActionEvent event, String fileName, String windowTitle) {
         try {
@@ -47,7 +52,24 @@ public class MainScreenController implements Initializable {
     }
     public void setExitButtonClicked(ActionEvent event) {
         System.out.println("Exit button clicked");
-        windowManager(event, "ExitWarningPopup.fxml", ExitWarningPopupController.EXIT_POPUP_TITLE);
+
+        // instantiate alert popup for exiting the program
+        Alert exiting = new Alert(Alert.AlertType.CONFIRMATION);
+        exiting.setTitle("Close program");
+        exiting.setContentText("Are you sure you would like to close the program?");
+
+        // set method for user to choose to quit by waiting on button press
+        Optional<ButtonType> choice = exiting.showAndWait();
+
+
+        if (choice.get() == ButtonType.OK) { // user clicks OK
+            System.out.println("Closed through alert popup");
+            System.exit(1);
+
+        } else if (choice.get() == ButtonType.CANCEL){ // user clicks CANCEL
+            System.out.println("Cancel selected, returning to main");
+            exiting.close();
+        }
     }
 
     public void setAddPartClicked(ActionEvent event) {
@@ -98,10 +120,10 @@ public class MainScreenController implements Initializable {
         mainPartPriceTableColumn.setCellValueFactory(new PropertyValueFactory<>("partPrice"));
         mainPartPriceTableColumn.setResizable(false);
 
-//        mainPartTableView.setItems(InHousePart.getAllParts());
+        populateMainScreenPartTable();
     }
 
-    public void initData(InHousePart inHousePart){
-        mainPartTableView.setItems((ObservableList<InHousePart>) inHousePart);
+    public void populateMainScreenPartTable(){
+        mainPartTableView.setItems(getAllParts());
     }
 }

@@ -7,10 +7,22 @@ public class Inventory {
     static ObservableList<Part> allParts = FXCollections.observableArrayList();
     static ObservableList<Part> allProducts = FXCollections.observableArrayList();
 
-    public static void addPart(/* new part */) {
-        InHousePart part = new InHousePart(1, "inhouse1", 2, 3, 4, 5);
+    public static void addPart(Part part) {
         System.out.println("allParts before add: " + allParts);
-        allParts.add(part);
+
+        // check if part is an instance of in house
+        if (part instanceof InHousePart) {
+            // instantiate new in house object then cast method variable part as an in house part
+            InHousePart partAsInHouse = (InHousePart) part;
+            allParts.add(partAsInHouse);
+        }
+
+        // check if part is an instance of outsourced
+        if (part instanceof  OutsourcedPart){
+            // instantiate new outsourced object then cast method variable part as an outsourced part
+            OutsourcedPart partAsOutsourced = (OutsourcedPart) part;
+            allParts.add(partAsOutsourced);
+        }
         System.out.println("allParts after add: " + allParts);
     }
 

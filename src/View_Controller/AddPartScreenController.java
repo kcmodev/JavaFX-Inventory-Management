@@ -1,10 +1,15 @@
 package View_Controller;
 
+import static Model.Inventory.addPart;
+
 import Model.InHousePart;
-import Model.Inventory;
+import static Model.Inventory.getAllParts;
+
+import Model.Part;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -28,22 +33,22 @@ public class AddPartScreenController {
 
     public void setAddPartScreenSaveButton(ActionEvent event) {
         System.out.println("Add part save button clicked");
-        FXMLLoader loader = new FXMLLoader();
-//        Parent tableViewParent = loader.load();
 
         // checks corresponding label to determine radio button selection
         // "Machine ID" = in house
         if (radioButtonLabelChanger.getText() == "Machine ID"){
-            System.out.println("Adding with Machine ID to in house");
-            Inventory.addPart();
+            System.out.println("Adding with Machine ID w/ in house part");
+            int partID = Integer.parseInt(addPartIDTextField.getText());
+            String partName = addPartNameTextField.getText();
+            int partInv = Integer.parseInt(addPartInventoryTextField.getText());
+            double partPrice = Double.parseDouble(addPartPriceTextField.getText());
+            int partInvMin = Integer.parseInt(addPartInvMinTextField.getText());
+            int partInvMax = Integer.parseInt(addPartInvMaxTextField.getText());
 
-            // load main screen controller to update table view
-            loader.setLocation(getClass().getResource("MainScreen.fxml"));
-            MainScreenController controller = loader.getController();
-
-            // use controller to push all part data back to main screen table view
-            controller.initData((InHousePart)Inventory.getAllParts());
-
+            InHousePart inHousePart = new InHousePart(partID, partName, partPrice, partInv, partInvMin, partInvMax);
+            inHousePart.setPartMachineID(Integer.parseInt(changedLabelTextField.getText()));
+            addPart(inHousePart);
+            System.out.println("Current in house parts list: " + getAllParts());
         }
 
         // checks corresponding label to determine radio button selection
@@ -51,6 +56,9 @@ public class AddPartScreenController {
         if (radioButtonLabelChanger.getText() == "Company ID"){
             System.out.println("Adding with company ID to outsourced");
         }
+
+        // returns user to main screen after saving the part
+        mainScreenController.windowManager(event, "MainScreen.fxml", mainScreenController.MAIN_SCREEN_TITLE);
     }
 
     public void setAddPartScreenCancelButton(ActionEvent event) {

@@ -26,7 +26,7 @@
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <TextField disable="true" layoutX="57.0" layoutY="-4.0" prefHeight="32.0" prefWidth="158.0" promptText="Enter Product ID">
+                  <TextField layoutX="57.0" layoutY="-4.0" prefHeight="32.0" prefWidth="158.0" promptText="Enter Product ID">
                      <font>
                         <Font name="System Italic" size="16.0" />
                      </font>
@@ -40,7 +40,7 @@
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <TextField disable="true" layoutX="57.0" layoutY="-2.0" prefHeight="32.0" prefWidth="158.0" promptText="Enter Product Name">
+                  <TextField layoutX="57.0" layoutY="-2.0" prefHeight="32.0" prefWidth="158.0" promptText="Enter Product Name">
                      <font>
                         <Font name="System Italic" size="16.0" />
                      </font>
@@ -54,7 +54,7 @@
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <TextField disable="true" layoutX="57.0" layoutY="-4.0" prefHeight="32.0" prefWidth="158.0" promptText="Enter # in Inventory">
+                  <TextField layoutX="57.0" layoutY="-4.0" prefHeight="32.0" prefWidth="158.0" promptText="Enter # in Inventory">
                      <font>
                         <Font name="System Italic" size="16.0" />
                      </font>
@@ -68,7 +68,7 @@
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <TextField disable="true" layoutX="57.0" layoutY="-4.0" prefHeight="32.0" prefWidth="158.0" promptText="Enter Price">
+                  <TextField layoutX="57.0" layoutY="-4.0" prefHeight="32.0" prefWidth="158.0" promptText="Enter Price">
                      <font>
                         <Font name="System Italic" size="16.0" />
                      </font>
@@ -82,12 +82,12 @@
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <TextField disable="true" layoutX="57.0" layoutY="-4.0" prefHeight="37.0" prefWidth="57.0" promptText="Max">
+                  <TextField layoutX="57.0" layoutY="-4.0" prefHeight="37.0" prefWidth="57.0" promptText="Max">
                      <font>
                         <Font name="System Italic" size="16.0" />
                      </font>
                   </TextField>
-                  <TextField disable="true" layoutX="158.0" layoutY="-4.0" prefHeight="37.0" prefWidth="57.0" promptText="Min">
+                  <TextField layoutX="158.0" layoutY="-4.0" prefHeight="37.0" prefWidth="57.0" promptText="Min">
                      <font>
                         <Font name="System Italic" size="16.0" />
                      </font>

@@ -4,7 +4,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-abstract class Part {
+public abstract class Part {
     int partID;
     SimpleStringProperty partName;
     double partPrice;
