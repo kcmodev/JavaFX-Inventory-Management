@@ -1,9 +1,15 @@
 package View_Controller;
 
+import Model.InHousePart;
+import Model.Inventory;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+
+import java.io.IOException;
 
 public class AddPartScreenController {
 
@@ -22,6 +28,19 @@ public class AddPartScreenController {
 
     public void setAddPartScreenSaveButton(ActionEvent event) {
         System.out.println("Add part save button clicked");
+        FXMLLoader loader = new FXMLLoader();
+//        Parent tableViewParent = loader.load();
+
+        if (radioButtonLabelChanger.getText() == "Machine ID"){
+            System.out.println("Adding with Machine ID to in house");
+            loader.setLocation(getClass().getResource("MainScreen.fxml"));
+            MainScreenController controller = loader.getController();
+
+        }
+
+        if (radioButtonLabelChanger.getText() == "Company ID"){
+            System.out.println("Adding with company ID to outsourced");
+        }
     }
 
     public void setAddPartScreenCancelButton(ActionEvent event) {
