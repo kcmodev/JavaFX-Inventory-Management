@@ -31,13 +31,23 @@ public class AddPartScreenController {
         FXMLLoader loader = new FXMLLoader();
 //        Parent tableViewParent = loader.load();
 
+        // checks corresponding label to determine radio button selection
+        // "Machine ID" = in house
         if (radioButtonLabelChanger.getText() == "Machine ID"){
             System.out.println("Adding with Machine ID to in house");
+            Inventory.addPart();
+
+            // load main screen controller to update table view
             loader.setLocation(getClass().getResource("MainScreen.fxml"));
             MainScreenController controller = loader.getController();
 
+            // use controller to push all part data back to main screen table view
+            controller.initData((InHousePart)Inventory.getAllParts());
+
         }
 
+        // checks corresponding label to determine radio button selection
+        // "Company ID" = outsourced
         if (radioButtonLabelChanger.getText() == "Company ID"){
             System.out.println("Adding with company ID to outsourced");
         }

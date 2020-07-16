@@ -4,6 +4,7 @@ import Model.InHousePart;
 import Model.Inventory;
 
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -100,5 +101,7 @@ public class MainScreenController implements Initializable {
 //        mainPartTableView.setItems(InHousePart.getAllParts());
     }
 
-
+    public void initData(InHousePart inHousePart){
+        mainPartTableView.setItems((ObservableList<InHousePart>) inHousePart);
+    }
 }

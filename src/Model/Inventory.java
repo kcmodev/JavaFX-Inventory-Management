@@ -7,7 +7,7 @@ public class Inventory {
     static ObservableList<Part> allParts = FXCollections.observableArrayList();
     static ObservableList<Part> allProducts = FXCollections.observableArrayList();
 
-    public void addPart(/* new part */) {
+    public static void addPart(/* new part */) {
         InHousePart part = new InHousePart(1, "inhouse1", 2, 3, 4, 5);
         System.out.println("allParts before add: " + allParts);
         allParts.add(part);
