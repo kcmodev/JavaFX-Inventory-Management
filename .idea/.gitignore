@@ -22,3 +22,6 @@
 
 # IntelliJ
 out/
+
+# Hide files made by MacOS
+.DS_Store 
