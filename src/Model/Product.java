@@ -9,17 +9,17 @@ public class Product {
     private int productID;
     private String productName;
     private double productPrice;
-    private int productStockLevel, productStockMin, productStockMax;
+    private int productInvLevel, productInvMin, productInvMax;
 
-    public Product(ObservableList<Part> associatedParts, int productID, String productName, double productPrice,
-                   int productStockLevel, int productStockMin, int productStockMax) {
-        this.associatedParts = associatedParts;
+    public Product(/*ObservableList<Part> associatedParts,*/ int productID, String productName, double productPrice,
+                   int productInvLevel, int productInvMin, int productInvMax) {
+//        this.associatedParts = associatedParts;
         this.productID = productID;
         this.productName = productName;
         this.productPrice = productPrice;
-        this.productStockLevel = productStockLevel;
-        this.productStockMin = productStockMin;
-        this.productStockMax = productStockMax;
+        this.productInvLevel = productInvLevel;
+        this.productInvMin = productInvMin;
+        this.productInvMax = productInvMax;
     }
 
 //    public ObservableList<Part> getAllAssociatedParts() {
@@ -58,27 +58,27 @@ public class Product {
         this.productPrice = productPrice;
     }
 
-    public int getProductStockLevel() {
-        return productStockLevel;
+    public int getProductInvLevel() {
+        return productInvLevel;
     }
 
-    public void setProductStockLevel(int productStockLevel) {
-        this.productStockLevel = productStockLevel;
+    public void setProductInvLevel(int productInvLevel) {
+        this.productInvLevel = productInvLevel;
     }
 
-    public int getProductStockMin() {
-        return productStockMin;
+    public int getProductInvMin() {
+        return productInvMin;
     }
 
-    public void setProductStockMin(int productStockMin) {
-        this.productStockMin = productStockMin;
+    public void setProductInvMin(int productInvMin) {
+        this.productInvMin = productInvMin;
     }
 
-    public int getProductStockMax() {
-        return productStockMax;
+    public int getProductInvMax() {
+        return productInvMax;
     }
 
-    public void setProductStockMax(int productStockMax) {
-        this.productStockMax = productStockMax;
+    public void setProductInvMax(int productInvMax) {
+        this.productInvMax = productInvMax;
     }
 }

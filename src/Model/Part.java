@@ -9,7 +9,8 @@ public abstract class Part {
     SimpleStringProperty partName;
     double partPrice;
     int partStock;
-    int partStockMin;int partStockMax;
+    int partStockMin;
+    int partStockMax;
 
     public Part(int partID, String partName, double partPrice, int partStock,
                 int partStockMin, int partStockMax) {
@@ -69,20 +70,5 @@ public abstract class Part {
         this.partStockMax = partStockMax;
     }
 
-//    public static ObservableList<Part> getAllPartInfo(){
-//        System.out.println("part info method called");
-//        ObservableList<Part> parts = FXCollections.observableArrayList();
-//        System.out.println("parts before adding = " + parts);
-
-//        parts.add(new Part(1, "name1", 1, 1, 1, 1));
-//        parts.add(new Part(1, "name2", 1, 1, 1, 1));
-//        parts.add(new Part(1, "name3", 1, 1, 1, 1));
-//        parts.add(new Part(1, "name4", 1, 1, 1, 1));
-//        parts.add(new Part(1, "name5", 1, 1, 1, 1));
-
-//        System.out.println("parts after adding = " + parts);
-//
-//        return parts;
-//    }
 }
 

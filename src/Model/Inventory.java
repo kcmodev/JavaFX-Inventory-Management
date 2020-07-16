@@ -5,7 +5,7 @@ import javafx.collections.ObservableList;
 
 public class Inventory {
     static ObservableList<Part> allParts = FXCollections.observableArrayList();
-    static ObservableList<Part> allProducts = FXCollections.observableArrayList();
+    static ObservableList<Product> allProducts = FXCollections.observableArrayList();
 
     public static void addPart(Part part) {
         System.out.println("allParts before add: " + allParts);
@@ -26,8 +26,8 @@ public class Inventory {
         System.out.println("allParts after add: " + allParts);
     }
 
-    void addProduct(/* new product */) {
-
+    public static void addProduct(Product product) {
+        allProducts.add(product);
     }
 
     public void lookupPart(int partID) {
@@ -62,7 +62,7 @@ public class Inventory {
         return allParts;
     }
 
-//    public ObservableList<Part> getAllProducts(){
-//
-//    }
+    public static ObservableList<Product> getAllProducts(){
+        return allProducts;
+    }
 }

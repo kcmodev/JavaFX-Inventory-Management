@@ -3,6 +3,8 @@ package View_Controller;
 import static Model.Inventory.addPart;
 
 import Model.InHousePart;
+import Model.OutsourcedPart;
+import View_Controller.MainScreenController;
 import static Model.Inventory.getAllParts;
 
 import Model.Part;

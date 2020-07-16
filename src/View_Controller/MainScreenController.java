@@ -1,12 +1,11 @@
 package View_Controller;
 
-import Model.InHousePart;
-import Model.Inventory;
 import Model.Part;
+import Model.Product;
 import static Model.Inventory.getAllParts;
+import static Model.Inventory.getAllProducts;
 
 import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -36,6 +35,12 @@ public class MainScreenController implements Initializable {
     @FXML private TableColumn<Part, Integer> mainPartInventoryTableColumn;
     @FXML private TableColumn<Part, Double> mainPartPriceTableColumn;
 
+    @FXML private TableView<Product> mainScreenProductTableView;
+    @FXML private TableColumn<Product, Integer> mainScreenProductIDTableColumn;
+    @FXML private TableColumn<Product, SimpleStringProperty> mainScreenProductNameTableColumn;
+    @FXML private TableColumn<Product, Integer> mainScreenProductInvLvlTableColumn;
+    @FXML private TableColumn<Product, Double> mainScreenProductPriceTableColumn;
+
     public void windowManager(ActionEvent event, String fileName, String windowTitle) {
         try {
             Parent parent = FXMLLoader.load(getClass().getResource(fileName));
@@ -43,6 +48,7 @@ public class MainScreenController implements Initializable {
             Stage newWindow = (Stage) ((Node)event.getSource()).getScene().getWindow();
 
             newWindow.setScene(scene);
+            newWindow.setResizable(false);
             newWindow.setTitle(windowTitle);
             newWindow.show();
         } catch (IOException e){
@@ -50,7 +56,7 @@ public class MainScreenController implements Initializable {
             System.exit(-1);
         }
     }
-    public void setExitButtonClicked(ActionEvent event) {
+    public void setExitButtonClicked() {
         System.out.println("Exit button clicked");
 
         // instantiate alert popup for exiting the program
@@ -91,7 +97,7 @@ public class MainScreenController implements Initializable {
         System.out.println("Search by part button clicked");
     }
 
-    public void setAddProductButton(ActionEvent event) {
+    public void setAddProductButtonClicked(ActionEvent event) {
         System.out.println("Add product button clicked");
         windowManager(event, "AddProductScreen.fxml", AddProductScreenController.ADD_PRODUCT_SCREEN_TITLE);
     }
@@ -112,18 +118,39 @@ public class MainScreenController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         mainPartIDTableColumn.setCellValueFactory(new PropertyValueFactory<>("partID"));
+        mainPartIDTableColumn.setStyle("-fx-alignment: CENTER;");
         mainPartIDTableColumn.setResizable(false);
         mainPartNameTableColumn.setCellValueFactory(new PropertyValueFactory<>("partName"));
+        mainPartNameTableColumn.setStyle("-fx-alignment: CENTER;");
         mainPartNameTableColumn.setResizable(false);
         mainPartInventoryTableColumn.setCellValueFactory(new PropertyValueFactory<>("partStock"));
+        mainPartInventoryTableColumn.setStyle("-fx-alignment: CENTER;");
         mainPartInventoryTableColumn.setResizable(false);
         mainPartPriceTableColumn.setCellValueFactory(new PropertyValueFactory<>("partPrice"));
+        mainPartPriceTableColumn.setStyle("-fx-alignment: CENTER;");
         mainPartPriceTableColumn.setResizable(false);
 
         populateMainScreenPartTable();
+
+        mainScreenProductIDTableColumn.setCellValueFactory(new PropertyValueFactory<>("productID"));
+        mainScreenProductIDTableColumn.setStyle("-fx-alignment: CENTER;");
+        mainScreenProductIDTableColumn.setResizable(false);
+        mainScreenProductNameTableColumn.setCellValueFactory(new PropertyValueFactory<>("productName"));
+        mainScreenProductNameTableColumn.setStyle("-fx-alignment: CENTER;");
+        mainScreenProductNameTableColumn.setResizable(false);
+        mainScreenProductInvLvlTableColumn.setCellValueFactory(new PropertyValueFactory<>("productInvLevel"));
+        mainScreenProductInvLvlTableColumn.setStyle("-fx-alignment: CENTER;");
+        mainScreenProductInvLvlTableColumn.setResizable(false);
+        mainScreenProductPriceTableColumn.setCellValueFactory(new PropertyValueFactory<>("productPrice"));
+        mainScreenProductPriceTableColumn.setStyle("-fx-alignment: CENTER;");
+        mainScreenProductPriceTableColumn.setResizable(false);
+
+        populateMainScreenProductTable();
     }
 
     public void populateMainScreenPartTable(){
         mainPartTableView.setItems(getAllParts());
     }
+
+    public void populateMainScreenProductTable() { mainScreenProductTableView.setItems(getAllProducts()); }
 }
