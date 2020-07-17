@@ -36,8 +36,10 @@ public class AddPartScreenController {
         int partInvMin = Integer.parseInt(addPartInvMinTextField.getText());
         int partInvMax = Integer.parseInt(addPartInvMaxTextField.getText());
 
-        // checks corresponding label to determine radio button selection
-        // "Machine ID" = in house
+        /**
+         * checks corresponding label to determine radio button selection
+         * "Machine ID" = in house
+         */
         if (radioButtonLabelChanger.getText() == "Machine ID"){
             System.out.println("Adding with Machine ID w/ in house part");
 
@@ -47,8 +49,10 @@ public class AddPartScreenController {
             System.out.println("Current in house parts list: " + getAllParts());
         }
 
-        // checks corresponding label to determine radio button selection
-        // "Company ID" = outsourced
+        /**
+         * checks corresponding label to determine radio button selection
+         * "Company ID" = outsourced
+         */
         if (radioButtonLabelChanger.getText() == "Company ID"){
             System.out.println("Adding with company ID to outsourced");
 
@@ -58,7 +62,9 @@ public class AddPartScreenController {
             System.out.println("Current in house parts list: " + getAllParts());
         }
 
-        // returns user to main screen after saving the part
+        /**
+         * returns user to main screen after saving the part
+         */
         mainScreenController.windowManager(event, "MainScreen.fxml", mainScreenController.MAIN_SCREEN_TITLE);
     }
 

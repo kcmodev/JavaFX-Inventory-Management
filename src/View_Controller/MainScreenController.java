@@ -28,21 +28,27 @@ public class MainScreenController implements Initializable {
     static final String MAIN_SCREEN_TITLE = "Christensen Software 1 Performance Assessment";
     private String userInput;
 
-    // defines structure for main screen part table
+    /**
+     * defines structure for main screen part table
+     */
     @FXML private TableView<Part> mainPartTableView;
     @FXML private TableColumn<Part, Integer> mainPartIDTableColumn;
     @FXML private TableColumn<Part, SimpleStringProperty> mainPartNameTableColumn;
     @FXML private TableColumn<Part, Integer> mainPartInventoryTableColumn;
     @FXML private TableColumn<Part, Double> mainPartPriceTableColumn;
 
-    // defines structure for main screen product table
+    /**
+     * defines structure for main screen product table
+     */
     @FXML private TableView<Product> mainScreenProductTableView;
     @FXML private TableColumn<Product, Integer> mainScreenProductIDTableColumn;
     @FXML private TableColumn<Product, SimpleStringProperty> mainScreenProductNameTableColumn;
     @FXML private TableColumn<Product, Integer> mainScreenProductInvLvlTableColumn;
     @FXML private TableColumn<Product, Double> mainScreenProductPriceTableColumn;
 
-    // defines search fields for main screen
+    /**
+     * defines search fields for main screen
+     */
     @FXML private TextField mainScreenSearchByPart;
     @FXML private TextField mainScreenSearchByProduct;
 
@@ -64,12 +70,16 @@ public class MainScreenController implements Initializable {
     public void setExitButtonClicked() {
         System.out.println("Exit button clicked");
 
-        // instantiate alert popup for exiting the program
+        /**
+         * instantiate alert popup for exiting the program
+         */
         Alert exiting = new Alert(Alert.AlertType.CONFIRMATION);
         exiting.setTitle("Close program");
         exiting.setContentText("Are you sure you would like to close the program?");
 
-        // set method for user to choose to quit by waiting on button press
+        /**
+         * set method for user to choose to quit by waiting on button press
+         */
         Optional<ButtonType> choice = exiting.showAndWait();
 
 
@@ -106,9 +116,11 @@ public class MainScreenController implements Initializable {
 
         userInput = mainScreenSearchByPart.getText();
 
-        //tries to parse to int
-        // if successful it will search by part ID
-        // if an error is throw then the catch will run and search by part name
+        /**
+         * tries to parse to int
+         * if successful it will search by part ID
+         * if an error is thrown then the catch will run and search by part name
+         */
         try {
             Inventory.searchByPartID(Integer.parseInt(userInput));
         } catch (NumberFormatException e) {
@@ -132,6 +144,7 @@ public class MainScreenController implements Initializable {
         Product selectedProduct = mainScreenProductTableView.getSelectionModel().getSelectedItem();
         Inventory.deleteProduct(selectedProduct);
     }
+
 
     public void setSearchByProductButton() {
         System.out.println("Search by product button clicked");
