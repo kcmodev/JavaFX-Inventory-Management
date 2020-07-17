@@ -33,20 +33,20 @@ public class MainScreenController implements Initializable {
     /**
      * defines structure for main screen part table
      */
-    @FXML private TableView<Part> mainPartTableView;
-    @FXML private TableColumn<Part, Integer> mainPartIDTableColumn;
-    @FXML private TableColumn<Part, SimpleStringProperty> mainPartNameTableColumn;
-    @FXML private TableColumn<Part, Integer> mainPartInventoryTableColumn;
-    @FXML private TableColumn<Part, Double> mainPartPriceTableColumn;
+    @FXML private TableView<Part> partTableView;
+    @FXML private TableColumn<Part, Integer> partIDTableCol;
+    @FXML private TableColumn<Part, SimpleStringProperty> partNameTableCol;
+    @FXML private TableColumn<Part, Integer> partInvLvlTableCol;
+    @FXML private TableColumn<Part, Double> partPriceTableCol;
 
     /**
      * defines structure for main screen product table
      */
-    @FXML private TableView<Product> mainScreenProductTableView;
-    @FXML private TableColumn<Product, Integer> mainScreenProductIDTableColumn;
-    @FXML private TableColumn<Product, SimpleStringProperty> mainScreenProductNameTableColumn;
-    @FXML private TableColumn<Product, Integer> mainScreenProductInvLvlTableColumn;
-    @FXML private TableColumn<Product, Double> mainScreenProductPriceTableColumn;
+    @FXML private TableView<Product> productTableView;
+    @FXML private TableColumn<Product, Integer> productIDTableCol;
+    @FXML private TableColumn<Product, SimpleStringProperty> productNameTableCol;
+    @FXML private TableColumn<Product, Integer> productInvLvlTableCol;
+    @FXML private TableColumn<Product, Double> productPriceTableCol;
 
     /**
      * defines search fields for main screen
@@ -114,7 +114,7 @@ public class MainScreenController implements Initializable {
     public void setDeletePartClicked() {
         System.out.println("Delete part button clicked");
 
-        Part selectedPart = mainPartTableView.getSelectionModel().getSelectedItem();
+        Part selectedPart = partTableView.getSelectionModel().getSelectedItem();
         deletePart(selectedPart);
     }
 
@@ -131,7 +131,7 @@ public class MainScreenController implements Initializable {
         try {
             System.out.println("attempting to search by part ID, checking input");
             userInputAsInt = Integer.parseInt(userInput); // testing to see if it will throw an error
-            mainPartTableView.getSelectionModel().select(searchByPartID(userInputAsInt));
+            partTableView.getSelectionModel().select(searchByPartID(userInputAsInt));
 
         } catch (NumberFormatException e) {
             System.out.println("Not an int, searching by part name instead of ID");
@@ -140,7 +140,7 @@ public class MainScreenController implements Initializable {
              * error thrown when attempting to parse input aas an int
              * searching via name with string as input instead
              */
-            mainPartTableView.getSelectionModel().select(searchByPartName(userInput));
+            partTableView.getSelectionModel().select(searchByPartName(userInput));
 
         }
     }
@@ -158,7 +158,7 @@ public class MainScreenController implements Initializable {
     public void setDeleteProductButton() {
         System.out.println("Delete product button clicked");
 
-        Product selectedProduct = mainScreenProductTableView.getSelectionModel().getSelectedItem();
+        Product selectedProduct = productTableView.getSelectionModel().getSelectedItem();
         Inventory.deleteProduct(selectedProduct);
     }
 
@@ -176,7 +176,7 @@ public class MainScreenController implements Initializable {
         try {
             System.out.println("attempting to search by part ID, checking input");
             userInputAsInt = Integer.parseInt(userInput); // testing to see if it will throw an error
-            mainScreenProductTableView.getSelectionModel().select(searchByProductID(userInputAsInt));
+            productTableView.getSelectionModel().select(searchByProductID(userInputAsInt));
 
 
         } catch (NumberFormatException e) {
@@ -186,7 +186,7 @@ public class MainScreenController implements Initializable {
              * error thrown when attempting to parse input aas an int
              * searching via name with string as input instead
              */
-                mainScreenProductTableView.getSelectionModel().select(searchByProductName(userInput));
+                productTableView.getSelectionModel().select(searchByProductName(userInput));
         }
     }
 
@@ -194,87 +194,96 @@ public class MainScreenController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         /**
+         * sets attributes for both tables on main screen
+         */
+        setPartTableAttributes();
+        setProductTableAttributes();
+
+
+        /**
+         * populates main screen part and product tables
+         */
+        partTableView.setItems(getAllParts());
+        productTableView.setItems(getAllProducts());
+    }
+
+    /**
+     * method for selling table attributes for every scene
+     */
+    public void setPartTableAttributes() {
+
+        /**
          * Set values for part id column
          * set styling to center text for the column
          * disable resizability by user
          */
-        mainPartIDTableColumn.setCellValueFactory(new PropertyValueFactory<>("partID"));
-        mainPartIDTableColumn.setStyle("-fx-alignment: CENTER;");
-        mainPartIDTableColumn.setResizable(false);
+        partIDTableCol.setCellValueFactory(new PropertyValueFactory<>("partID"));
+        partIDTableCol.setStyle("-fx-alignment: CENTER;");
+        partIDTableCol.setResizable(false);
 
         /**
          * Set values for part name column
          * set styling to center text for the column
          * disable resizability by user
          */
-        mainPartNameTableColumn.setCellValueFactory(new PropertyValueFactory<>("partName"));
-        mainPartNameTableColumn.setStyle("-fx-alignment: CENTER;");
-        mainPartNameTableColumn.setResizable(false);
+        partNameTableCol.setCellValueFactory(new PropertyValueFactory<>("partName"));
+        partNameTableCol.setStyle("-fx-alignment: CENTER;");
+        partNameTableCol.setResizable(false);
 
         /**
          * Set values for part inventory level column
          * set styling to center text for the column
          * disable resizability by user
          */
-        mainPartInventoryTableColumn.setCellValueFactory(new PropertyValueFactory<>("partStock"));
-        mainPartInventoryTableColumn.setStyle("-fx-alignment: CENTER;");
-        mainPartInventoryTableColumn.setResizable(false);
+        partInvLvlTableCol.setCellValueFactory(new PropertyValueFactory<>("partStock"));
+        partInvLvlTableCol.setStyle("-fx-alignment: CENTER;");
+        partInvLvlTableCol.setResizable(false);
 
         /**
          * Set values for part price column
          * set styling to center text for the column
          * disable resizability by user
          */
-        mainPartPriceTableColumn.setCellValueFactory(new PropertyValueFactory<>("partPrice"));
-        mainPartPriceTableColumn.setStyle("-fx-alignment: CENTER;");
-        mainPartPriceTableColumn.setResizable(false);
+        partPriceTableCol.setCellValueFactory(new PropertyValueFactory<>("partPrice"));
+        partPriceTableCol.setStyle("-fx-alignment: CENTER;");
+        partPriceTableCol.setResizable(false);
+    }
 
+    public void setProductTableAttributes() {
         /**
          * Set values for product ID column
          * set styling to center text for the column
          * disable resizability by user
          */
-        mainScreenProductIDTableColumn.setCellValueFactory(new PropertyValueFactory<>("productID"));
-        mainScreenProductIDTableColumn.setStyle("-fx-alignment: CENTER;");
-        mainScreenProductIDTableColumn.setResizable(false);
+        productIDTableCol.setCellValueFactory(new PropertyValueFactory<>("productID"));
+        productIDTableCol.setStyle("-fx-alignment: CENTER;");
+        productIDTableCol.setResizable(false);
 
         /**
          * Set values for product name column
          * set styling to center text for the column
          * disable resizability by user
          */
-        mainScreenProductNameTableColumn.setCellValueFactory(new PropertyValueFactory<>("productName"));
-        mainScreenProductNameTableColumn.setStyle("-fx-alignment: CENTER;");
-        mainScreenProductNameTableColumn.setResizable(false);
+        productNameTableCol.setCellValueFactory(new PropertyValueFactory<>("productName"));
+        productNameTableCol.setStyle("-fx-alignment: CENTER;");
+        productNameTableCol.setResizable(false);
 
         /**
          * Set values for product inventory level column
          * set styling to center text for the column
          * disable resizability by user
          */
-        mainScreenProductInvLvlTableColumn.setCellValueFactory(new PropertyValueFactory<>("productInvLevel"));
-        mainScreenProductInvLvlTableColumn.setStyle("-fx-alignment: CENTER;");
-        mainScreenProductInvLvlTableColumn.setResizable(false);
+        productInvLvlTableCol.setCellValueFactory(new PropertyValueFactory<>("productInvLevel"));
+        productInvLvlTableCol.setStyle("-fx-alignment: CENTER;");
+        productInvLvlTableCol.setResizable(false);
 
         /**
          * Set values for product price column
          * set styling to center text for the column
          * disable resizability by user
          */
-        mainScreenProductPriceTableColumn.setCellValueFactory(new PropertyValueFactory<>("productPrice"));
-        mainScreenProductPriceTableColumn.setStyle("-fx-alignment: CENTER;");
-        mainScreenProductPriceTableColumn.setResizable(false);
-
-        /**
-         * populates main screen part and product tables
-         */
-        populateMainScreenProductTable();
-        populateMainScreenPartTable();
+        productPriceTableCol.setCellValueFactory(new PropertyValueFactory<>("productPrice"));
+        productPriceTableCol.setStyle("-fx-alignment: CENTER;");
+        productPriceTableCol.setResizable(false);
     }
-
-    public void populateMainScreenPartTable(){
-        mainPartTableView.setItems(getAllParts());
-    }
-
-    public void populateMainScreenProductTable() { mainScreenProductTableView.setItems(getAllProducts()); }
 }

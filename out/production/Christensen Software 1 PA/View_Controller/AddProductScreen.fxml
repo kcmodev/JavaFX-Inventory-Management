@@ -26,7 +26,7 @@
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="addProductScreenIDTextField" layoutX="57.0" layoutY="-4.0" prefHeight="32.0" prefWidth="158.0" promptText="Enter Product ID">
+                  <TextField fx:id="productIDTextField" layoutX="57.0" layoutY="-4.0" prefHeight="32.0" prefWidth="158.0" promptText="Enter Product ID">
                      <font>
                         <Font name="System Italic" size="16.0" />
                      </font>
@@ -40,7 +40,7 @@
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="addProductScreenNameTextField" layoutX="57.0" layoutY="-2.0" prefHeight="32.0" prefWidth="158.0" promptText="Enter Product Name">
+                  <TextField fx:id="productNameTextField" layoutX="57.0" layoutY="-2.0" prefHeight="32.0" prefWidth="158.0" promptText="Enter Product Name">
                      <font>
                         <Font name="System Italic" size="16.0" />
                      </font>
@@ -54,7 +54,7 @@
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="addProductScreenInvTextField" layoutX="57.0" layoutY="-4.0" prefHeight="32.0" prefWidth="158.0" promptText="Enter # in Inventory">
+                  <TextField fx:id="productInvTextField" layoutX="57.0" layoutY="-4.0" prefHeight="32.0" prefWidth="158.0" promptText="Enter # in Inventory">
                      <font>
                         <Font name="System Italic" size="16.0" />
                      </font>
@@ -68,7 +68,7 @@
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="addProductScreenPriceTextField" layoutX="57.0" layoutY="-4.0" prefHeight="32.0" prefWidth="158.0" promptText="Enter Price">
+                  <TextField fx:id="productPriceTextField" layoutX="57.0" layoutY="-4.0" prefHeight="32.0" prefWidth="158.0" promptText="Enter Price">
                      <font>
                         <Font name="System Italic" size="16.0" />
                      </font>
@@ -82,46 +82,46 @@
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="addProductScreenInvMaxTextField" layoutX="57.0" layoutY="-4.0" prefHeight="37.0" prefWidth="57.0" promptText="Max">
+                  <TextField fx:id="productInvMaxTextField" layoutX="57.0" layoutY="-4.0" prefHeight="37.0" prefWidth="57.0" promptText="Max">
                      <font>
                         <Font name="System Italic" size="16.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="addProductScreenInvMinTextField" layoutX="158.0" layoutY="-4.0" prefHeight="37.0" prefWidth="57.0" promptText="Min">
+                  <TextField fx:id="productInvMinTextField" layoutX="158.0" layoutY="-4.0" prefHeight="37.0" prefWidth="57.0" promptText="Min">
                      <font>
                         <Font name="System Italic" size="16.0" />
                      </font>
                   </TextField>
                </children>
             </AnchorPane>
-            <Button fx:id="addProductScreenSaveButton" layoutX="12.0" layoutY="278.0" mnemonicParsing="false" onAction="#setAddProductSaveButton" prefHeight="34.0" prefWidth="70.0" text="Save" />
-            <Button fx:id="addProductScreenCancelButton" layoutX="87.0" layoutY="279.0" mnemonicParsing="false" onAction="#setAddProductCancelButton" prefHeight="32.0" prefWidth="70.0" text="Cancel" />
+            <Button fx:id="saveButton" layoutX="12.0" layoutY="278.0" mnemonicParsing="false" onAction="#setAddProductSaveButton" prefHeight="34.0" prefWidth="70.0" text="Save" />
+            <Button fx:id="cancelButton" layoutX="87.0" layoutY="279.0" mnemonicParsing="false" onAction="#setAddProductCancelButton" prefHeight="32.0" prefWidth="70.0" text="Cancel" />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="308.0" layoutY="60.0" prefHeight="204.0" prefWidth="347.0">
          <children>
-            <TableView fx:id="populateAddProductScreenAllPartsTable" prefHeight="157.0" prefWidth="341.0">
+            <TableView fx:id="partTableView" prefHeight="157.0" prefWidth="341.0">
               <columns>
-                <TableColumn prefWidth="75.0" text="Part ID" />
-                <TableColumn prefWidth="106.0" text="Part Name" />
-                  <TableColumn prefWidth="78.0" text="Inv. Level" />
-                  <TableColumn prefWidth="81.0" text="Price / Unit" />
+                <TableColumn fx:id="partIDTableCol" prefWidth="75.0" text="Part ID" />
+                <TableColumn fx:id="partNameTableCol" prefWidth="106.0" text="Part Name" />
+                  <TableColumn fx:id="partInvLvlTableCol" prefWidth="78.0" text="Inv. Level" />
+                  <TableColumn fx:id="partPriceTableCol" prefWidth="81.0" text="Price / Unit" />
               </columns>
             </TableView>
          </children>
       </AnchorPane>
-      <Button fx:id="addProductScreenAddButton" layoutX="579.0" layoutY="225.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="70.0" text="Add" />
+      <Button fx:id="addButton" layoutX="579.0" layoutY="225.0" mnemonicParsing="false" onAction="#setAddButton" prefHeight="32.0" prefWidth="70.0" text="Add" />
       <AnchorPane layoutX="308.0" layoutY="241.0" prefHeight="204.0" prefWidth="347.0">
          <children>
-            <TableView fx:id="populateAddProductAssociatedPartsTable" layoutX="3.0" layoutY="24.0" prefHeight="157.0" prefWidth="341.0">
+            <TableView fx:id="assocPartTableView" layoutX="3.0" layoutY="24.0" prefHeight="157.0" prefWidth="341.0">
                <columns>
-                  <TableColumn prefWidth="75.0" text="Part ID" />
-                  <TableColumn prefWidth="106.0" text="Part Name" />
-                  <TableColumn prefWidth="78.0" text="Inv. Level" />
-                  <TableColumn prefWidth="81.0" text="Price / Unit" />
+                  <TableColumn fx:id="assocPartIDTableCol" prefWidth="75.0" text="Part ID" />
+                  <TableColumn fx:id="assocPartNameTableCol" prefWidth="106.0" text="Part Name" />
+                  <TableColumn fx:id="assocPartInvLvlTableCol" prefWidth="78.0" text="Inv. Level" />
+                  <TableColumn fx:id="assocPartPriceTableCol" prefWidth="81.0" text="Price / Unit" />
                </columns>
             </TableView>
-            <Button fx:id="addProductScreenDeleteButton" layoutX="274.0" layoutY="187.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="70.0" text="Delete" />
+            <Button fx:id="deleteButton" layoutX="274.0" layoutY="187.0" mnemonicParsing="false" onAction="#setDeleteButton" prefHeight="32.0" prefWidth="70.0" text="Delete" />
             <Label layoutX="5.0" layoutY="-4.0" prefHeight="25.0" prefWidth="131.0" text="Associated Parts:">
                <font>
                   <Font name="System Bold" size="16.0" />
@@ -134,6 +134,6 @@
             <Font name="System Italic" size="16.0" />
          </font>
       </TextField>
-      <Button layoutX="579.0" layoutY="14.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="70.0" text="Search" />
+      <Button fx:id="searchButton" layoutX="579.0" layoutY="14.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="70.0" text="Search" />
    </children>
 </AnchorPane>

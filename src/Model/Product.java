@@ -4,16 +4,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class Product {
-    ObservableList<Part> associatedParts = FXCollections.observableArrayList();
+    static ObservableList<Part> associatedParts = FXCollections.observableArrayList();
 
     private int productID;
     private String productName;
     private double productPrice;
     private int productInvLevel, productInvMin, productInvMax;
 
-    public Product(/*ObservableList<Part> associatedParts,*/ int productID, String productName, double productPrice,
+    public Product(int productID, String productName, double productPrice,
                    int productInvLevel, int productInvMin, int productInvMax) {
-//        this.associatedParts = associatedParts;
         this.productID = productID;
         this.productName = productName;
         this.productPrice = productPrice;
@@ -22,11 +21,11 @@ public class Product {
         this.productInvMax = productInvMax;
     }
 
-//    public ObservableList<Part> getAllAssociatedParts() { return associatedParts; }
-//
-//    public void addAssociatedPart(/* selected part */) { this.associatedParts = associatedParts; }
-//
-//    public boolean deleteAssociatedPart(/* selected associated part */){ }
+    public static ObservableList<Part> getAllAssociatedParts() { return associatedParts; }
+
+    public static void addAssociatedPart(Part part) { associatedParts.add(part); }
+
+    public static void deleteAssociatedPart(Part part){ }
 
     public int getProductID() {
         return productID;
@@ -60,17 +59,13 @@ public class Product {
         this.productInvLevel = productInvLevel;
     }
 
-    public int getProductInvMin() {
-        return productInvMin;
-    }
+    public int getProductInvMin() { return productInvMin; }
 
     public void setProductInvMin(int productInvMin) {
         this.productInvMin = productInvMin;
     }
 
-    public int getProductInvMax() {
-        return productInvMax;
-    }
+    public int getProductInvMax() { return productInvMax; }
 
     public void setProductInvMax(int productInvMax) {
         this.productInvMax = productInvMax;
