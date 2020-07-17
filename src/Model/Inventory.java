@@ -3,11 +3,16 @@ package Model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.util.ArrayList;
+
 public class Inventory {
     static ObservableList<Part> allParts = FXCollections.observableArrayList();
     static ObservableList<Product> allProducts = FXCollections.observableArrayList();
 
     public Inventory() {
+        /**
+         * set default values to start with in parts table
+         */
         InHousePart graphicsCard = new InHousePart(1, "Graphics Card", 800, 5, 2, 10);
         allParts.add(graphicsCard);
 
@@ -17,6 +22,10 @@ public class Inventory {
         InHousePart CPU = new InHousePart(3, "CPU", 400, 7, 2, 10);
         allParts.add(CPU);
 
+        /**
+         * set default values to product table
+         * used to associate the other 3 default parts to 1 product
+         */
         Product computer = new Product(1, "Computer", 1700, 2, 1, 5);
         allProducts.add(computer);
 
@@ -33,6 +42,7 @@ public class Inventory {
             InHousePart partAsInHouse = (InHousePart) part;
             allParts.add(partAsInHouse);
         }
+
         /**
          * check if part is an instance of outsourced
          * instantiate new outsourced object then cast method variable part as an outsourced part
@@ -54,27 +64,84 @@ public class Inventory {
 
     /**
      * search field to search by part ID
+     * @return
      */
-    public static boolean searchByPartID(int partID) {
-        System.out.println("Searching by part ID");
+    public static Part searchByPartID(int partID) {
+        System.out.println("Searching by part ID. ID Entered = " + partID);
 
-        return allParts.contains(partID);
+        for (Part part : allParts){
+            System.out.println("part being checked: " + part.getPartName());
+            if (part.getPartID() == partID){
+                System.out.println("part being returned: " + part.getPartName());
+                return part;
+            }
+            System.out.println("not a match, continuing");
+        }
+        return null;
     }
 
     /**
      * search field to search by product ID
      */
-    public static void searchByProductID(int productID) { }
+    public static Product searchByProductID(int productID) {
+        System.out.println("Searching by part ID. ID Entered = " + productID);
+
+        for (Product product : allProducts){
+            System.out.println("product being checked " + product.getProductName());
+            if (product.getProductID() == productID){
+                System.out.println("product being returned: " + product.getProductName());
+                return product;
+            }
+            System.out.println("not a match, continuing");
+        }
+        return null;
+    }
 
     /**
      * search field to search by part name
      */
-    public static void searchByPartName(String partName) { }
+    public static Part searchByPartName(String partName) {
+        System.out.println("searching by part name with string/substring: \"" + partName + "\"");
+
+        for (Part part : allParts){
+            System.out.println("part being checked: " + part.getPartName());
+            /**
+             * checking if user input is either a full or partial match
+             * returns first instance if not an exact match
+             * also converts both string to lower case to ease in locating the appropriate object
+             * without case sensitivity
+             */
+            if (part.getPartName().toLowerCase().contains(partName.toLowerCase())){
+                System.out.println("part name being returned: " + part.getPartName());
+                return part;
+            }
+            System.out.println("not a match, continuing");
+        }
+        return null;
+    }
 
     /**
      * search  field to search by product name
      */
-    public static void searchByProductName(String productName) { }
+    public static Product searchByProductName(String productName) {
+        System.out.println("searching by part namne with strin/substring: \"" + productName + "\"");
+
+        for (Product product : allProducts){
+            System.out.println("product being checked: " + product.getProductName());
+            /**
+             * checking if user input is either a full or partial match
+             * returns first instance if not an exact match
+             * also converts both string to lower case to ease in locating the appropriate object
+             * without case sensitivity
+             */
+            if (product.getProductName().toLowerCase().contains(productName.toLowerCase())){
+                System.out.println("part name found: " + product.getProductName());
+                return product;
+            }
+            System.out.println("not a match, continuing");
+        }
+        return null;
+    }
 
     /**
      * list used to search for parts related to a product

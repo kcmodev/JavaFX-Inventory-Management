@@ -3,12 +3,12 @@ package Model;
 import javafx.beans.property.SimpleStringProperty;
 
 public abstract class Part {
-    int partID;
-    SimpleStringProperty partName;
-    double partPrice;
-    int partStock;
-    int partStockMin;
-    int partStockMax;
+    private int partID;
+    private SimpleStringProperty partName;
+    private double partPrice;
+    private int partStock;
+    private int partStockMin;
+    private int partStockMax;
 
     public Part(int partID, String partName, double partPrice, int partStock,
                 int partStockMin, int partStockMax) {

@@ -26,7 +26,9 @@ import java.util.ResourceBundle;
 public class MainScreenController implements Initializable {
 
     static final String MAIN_SCREEN_TITLE = "Christensen Software 1 Performance Assessment";
-    private String userInput;
+
+    private String userInput; // used to take input in search fields
+    private int userInputAsInt; // used to convert userInput to check for errors and pass correct data
 
     /**
      * defines structure for main screen part table
@@ -111,7 +113,7 @@ public class MainScreenController implements Initializable {
         deletePart(selectedPart);
     }
 
-    public void setSearchByPartButton(ActionEvent event) {
+    public void setSearchByPartButton() {
         System.out.println("Search by part button clicked");
 
         userInput = mainScreenSearchByPart.getText();
@@ -122,9 +124,19 @@ public class MainScreenController implements Initializable {
          * if an error is thrown then the catch will run and search by part name
          */
         try {
-            Inventory.searchByPartID(Integer.parseInt(userInput));
+            System.out.println("attempting to search by part ID, checking input");
+            userInputAsInt = Integer.parseInt(userInput); // testing to see if it will throw an error
+            mainPartTableView.getSelectionModel().select(searchByPartID(userInputAsInt));
+
         } catch (NumberFormatException e) {
-            Inventory.searchByPartName(userInput);
+            System.out.println("Not an int, searching by part name instead of ID");
+
+            /**
+             * error thrown when attempting to parse input aas an int
+             * searching via name with string as input instead
+             */
+            mainPartTableView.getSelectionModel().select(searchByPartName(userInput));
+
         }
     }
 
@@ -148,10 +160,36 @@ public class MainScreenController implements Initializable {
 
     public void setSearchByProductButton() {
         System.out.println("Search by product button clicked");
+
+        userInput = mainScreenSearchByProduct.getText();
+
+        /**
+         * tries to parse to int
+         * if successful it will search by part ID
+         * if an error is thrown then the catch will run and search by part name
+         */
+        try {
+            System.out.println("attempting to search by part ID, checking input");
+            userInputAsInt = Integer.parseInt(userInput); // testing to see if it will throw an error
+            mainScreenProductTableView.getSelectionModel().select(searchByProductID(userInputAsInt));
+
+
+        } catch (NumberFormatException e) {
+            System.out.println("Not an int, searching by part name instead of ID");
+
+            /**
+             * error thrown when attempting to parse input aas an int
+             * searching via name with string as input instead
+             */
+                mainScreenProductTableView.getSelectionModel().select(searchByProductName(userInput));
+        }
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        /**
+         * instantiate Inventory to run constructor to add default table data
+         */
         Inventory defaultInv = new Inventory();
 
         mainPartIDTableColumn.setCellValueFactory(new PropertyValueFactory<>("partID"));

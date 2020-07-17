@@ -28,7 +28,7 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="143.0" layoutY="11.0" prefHeight="33.0" prefWidth="184.0" promptText="Search by part">
+                  <TextField fx:id="mainScreenSearchByPart" layoutX="143.0" layoutY="11.0" prefHeight="33.0" prefWidth="184.0" promptText="Search by part">
                      <font>
                         <Font name="System Italic" size="14.0" />
                      </font>
@@ -58,7 +58,7 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="143.0" layoutY="11.0" prefHeight="33.0" prefWidth="184.0" promptText="Search by product">
+                  <TextField fx:id="mainScreenSearchByProduct" layoutX="143.0" layoutY="11.0" prefHeight="33.0" prefWidth="184.0" promptText="Search by product">
                      <font>
                         <Font name="System Italic" size="14.0" />
                      </font>
