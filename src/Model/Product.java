@@ -22,17 +22,11 @@ public class Product {
         this.productInvMax = productInvMax;
     }
 
-//    public ObservableList<Part> getAllAssociatedParts() {
-//        return associatedParts;
-//    }
-
-//    public void addAssociatedPart(/* selected part */) {
-//        this.associatedParts = associatedParts;
-//    }
-
-//    public boolean deleteAssociatedPart(/* selected associated part */){
+//    public ObservableList<Part> getAllAssociatedParts() { return associatedParts; }
 //
-//    }
+//    public void addAssociatedPart(/* selected part */) { this.associatedParts = associatedParts; }
+//
+//    public boolean deleteAssociatedPart(/* selected associated part */){ }
 
     public int getProductID() {
         return productID;

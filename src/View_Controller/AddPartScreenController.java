@@ -1,22 +1,16 @@
 package View_Controller;
 
 import static Model.Inventory.addPart;
+import static Model.Inventory.getAllParts;
 
 import Model.InHousePart;
 import Model.OutsourcedPart;
-import View_Controller.MainScreenController;
-import static Model.Inventory.getAllParts;
 
-import Model.Part;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-import java.io.IOException;
 
 public class AddPartScreenController {
 
@@ -35,17 +29,17 @@ public class AddPartScreenController {
 
     public void setAddPartScreenSaveButton(ActionEvent event) {
         System.out.println("Add part save button clicked");
+        int partID = Integer.parseInt(addPartIDTextField.getText());
+        String partName = addPartNameTextField.getText();
+        int partInv = Integer.parseInt(addPartInventoryTextField.getText());
+        double partPrice = Double.parseDouble(addPartPriceTextField.getText());
+        int partInvMin = Integer.parseInt(addPartInvMinTextField.getText());
+        int partInvMax = Integer.parseInt(addPartInvMaxTextField.getText());
 
         // checks corresponding label to determine radio button selection
         // "Machine ID" = in house
         if (radioButtonLabelChanger.getText() == "Machine ID"){
             System.out.println("Adding with Machine ID w/ in house part");
-            int partID = Integer.parseInt(addPartIDTextField.getText());
-            String partName = addPartNameTextField.getText();
-            int partInv = Integer.parseInt(addPartInventoryTextField.getText());
-            double partPrice = Double.parseDouble(addPartPriceTextField.getText());
-            int partInvMin = Integer.parseInt(addPartInvMinTextField.getText());
-            int partInvMax = Integer.parseInt(addPartInvMaxTextField.getText());
 
             InHousePart inHousePart = new InHousePart(partID, partName, partPrice, partInv, partInvMin, partInvMax);
             inHousePart.setPartMachineID(Integer.parseInt(changedLabelTextField.getText()));
@@ -57,6 +51,11 @@ public class AddPartScreenController {
         // "Company ID" = outsourced
         if (radioButtonLabelChanger.getText() == "Company ID"){
             System.out.println("Adding with company ID to outsourced");
+
+            OutsourcedPart outsourcedPart = new OutsourcedPart(partID, partName, partPrice, partInv, partInvMin, partInvMax);
+            outsourcedPart.setCompanyName(changedLabelTextField.getText());
+            addPart(outsourcedPart);
+            System.out.println("Current in house parts list: " + getAllParts());
         }
 
         // returns user to main screen after saving the part
@@ -78,18 +77,18 @@ public class AddPartScreenController {
         setRemainingTextFields();
     }
 
-    public void setRadioButtonLabelChanger(String labelID, String textField) {
+    private void setRadioButtonLabelChanger(String labelID, String textField) {
         radioButtonLabelChanger.setText(labelID);
         setChangedLabelTextField(textField);
 
     }
 
-    public void setChangedLabelTextField(String textField) {
+    private void setChangedLabelTextField(String textField) {
         changedLabelTextField.setDisable(false);
         changedLabelTextField.setPromptText(textField);
     }
 
-    public void setRemainingTextFields() {
+    private void setRemainingTextFields() {
         addPartIDTextField.setDisable(false);
         addPartNameTextField.setDisable(false);
         addPartInventoryTextField.setDisable(false);

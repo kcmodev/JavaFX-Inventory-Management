@@ -1,6 +1,5 @@
 package Model;
 
-import javafx.beans.property.SimpleStringProperty;
 
 public class OutsourcedPart extends Part {
 
@@ -10,11 +9,7 @@ public class OutsourcedPart extends Part {
         super(partID, partName, partPrice, partStock, partStockMin, partStockMax);
     }
 
-    public String getCompanyName() {
-        return companyName;
-    }
+    public String getCompanyName() { return companyName; }
 
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
+    public void setCompanyName(String companyName) { this.companyName = companyName; }
 }

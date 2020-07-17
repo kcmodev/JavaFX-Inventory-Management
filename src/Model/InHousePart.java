@@ -1,6 +1,5 @@
 package Model;
 
-import javafx.beans.property.SimpleStringProperty;
 
 public class InHousePart extends Part {
 
@@ -10,11 +9,7 @@ public class InHousePart extends Part {
         super(partID, partName, partPrice, partStock, partStockMin, partStockMax);
     }
 
-    public int getPartMachineID() {
-        return partMachineID;
-    }
+    public int getPartMachineID() { return partMachineID; }
 
-    public void setPartMachineID(int partMachineID) {
-        this.partMachineID = partMachineID;
-    }
+    public void setPartMachineID(int partMachineID) { this.partMachineID = partMachineID; }
 }
