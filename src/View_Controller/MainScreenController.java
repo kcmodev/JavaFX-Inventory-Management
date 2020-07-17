@@ -54,6 +54,11 @@ public class MainScreenController implements Initializable {
     @FXML private TextField mainScreenSearchByPart;
     @FXML private TextField mainScreenSearchByProduct;
 
+    /**
+     * creates a method for managing changing windows
+     * called by any class and passes input as parameters to decide which window to direct the user to
+     * uses static variables for the title info of each window
+     */
     public void windowManager(ActionEvent event, String fileName, String windowTitle) {
         try {
             Parent parent = FXMLLoader.load(getClass().getResource(fileName));
@@ -187,46 +192,84 @@ public class MainScreenController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        /**
-         * instantiate Inventory to run constructor to add default table data
-         */
-        Inventory defaultInv = new Inventory();
 
+        /**
+         * Set values for part id column
+         * set styling to center text for the column
+         * disable resizability by user
+         */
         mainPartIDTableColumn.setCellValueFactory(new PropertyValueFactory<>("partID"));
         mainPartIDTableColumn.setStyle("-fx-alignment: CENTER;");
         mainPartIDTableColumn.setResizable(false);
 
+        /**
+         * Set values for part name column
+         * set styling to center text for the column
+         * disable resizability by user
+         */
         mainPartNameTableColumn.setCellValueFactory(new PropertyValueFactory<>("partName"));
         mainPartNameTableColumn.setStyle("-fx-alignment: CENTER;");
         mainPartNameTableColumn.setResizable(false);
 
+        /**
+         * Set values for part inventory level column
+         * set styling to center text for the column
+         * disable resizability by user
+         */
         mainPartInventoryTableColumn.setCellValueFactory(new PropertyValueFactory<>("partStock"));
         mainPartInventoryTableColumn.setStyle("-fx-alignment: CENTER;");
         mainPartInventoryTableColumn.setResizable(false);
 
+        /**
+         * Set values for part price column
+         * set styling to center text for the column
+         * disable resizability by user
+         */
         mainPartPriceTableColumn.setCellValueFactory(new PropertyValueFactory<>("partPrice"));
         mainPartPriceTableColumn.setStyle("-fx-alignment: CENTER;");
         mainPartPriceTableColumn.setResizable(false);
 
-        populateMainScreenPartTable();
-
+        /**
+         * Set values for product ID column
+         * set styling to center text for the column
+         * disable resizability by user
+         */
         mainScreenProductIDTableColumn.setCellValueFactory(new PropertyValueFactory<>("productID"));
         mainScreenProductIDTableColumn.setStyle("-fx-alignment: CENTER;");
         mainScreenProductIDTableColumn.setResizable(false);
 
+        /**
+         * Set values for product name column
+         * set styling to center text for the column
+         * disable resizability by user
+         */
         mainScreenProductNameTableColumn.setCellValueFactory(new PropertyValueFactory<>("productName"));
         mainScreenProductNameTableColumn.setStyle("-fx-alignment: CENTER;");
         mainScreenProductNameTableColumn.setResizable(false);
 
+        /**
+         * Set values for product inventory level column
+         * set styling to center text for the column
+         * disable resizability by user
+         */
         mainScreenProductInvLvlTableColumn.setCellValueFactory(new PropertyValueFactory<>("productInvLevel"));
         mainScreenProductInvLvlTableColumn.setStyle("-fx-alignment: CENTER;");
         mainScreenProductInvLvlTableColumn.setResizable(false);
 
+        /**
+         * Set values for product price column
+         * set styling to center text for the column
+         * disable resizability by user
+         */
         mainScreenProductPriceTableColumn.setCellValueFactory(new PropertyValueFactory<>("productPrice"));
         mainScreenProductPriceTableColumn.setStyle("-fx-alignment: CENTER;");
         mainScreenProductPriceTableColumn.setResizable(false);
 
+        /**
+         * populates main screen part and product tables
+         */
         populateMainScreenProductTable();
+        populateMainScreenPartTable();
     }
 
     public void populateMainScreenPartTable(){

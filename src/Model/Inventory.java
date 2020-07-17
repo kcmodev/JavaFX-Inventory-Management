@@ -3,8 +3,6 @@ package Model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.util.ArrayList;
-
 public class Inventory {
     static ObservableList<Part> allParts = FXCollections.observableArrayList();
     static ObservableList<Product> allProducts = FXCollections.observableArrayList();
@@ -69,6 +67,11 @@ public class Inventory {
     public static Part searchByPartID(int partID) {
         System.out.println("Searching by part ID. ID Entered = " + partID);
 
+        /**
+         * loop through observable list allParts
+         * check each part for a match with given partID
+         * return first part object found
+         */
         for (Part part : allParts){
             System.out.println("part being checked: " + part.getPartName());
             if (part.getPartID() == partID){
@@ -86,6 +89,11 @@ public class Inventory {
     public static Product searchByProductID(int productID) {
         System.out.println("Searching by part ID. ID Entered = " + productID);
 
+        /**
+         * loop through observable list allProducts
+         * check each part for a match with given productID
+         * return first pproduct object found
+         */
         for (Product product : allProducts){
             System.out.println("product being checked " + product.getProductName());
             if (product.getProductID() == productID){
@@ -105,6 +113,7 @@ public class Inventory {
 
         for (Part part : allParts){
             System.out.println("part being checked: " + part.getPartName());
+
             /**
              * checking if user input is either a full or partial match
              * returns first instance if not an exact match
@@ -128,6 +137,7 @@ public class Inventory {
 
         for (Product product : allProducts){
             System.out.println("product being checked: " + product.getProductName());
+
             /**
              * checking if user input is either a full or partial match
              * returns first instance if not an exact match

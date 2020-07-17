@@ -1,5 +1,6 @@
 package View_Controller;
 
+import Model.Inventory;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,6 +15,7 @@ public class Main extends Application {
 
         primaryStage.setTitle(MainScreenController.MAIN_SCREEN_TITLE);
         primaryStage.setScene(new Scene(root));
+        Inventory initData = new Inventory(); // call constructor to initialize data to table doesn't start blank
         primaryStage.show();
     }
 

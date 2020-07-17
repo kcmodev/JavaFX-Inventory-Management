@@ -2,7 +2,6 @@ package View_Controller;
 
 import static Model.Inventory.addProduct;
 import static Model.Inventory.getAllProducts;
-import static Model.Inventory.getAllParts;
 
 import Model.Product;
 
