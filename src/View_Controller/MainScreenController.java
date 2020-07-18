@@ -166,20 +166,19 @@ public class MainScreenController implements Initializable {
      */
     public void setModifyProductButton(ActionEvent event) throws IOException {
         System.out.println("Modify product button clicked");
-//        windowManager(event, "ModifyProductScreen.fxml", ModifyProductScreenController.MOD_PRODUCT_SCREEN_TITLE);
 
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("ModifyProductScreen.fxml"));
         Parent parent = loader.load();
-        Scene modPartScene = new Scene(parent);
+        Scene modProductScene = new Scene(parent);
 
         ModifyProductScreenController controller = loader.getController();
         controller.setTextFields(productTableView.getSelectionModel().getSelectedItem());
 
         Stage newWindow = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        newWindow.setScene(modPartScene);
+        newWindow.setScene(modProductScene);
         newWindow.setResizable(false);
-        newWindow.setTitle(ModifyPartScreenController.MOD_PART_SCREEN_TITLE);
+        newWindow.setTitle(ModifyProductScreenController.MOD_PRODUCT_SCREEN_TITLE);
         newWindow.show();
     }
 

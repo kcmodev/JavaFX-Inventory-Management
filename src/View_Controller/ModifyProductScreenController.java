@@ -1,9 +1,9 @@
 package View_Controller;
 
+import Model.Inventory;
 import Model.Product;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
 public class ModifyProductScreenController {
@@ -33,6 +33,24 @@ public class ModifyProductScreenController {
         modProductInvMinTextField.setText(Integer.toString(product.getProductInvMin()));
     }
     public void setModProductSave(ActionEvent event) {
+        System.out.println("modify product save button clicked");
+
+        modifiedProduct.setProductID(Integer.parseInt(modProductIDTextField.getText()));
+        modifiedProduct.setProductName(modProductNameTextField.getText());
+        modifiedProduct.setProductInvLevel(Integer.parseInt(modProductInventoryTextField.getText()));
+        modifiedProduct.setProductPrice(Double.parseDouble(modProductPriceTextField.getText()));
+        modifiedProduct.setProductInvMax(Integer.parseInt(modProductInvMaxTextField.getText()));
+        modifiedProduct.setProductInvMin(Integer.parseInt(modProductInvMinTextField.getText()));
+
+        for (Product product : Inventory.getAllProducts()){
+            if (product.getProductID() == modifiedProduct.getProductID()){
+                Inventory.deleteProduct(product);
+                break;
+            }
+        }
+
+        Inventory.addProduct(modifiedProduct);
+        mainScreenController.windowManager(event, "MainScreen.fxml", mainScreenController.MAIN_SCREEN_TITLE);
     }
 
     public void setModProductCancel() {
