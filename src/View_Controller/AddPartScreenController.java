@@ -14,9 +14,15 @@ import javafx.scene.control.TextField;
 
 public class AddPartScreenController {
 
+    /**
+     * title for add part screen to pass when switching screens
+     */
     static final String ADD_PART_SCREEN_TITLE = "Add Part(s)";
     MainScreenController mainScreenController = new MainScreenController();
 
+    /**
+     * initialize label and input fields on add part screen
+     */
     @FXML private Label radioButtonLabelChanger;
     @FXML private TextField addPartIDTextField;
     @FXML private TextField addPartNameTextField;
@@ -27,6 +33,9 @@ public class AddPartScreenController {
     @FXML private TextField changedLabelTextField;
 
 
+    /**
+     * add part save button handler
+     */
     public void setAddPartScreenSaveButton(ActionEvent event) {
         System.out.println("Add part save button clicked");
         int partID = Integer.parseInt(addPartIDTextField.getText());

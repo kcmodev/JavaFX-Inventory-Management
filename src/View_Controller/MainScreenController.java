@@ -1,6 +1,5 @@
 package View_Controller;
 
-import Model.Inventory;
 import Model.Part;
 import Model.Product;
 
@@ -25,6 +24,9 @@ import java.util.ResourceBundle;
 
 public class MainScreenController implements Initializable {
 
+    /**
+     * title for main screen to pass when switching screens
+     */
     static final String MAIN_SCREEN_TITLE = "Christensen Software 1 Performance Assessment";
 
     private String userInput; // used to take input in search fields
@@ -74,50 +76,61 @@ public class MainScreenController implements Initializable {
             System.exit(-1);
         }
     }
+
+    /**
+     * main screen exit button handler
+     */
     public void setExitButtonClicked() {
         System.out.println("Exit button clicked");
-
-        /**
-         * instantiate alert popup for exiting the program
-         */
-        Alert exiting = new Alert(Alert.AlertType.CONFIRMATION);
-        exiting.setTitle("Close program");
-        exiting.setContentText("Are you sure you would like to close the program?");
-
-        /**
-         * set method for user to choose to quit by waiting on button press
-         */
-        Optional<ButtonType> choice = exiting.showAndWait();
-
-
-        if (choice.get() == ButtonType.OK) { // user clicks OK
-            System.out.println("Closed through alert popup");
-            System.exit(1);
-
-        } else if (choice.get() == ButtonType.CANCEL){ // user clicks CANCEL
-            System.out.println("Cancel selected, returning to main");
-            exiting.close();
-        }
+        confirmationAlert("close the program");
     }
 
+    /**
+     * main screen add part button handler
+     */
     public void setAddPartClicked(ActionEvent event) {
         System.out.println("Add part button clicked");
         windowManager(event, "AddPartScreen.fxml", AddPartScreenController.ADD_PART_SCREEN_TITLE);
     }
 
-
-    public void setModifyPartClicked(ActionEvent event) {
+    /**
+     * main screen modify part button handler
+     */
+    public void setModifyPartClicked(ActionEvent event) throws IOException {
         System.out.println("Modify part button clicked");
-        windowManager(event, "ModifyPartScreen.fxml", ModifyPartScreenController.MOD_PART_SCREEN_TITLE);
+
+        FXMLLoader loader = new FXMLLoader();
+        System.out.println("initialize loader");
+        loader.setLocation(getClass().getResource("ModifyPartScreen.fxml"));
+        System.out.println("loader location set");
+        Parent parent = loader.load();
+        System.out.println("load parent");
+        Scene modPartScene = new Scene(parent);
+        System.out.println("initialize scene");
+
+        ModifyPartScreenController controller = loader.getController();
+        controller.setTextFields(partTableView.getSelectionModel().getSelectedItem());
+
+        Stage newWindow = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        newWindow.setScene(modPartScene);
+        newWindow.setResizable(false);
+        newWindow.setTitle(ModifyPartScreenController.MOD_PART_SCREEN_TITLE);
+        newWindow.show();
     }
 
+    /**
+     * main screen delete part button handler
+     */
     public void setDeletePartClicked() {
         System.out.println("Delete part button clicked");
-
         Part selectedPart = partTableView.getSelectionModel().getSelectedItem();
-        deletePart(selectedPart);
+        errorAlert(selectedPart);
+        partTableView.getSelectionModel().clearSelection();
     }
 
+    /**
+     * main screen search by part button handler
+     */
     public void setSearchByPartButton() {
         System.out.println("Search by part button clicked");
 
@@ -141,28 +154,39 @@ public class MainScreenController implements Initializable {
              * searching via name with string as input instead
              */
             partTableView.getSelectionModel().select(searchByPartName(userInput));
-
         }
     }
 
+    /**
+     * main screen add product button handler
+     */
     public void setAddProductButtonClicked(ActionEvent event) {
         System.out.println("Add product button clicked");
         windowManager(event, "AddProductScreen.fxml", AddProductScreenController.ADD_PRODUCT_SCREEN_TITLE);
     }
 
+    /**
+     * main screen modify product button handler
+     */
     public void setModifyProductButton(ActionEvent event) {
         System.out.println("Modify product button clicked");
         windowManager(event, "ModifyProductScreen.fxml", ModifyProductScreenController.MOD_PRODUCT_SCREEN_TITLE);
     }
 
+    /**
+     * main screen delete product button handler
+     */
     public void setDeleteProductButton() {
         System.out.println("Delete product button clicked");
 
         Product selectedProduct = productTableView.getSelectionModel().getSelectedItem();
-        Inventory.deleteProduct(selectedProduct);
+        errorAlert(selectedProduct);
+        productTableView.getSelectionModel().clearSelection();
     }
 
-
+    /**
+     * main screen search by product button handler
+     */
     public void setSearchByProductButton() {
         System.out.println("Search by product button clicked");
 
@@ -199,7 +223,6 @@ public class MainScreenController implements Initializable {
         setPartTableAttributes();
         setProductTableAttributes();
 
-
         /**
          * populates main screen part and product tables
          */
@@ -211,7 +234,6 @@ public class MainScreenController implements Initializable {
      * method for selling table attributes for every scene
      */
     public void setPartTableAttributes() {
-
         /**
          * Set values for part id column
          * set styling to center text for the column
@@ -285,5 +307,51 @@ public class MainScreenController implements Initializable {
         productPriceTableCol.setCellValueFactory(new PropertyValueFactory<>("productPrice"));
         productPriceTableCol.setStyle("-fx-alignment: CENTER;");
         productPriceTableCol.setResizable(false);
+    }
+
+    /**
+     * confirmation alert popup handler
+     * passes in string variable to define type of event in the text box
+     */
+    public static void confirmationAlert(String action){
+        /**
+         * instantiate alert popup for exiting the program
+         */
+        Alert exiting = new Alert(Alert.AlertType.CONFIRMATION);
+        exiting.setTitle("Please confirm");
+        exiting.setContentText("Are you sure you would like to " + action + "?");
+
+        /**
+         * set method for user to choose to quit by waiting on button press
+         */
+        Optional<ButtonType> choice = exiting.showAndWait();
+
+        if (choice.get() == ButtonType.OK) { // user clicks OK
+            System.out.println("Closed through alert popup");
+            System.exit(1);
+
+        } else if (choice.get() == ButtonType.CANCEL){ // user clicks CANCEL
+            System.out.println("Cancel selected, returning to main");
+            exiting.close();
+        }
+    }
+
+    /**
+     * error alert popup handler
+     */
+    public static void errorAlert(Object object){
+
+         if (object != null) {
+             if (object instanceof Part) {
+                 deletePart((Part) object);
+             } else if (object instanceof Product) {
+                 deleteProduct((Product) object);
+             }
+         }else {
+                Alert invalidChoice = new Alert(Alert.AlertType.ERROR);
+                invalidChoice.setTitle("Error");
+                invalidChoice.setContentText("You must make a selection.");
+                invalidChoice.showAndWait();
+            }
     }
 }

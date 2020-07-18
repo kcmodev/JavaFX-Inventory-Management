@@ -12,12 +12,15 @@ public class Inventory {
          * set default values to start with in parts table
          */
         InHousePart graphicsCard = new InHousePart(1, "Graphics Card", 800, 5, 2, 10);
+        graphicsCard.setPartMachineID(24);
         allParts.add(graphicsCard);
 
         InHousePart motherboard = new InHousePart(2, "Motherboard", 500, 3, 2, 10);
+        motherboard.setPartMachineID(16);
         allParts.add(motherboard);
 
         InHousePart CPU = new InHousePart(3, "CPU", 400, 7, 2, 10);
+        CPU.setPartMachineID(8);
         allParts.add(CPU);
 
         /**

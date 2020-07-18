@@ -15,7 +15,7 @@
                 <Font name="System Bold" size="18.0" />
             </font>
         </Label>
-        <RadioButton fx:id="inHouseModifyRadioButton" layoutX="123.0" layoutY="50.0" mnemonicParsing="false" onAction="#setInHouseModifyRadioButton" prefHeight="25.0" prefWidth="138.0" text="   In-House">
+        <RadioButton fx:id="inHouseRadio" layoutX="123.0" layoutY="50.0" mnemonicParsing="false" onAction="#setInHouseModifyRadioButton" prefHeight="25.0" prefWidth="138.0" text="   In-House">
             <font>
                 <Font size="16.0" />
             </font>
@@ -23,7 +23,7 @@
             <ToggleGroup fx:id="modPartToggleGroup" />
          </toggleGroup>
         </RadioButton>
-        <RadioButton fx:id="outsourcedModifyRadioButton" layoutX="261.0" layoutY="50.0" mnemonicParsing="false" onAction="#setOutsourcedModifyRadioButton" prefHeight="25.0" prefWidth="138.0" text="   Outsourced" toggleGroup="$modPartToggleGroup">
+        <RadioButton fx:id="outsourcedRadio" layoutX="261.0" layoutY="50.0" mnemonicParsing="false" onAction="#setOutsourcedModifyRadioButton" prefHeight="25.0" prefWidth="138.0" text="   Outsourced" toggleGroup="$modPartToggleGroup">
             <font>
                 <Font size="16.0" />
             </font>
@@ -107,12 +107,12 @@
                 </AnchorPane>
                 <AnchorPane layoutY="265.0">
                     <children>
-                        <TextField fx:id="modPartChangedLabelTextField" disable="true" layoutX="98.0" prefHeight="37.0" prefWidth="158.0" promptText="(Variable)">
+                        <TextField fx:id="modPartChangedTextField" disable="true" layoutX="98.0" prefHeight="37.0" prefWidth="158.0">
                             <font>
                                 <Font name="System Italic" size="16.0" />
                             </font>
                         </TextField>
-                        <Label fx:id="modifyRadioButtonLabelChanger" layoutY="6.0" prefHeight="25.0" prefWidth="95.0" text="-">
+                        <Label fx:id="modPartLabelChanger" layoutY="6.0" prefHeight="25.0" prefWidth="95.0">
                             <font>
                                 <Font name="System Bold" size="16.0" />
                             </font>
@@ -121,12 +121,12 @@
                 </AnchorPane>
             </children>
         </AnchorPane>
-        <Button fx:id="modPartScreenCancelButton" layoutX="337.0" layoutY="418.0" mnemonicParsing="false" onAction="#setModPartScreenCancelButton" prefHeight="37.0" prefWidth="66.0" text="Cancel">
+        <Button fx:id="modPartCancelButton" layoutX="337.0" layoutY="418.0" mnemonicParsing="false" onAction="#setModPartCancelButton" prefHeight="37.0" prefWidth="66.0" text="Cancel">
             <font>
                 <Font size="14.0" />
             </font>
         </Button>
-        <Button fx:id="modPartScreenSaveButton" layoutX="250.0" layoutY="418.0" mnemonicParsing="false" onAction="#setModPartScreenSaveButton" prefHeight="37.0" prefWidth="66.0" text="Save">
+        <Button fx:id="modPartSaveButton" layoutX="250.0" layoutY="418.0" mnemonicParsing="false" onAction="#setModPartSaveButton" prefHeight="37.0" prefWidth="66.0" text="Save">
             <font>
                 <Font size="14.0" />
             </font>
