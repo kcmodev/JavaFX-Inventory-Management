@@ -32,9 +32,7 @@ public abstract class Part {
         return partName.get();
     }
 
-    public void setPartName(SimpleStringProperty partName) {
-        this.partName = partName;
-    }
+    public void setPartName(String partName) { this.partName = new SimpleStringProperty(partName); }
 
     public double getPartPrice() {
         return partPrice;

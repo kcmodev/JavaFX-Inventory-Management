@@ -1,28 +1,27 @@
 package View_Controller;
 
 import Model.InHousePart;
+import Model.Inventory;
 import Model.OutsourcedPart;
 import Model.Part;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 
-import java.net.URL;
-import java.util.ResourceBundle;
 
 
-public class ModifyPartScreenController implements Initializable {
+public class ModifyPartScreenController {
 
     /**
      * title for modify part screen to pass when switching screens
      */
     static final String MOD_PART_SCREEN_TITLE = "Modify Part(s)";
-    private Part modifyingPart;
+    private Part modifiedPart;
+
     MainScreenController mainScreenController = new MainScreenController();
 
     /**
@@ -44,7 +43,8 @@ public class ModifyPartScreenController implements Initializable {
 
 
     public void setTextFields(Part part){
-        System.out.println("hits text fields method");
+        modifiedPart = part;
+
         modPartIDTextField.setText(Integer.toString(part.getPartID()));
         modPartNameTextField.setText(part.getPartName());
         modPartInventoryTextField.setText(Integer.toString((part.getPartStock())));
@@ -64,9 +64,23 @@ public class ModifyPartScreenController implements Initializable {
             outsourcedRadio.setSelected(true);
             setModifyRemainingTextFields();
         }
+
+        Inventory.deletePart(part);
     }
 
-    public void setModPartSaveButton() { System.out.println("mod part save button clicked"); }
+    public void setModPartSaveButton(ActionEvent event) {
+        System.out.println("mod part save button clicked");
+
+        modifiedPart.setPartID(Integer.parseInt(modPartIDTextField.getText()));
+        modifiedPart.setPartName(modPartNameTextField.getText());
+        modifiedPart.setPartStock(Integer.parseInt(modPartInventoryTextField.getText()));
+        modifiedPart.setPartPrice(Double.parseDouble(modPartPriceTextField.getText()));
+        modifiedPart.setPartStockMax(Integer.parseInt(modPartInvMaxTextField.getText()));
+        modifiedPart.setPartStockMin(Integer.parseInt(modPartInvMinTextField.getText()));
+
+        Inventory.addPart(modifiedPart);
+        mainScreenController.windowManager(event, "MainScreen.fxml", mainScreenController.MAIN_SCREEN_TITLE);
+    }
 
     public void setModPartCancelButton(ActionEvent event) {
         System.out.println("mod part screen cancel button clicked");
@@ -85,16 +99,11 @@ public class ModifyPartScreenController implements Initializable {
     }
 
     public void setModifyRemainingTextFields() {
-        modPartIDTextField.setDisable(false);
         modPartNameTextField.setDisable(false);
         modPartInventoryTextField.setDisable(false);
         modPartPriceTextField.setDisable(false);
         modPartInvMaxTextField.setDisable(false);
         modPartInvMinTextField.setDisable(false);
         modPartChangedTextField.setDisable(false);
-    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
     }
 }
