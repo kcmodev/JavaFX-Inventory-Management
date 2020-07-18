@@ -100,13 +100,9 @@ public class MainScreenController implements Initializable {
         System.out.println("Modify part button clicked");
 
         FXMLLoader loader = new FXMLLoader();
-        System.out.println("initialize loader");
         loader.setLocation(getClass().getResource("ModifyPartScreen.fxml"));
-        System.out.println("loader location set");
         Parent parent = loader.load();
-        System.out.println("load parent");
         Scene modPartScene = new Scene(parent);
-        System.out.println("initialize scene");
 
         ModifyPartScreenController controller = loader.getController();
         controller.setTextFields(partTableView.getSelectionModel().getSelectedItem());
@@ -168,9 +164,23 @@ public class MainScreenController implements Initializable {
     /**
      * main screen modify product button handler
      */
-    public void setModifyProductButton(ActionEvent event) {
+    public void setModifyProductButton(ActionEvent event) throws IOException {
         System.out.println("Modify product button clicked");
-        windowManager(event, "ModifyProductScreen.fxml", ModifyProductScreenController.MOD_PRODUCT_SCREEN_TITLE);
+//        windowManager(event, "ModifyProductScreen.fxml", ModifyProductScreenController.MOD_PRODUCT_SCREEN_TITLE);
+
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("ModifyProductScreen.fxml"));
+        Parent parent = loader.load();
+        Scene modPartScene = new Scene(parent);
+
+        ModifyProductScreenController controller = loader.getController();
+        controller.setTextFields(productTableView.getSelectionModel().getSelectedItem());
+
+        Stage newWindow = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        newWindow.setScene(modPartScene);
+        newWindow.setResizable(false);
+        newWindow.setTitle(ModifyPartScreenController.MOD_PART_SCREEN_TITLE);
+        newWindow.show();
     }
 
     /**

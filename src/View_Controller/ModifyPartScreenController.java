@@ -42,7 +42,6 @@ public class ModifyPartScreenController {
     @FXML private RadioButton inHouseRadio;
     @FXML private RadioButton outsourcedRadio;
 
-
     /**
      * takes passed object and instantiates text fields with their appropriate values
      * as well as sets the radio button to the appropriate selection according to the part selected
