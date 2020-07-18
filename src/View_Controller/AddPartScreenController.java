@@ -38,6 +38,10 @@ public class AddPartScreenController {
      */
     public void setAddPartScreenSaveButton(ActionEvent event) {
         System.out.println("Add part save button clicked");
+        /**
+         * assign and parse all test in text fields to the current part
+         * and to the correct data type
+         */
         int partID = Integer.parseInt(addPartIDTextField.getText());
         String partName = addPartNameTextField.getText();
         int partInv = Integer.parseInt(addPartInventoryTextField.getText());
@@ -77,39 +81,46 @@ public class AddPartScreenController {
         mainScreenController.windowManager(event, "MainScreen.fxml", mainScreenController.MAIN_SCREEN_TITLE);
     }
 
+    /**
+     * handles cancel button click
+     * send user back to main screen
+     */
     public void setAddPartScreenCancelButton(ActionEvent event) {
         System.out.println("Add part screen cancel button clicked");
         mainScreenController.windowManager(event, "MainScreen.fxml", MainScreenController.MAIN_SCREEN_TITLE);
     }
 
+    /**
+     * the next 2 methods set the label to in house or outsourced
+     * based on the current radio button selection and enable
+     * text fields to be available for user input
+     */
     public void setInHouseRadioButton() {
         setRadioButtonLabelChanger("Machine ID", "Enter Machine ID");
-        setRemainingTextFields();
+        enableTextFields();
     }
-
     public void setOutsourcedRadioButton() {
         setRadioButtonLabelChanger("Company ID", "Enter Company ID");
-        setRemainingTextFields();
+        enableTextFields();
     }
 
+    /**
+     * changes label for company name or machine ID based on
+     * current radio button selection
+     */
     private void setRadioButtonLabelChanger(String labelID, String textField) {
         radioButtonLabelChanger.setText(labelID);
-        setChangedLabelTextField(textField);
-
-    }
-
-    private void setChangedLabelTextField(String textField) {
-        changedLabelTextField.setDisable(false);
         changedLabelTextField.setPromptText(textField);
     }
 
-    private void setRemainingTextFields() {
+    private void enableTextFields() {
         addPartIDTextField.setDisable(false);
         addPartNameTextField.setDisable(false);
         addPartInventoryTextField.setDisable(false);
         addPartPriceTextField.setDisable(false);
         addPartInvMaxTextField.setDisable(false);
         addPartInvMinTextField.setDisable(false);
+        changedLabelTextField.setDisable(false);
     }
 
 }

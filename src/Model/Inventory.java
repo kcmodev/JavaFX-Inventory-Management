@@ -208,10 +208,10 @@ public class Inventory {
     /**
      * returns entire observable list of all parts
      */
-    public static ObservableList<Part> getAllParts(){ return allParts; }
+    public static ObservableList<Part> getAllParts(){ return allParts.sorted(); }
 
     /**
      * returns entire observable list of all products
      */
-    public static ObservableList<Product> getAllProducts(){ return allProducts; }
+    public static ObservableList<Product> getAllProducts(){ return allProducts.sorted(); }
 }
