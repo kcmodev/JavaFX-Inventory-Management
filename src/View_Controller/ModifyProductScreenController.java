@@ -53,9 +53,6 @@ public class ModifyProductScreenController {
         mainScreenController.windowManager(event, "MainScreen.fxml", mainScreenController.MAIN_SCREEN_TITLE);
     }
 
-    public void setModProductCancel() {
-    }
-
     public void setModProductAdd() {
     }
 

@@ -1,19 +1,21 @@
 package View_Controller;
 
-import static Model.Inventory.addProduct;
-import static Model.Inventory.getAllParts;
+import static Model.Inventory.*;
+import static Model.Inventory.searchByPartName;
 import static Model.Product.addAssociatedPart;
 import static Model.Product.getAllAssociatedParts;
 import static Model.Product.deleteAssociatedPart;
 
+import Model.Inventory;
 import Model.Part;
 import Model.Product;
 
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -26,6 +28,9 @@ import java.util.ResourceBundle;
 public class AddProductScreenController implements Initializable {
 
         static final String ADD_PRODUCT_SCREEN_TITLE = "Add Product(s)";
+        private String userInput;
+        private ObservableList<Part> filteredList = FXCollections.observableArrayList();
+
         MainScreenController mainScreenController = new MainScreenController();
 
         /**
@@ -47,32 +52,38 @@ public class AddProductScreenController implements Initializable {
         @FXML private TableColumn<Part, Double> assocPartPriceTableCol;
 
         /**
-         * initialize all buttons
-         */
-        @FXML Button saveButton;
-        @FXML Button cancelButton;
-        @FXML Button addButton;
-        @FXML Button deleteButton;
-        @FXML Button searchButton;
-
-        /**
          * initialize all text fields
          */
-        @FXML TextField productIDTextField;
-        @FXML TextField productNameTextField;
-        @FXML TextField productInvTextField;
-        @FXML TextField productPriceTextField;
-        @FXML TextField productInvMaxTextField;
-        @FXML TextField productInvMinTextField;
+        @FXML TextField prodIDField;
+        @FXML TextField prodNameField;
+        @FXML TextField prodInvField;
+        @FXML TextField prodPriceField;
+        @FXML TextField prodInvMaxField;
+        @FXML TextField prodInvMinField;
+        @FXML TextField searchField;
 
+        /**
+         * constructor
+         * will create temporary list to show a filtered list
+         */
+        public AddProductScreenController(){
+                setCopiedList(getAllParts());
+        }
 
-        public void setAddProductSaveButton(ActionEvent event){
-                int productID = Integer.parseInt(productIDTextField.getText());
-                String productName = productNameTextField.getText();
-                int productInv = Integer.parseInt(productInvTextField.getText());
-                double productPrice = Double.parseDouble(productPriceTextField.getText());
-                int productInvMin = Integer.parseInt(productInvMaxTextField.getText());
-                int productInvMax = Integer.parseInt(productInvMinTextField.getText());
+        private void setCopiedList(ObservableList<Part> list){
+                this.filteredList = list;
+        }
+
+        /**
+         * save product button handler
+         */
+        public void setSaveButton(ActionEvent event){
+                int productID = Integer.parseInt(prodIDField.getText());
+                String productName = prodNameField.getText();
+                int productInv = Integer.parseInt(prodInvField.getText());
+                double productPrice = Double.parseDouble(prodPriceField.getText());
+                int productInvMin = Integer.parseInt(prodInvMaxField.getText());
+                int productInvMax = Integer.parseInt(prodInvMinField.getText());
 
                 Product product = new Product(productID, productName, productPrice, productInv, productInvMin, productInvMax);
                 addProduct(product);
@@ -80,20 +91,43 @@ public class AddProductScreenController implements Initializable {
                 mainScreenController.windowManager(event, "MainScreen.fxml", MainScreenController.MAIN_SCREEN_TITLE);
         }
 
-        public void setAddProductCancelButton(ActionEvent event) {
-                System.out.println("Add product cancel button clicked. Going back to main.");
-                mainScreenController.windowManager(event, "MainScreen.fxml", MainScreenController.MAIN_SCREEN_TITLE);
+        public void setSearchButton(){
+                System.out.println("add product search button clicked");
+
+                userInput = searchField.getText();
+
+                /**
+                 * tries to parse to int
+                 * if successful it will search by part ID
+                 * if an error is thrown then the catch will run and search by part name
+                 */
+                try {
+                        System.out.println("attempting to search by part ID, checking input");
+                        int userInputAsInt = Integer.parseInt(userInput); // testing to see if it will throw an error
+                        partTableView.getSelectionModel().select(searchByPartID(userInputAsInt));
+
+                } catch (NumberFormatException e) {
+                        System.out.println("Not an int, searching by part name instead of ID");
+
+                        /**
+                         * error thrown when attempting to parse input aas an int
+                         * searching via name with string as input instead
+                         */
+                        partTableView.getSelectionModel().select(searchByPartName(userInput));
+                }
         }
 
         /**
          * add selected part from parts list to associated parts list
          * populate associated parts list as items are added
          */
-        public void setAddButton(){
+        public void setAddButton(ActionEvent event){
                 System.out.println("Add part to associated parts button clicked");
                 Part selection = partTableView.getSelectionModel().getSelectedItem();
                 Product.addAssociatedPart(selection);
                 assocPartTableView.setItems(Product.getAllAssociatedParts());
+                filteredList.remove(selection);
+//                assocPartTableView.setItems(Product.getAllAssociatedParts());
         }
 
         /**
@@ -101,6 +135,19 @@ public class AddProductScreenController implements Initializable {
          */
         public void setDeleteButton(){
                 System.out.println("Delete part from associated parts button clicked");
+
+                Part selection = assocPartTableView.getSelectionModel().getSelectedItem(); // select from associated parts list
+                System.out.println("associated parts list before delete: " + Product.getAllAssociatedParts());
+                Product.deleteAssociatedPart(selection); // remove selected item from the list
+                System.out.println("associated parts list after delete: " + Product.getAllAssociatedParts());
+                assocPartTableView.setItems(Product.getAllAssociatedParts()); // reset associated parts list
+                filteredList.add(selection); // add removed part back to the filtered list
+                partTableView.setItems(filteredList);
+        }
+
+        public void setCancelButton(ActionEvent event) {
+                System.out.println("Add product cancel button clicked. Going back to main.");
+                mainScreenController.windowManager(event, "MainScreen.fxml", MainScreenController.MAIN_SCREEN_TITLE);
         }
 
         /**
@@ -190,7 +237,6 @@ public class AddProductScreenController implements Initializable {
                 setPartsTableProperties();
                 setAssocPartsProperties();
                 partTableView.setItems(getAllParts());
-                assocPartTableView.setItems(getAllAssociatedParts());
         }
 
 }

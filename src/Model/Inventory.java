@@ -30,6 +30,7 @@ public class Inventory {
         Product computer = new Product(1, "Computer", 1700, 2, 1, 5);
         allProducts.add(computer);
 
+
     }
 
     public static void addPart(Part part) {

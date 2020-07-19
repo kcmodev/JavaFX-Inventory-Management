@@ -9,7 +9,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="468.0" prefWidth="670.0" style="-fx-background-color: a9a9a9;" styleClass="root" stylesheets="@Stylesheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View_Controller.AddProductScreenController">
+<AnchorPane prefHeight="497.0" prefWidth="685.0" style="-fx-background-color: a9a9a9;" styleClass="root" stylesheets="@Stylesheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View_Controller.AddProductScreenController">
    <children>
       <Label layoutX="14.0" layoutY="14.0" prefHeight="39.0" prefWidth="112.0" text="Add Product">
          <font>
@@ -26,7 +26,7 @@
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="productIDTextField" layoutX="57.0" layoutY="-4.0" prefHeight="32.0" prefWidth="158.0" promptText="Enter Product ID">
+                  <TextField fx:id="prodIDField" layoutX="57.0" layoutY="-4.0" prefHeight="32.0" prefWidth="158.0" promptText="Enter Product ID">
                      <font>
                         <Font name="System Italic" size="16.0" />
                      </font>
@@ -40,7 +40,7 @@
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="productNameTextField" layoutX="57.0" layoutY="-2.0" prefHeight="32.0" prefWidth="158.0" promptText="Enter Product Name">
+                  <TextField fx:id="prodNameField" layoutX="57.0" layoutY="-2.0" prefHeight="32.0" prefWidth="158.0" promptText="Enter Product Name">
                      <font>
                         <Font name="System Italic" size="16.0" />
                      </font>
@@ -54,7 +54,7 @@
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="productInvTextField" layoutX="57.0" layoutY="-4.0" prefHeight="32.0" prefWidth="158.0" promptText="Enter # in Inventory">
+                  <TextField fx:id="prodInvField" layoutX="57.0" layoutY="-4.0" prefHeight="32.0" prefWidth="158.0" promptText="Enter # in Inventory">
                      <font>
                         <Font name="System Italic" size="16.0" />
                      </font>
@@ -68,7 +68,7 @@
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="productPriceTextField" layoutX="57.0" layoutY="-4.0" prefHeight="32.0" prefWidth="158.0" promptText="Enter Price">
+                  <TextField fx:id="prodPriceField" layoutX="57.0" layoutY="-4.0" prefHeight="32.0" prefWidth="158.0" promptText="Enter Price">
                      <font>
                         <Font name="System Italic" size="16.0" />
                      </font>
@@ -82,20 +82,20 @@
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="productInvMaxTextField" layoutX="57.0" layoutY="-4.0" prefHeight="37.0" prefWidth="57.0" promptText="Max">
+                  <TextField fx:id="prodInvMaxField" layoutX="57.0" layoutY="-4.0" prefHeight="37.0" prefWidth="57.0" promptText="Max">
                      <font>
                         <Font name="System Italic" size="16.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="productInvMinTextField" layoutX="158.0" layoutY="-4.0" prefHeight="37.0" prefWidth="57.0" promptText="Min">
+                  <TextField fx:id="prodInvMinField" layoutX="158.0" layoutY="-4.0" prefHeight="37.0" prefWidth="57.0" promptText="Min">
                      <font>
                         <Font name="System Italic" size="16.0" />
                      </font>
                   </TextField>
                </children>
             </AnchorPane>
-            <Button fx:id="saveButton" layoutX="12.0" layoutY="278.0" mnemonicParsing="false" onAction="#setAddProductSaveButton" prefHeight="34.0" prefWidth="70.0" text="Save" />
-            <Button fx:id="cancelButton" layoutX="87.0" layoutY="279.0" mnemonicParsing="false" onAction="#setAddProductCancelButton" prefHeight="32.0" prefWidth="70.0" text="Cancel" />
+            <Button fx:id="saveButton" layoutX="12.0" layoutY="278.0" mnemonicParsing="false" onAction="#setSaveButton" prefHeight="34.0" prefWidth="70.0" text="Save" />
+            <Button fx:id="cancelButton" layoutX="87.0" layoutY="279.0" mnemonicParsing="false" onAction="#setCancelButton" prefHeight="32.0" prefWidth="70.0" text="Cancel" />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="308.0" layoutY="60.0" prefHeight="204.0" prefWidth="347.0">
@@ -110,8 +110,8 @@
             </TableView>
          </children>
       </AnchorPane>
-      <Button fx:id="addButton" layoutX="579.0" layoutY="225.0" mnemonicParsing="false" onAction="#setAddButton" prefHeight="32.0" prefWidth="70.0" text="Add" />
-      <AnchorPane layoutX="308.0" layoutY="241.0" prefHeight="204.0" prefWidth="347.0">
+      <Button layoutX="579.0" layoutY="225.0" mnemonicParsing="false" onAction="#setAddButton" prefHeight="32.0" prefWidth="70.0" text="Add" />
+      <AnchorPane layoutX="308.0" layoutY="257.0" prefHeight="204.0" prefWidth="347.0">
          <children>
             <TableView fx:id="assocPartTableView" layoutX="3.0" layoutY="24.0" prefHeight="157.0" prefWidth="341.0">
                <columns>
@@ -129,11 +129,11 @@
             </Label>
          </children>
       </AnchorPane>
-      <TextField layoutX="354.0" layoutY="15.0" prefHeight="32.0" prefWidth="207.0" promptText="Search for Product">
+      <TextField fx:id="searchField" layoutX="354.0" layoutY="15.0" prefHeight="32.0" prefWidth="207.0" promptText="Search all parts">
          <font>
             <Font name="System Italic" size="16.0" />
          </font>
       </TextField>
-      <Button fx:id="searchButton" layoutX="579.0" layoutY="14.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="70.0" text="Search" />
+      <Button layoutX="579.0" layoutY="14.0" mnemonicParsing="false" onAction="#setSearchButton" prefHeight="37.0" prefWidth="70.0" text="Search" />
    </children>
 </AnchorPane>

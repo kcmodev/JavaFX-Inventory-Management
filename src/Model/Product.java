@@ -25,7 +25,7 @@ public class Product {
 
     public static void addAssociatedPart(Part part) { associatedParts.add(part); }
 
-    public static void deleteAssociatedPart(Part part){ }
+    public static void deleteAssociatedPart(Part part){ associatedParts.remove(part);}
 
     public int getProductID() {
         return productID;
