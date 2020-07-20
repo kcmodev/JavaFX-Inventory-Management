@@ -4,6 +4,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class Product {
+    /**
+     * tracks all parts associated with the product object
+     */
     static ObservableList<Part> associatedParts = FXCollections.observableArrayList();
 
     private int productID;
@@ -11,9 +14,12 @@ public class Product {
     private double productPrice;
     private int productInvLevel, productInvMin, productInvMax;
 
+    /**
+     * product constructor
+     */
     public Product(int productID, String productName, double productPrice,
                    int productInvLevel, int productInvMin, int productInvMax) {
-        this.productID = productID;
+        this.productID = productID; // product ID is unique and can't be changed by the user
         this.productName = productName;
         this.productPrice = productPrice;
         this.productInvLevel = productInvLevel;
@@ -21,6 +27,9 @@ public class Product {
         this.productInvMax = productInvMax;
     }
 
+    /**
+     * product getters and setters
+     */
     public static ObservableList<Part> getAllAssociatedParts() { return associatedParts; }
 
     public static void addAssociatedPart(Part part) { associatedParts.add(part); }

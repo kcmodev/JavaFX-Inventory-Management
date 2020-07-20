@@ -10,7 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-
+import javafx.scene.control.ToggleGroup;
 
 
 public class ModifyPartScreenController {
@@ -41,13 +41,14 @@ public class ModifyPartScreenController {
      */
     @FXML private RadioButton inHouseRadio;
     @FXML private RadioButton outsourcedRadio;
+    @FXML private ToggleGroup modPartToggleGroup;
 
     /**
      * takes passed object and instantiates text fields with their appropriate values
      * as well as sets the radio button to the appropriate selection according to the part selected
      */
     public void setTextFields(Part part){
-        modifiedPart = part;
+        System.out.println("previous class object type: " + part.getClass());
 
         modPartIDTextField.setText(Integer.toString(part.getPartID()));
         modPartNameTextField.setText(part.getPartName());
@@ -76,30 +77,71 @@ public class ModifyPartScreenController {
     public void setModPartSaveButton(ActionEvent event) {
         System.out.println("mod part save button clicked");
 
-        modifiedPart.setPartID(Integer.parseInt(modPartIDTextField.getText()));
-        modifiedPart.setPartName(modPartNameTextField.getText());
-        modifiedPart.setPartStock(Integer.parseInt(modPartInventoryTextField.getText()));
-        modifiedPart.setPartPrice(Double.parseDouble(modPartPriceTextField.getText()));
-        modifiedPart.setPartStockMax(Integer.parseInt(modPartInvMaxTextField.getText()));
-        modifiedPart.setPartStockMin(Integer.parseInt(modPartInvMinTextField.getText()));
+        int moddedPartID = Integer.parseInt(modPartIDTextField.getText());
+        String moddedPartName = modPartNameTextField.getText();
+        int moddedPartInv = Integer.parseInt(modPartInventoryTextField.getText());
+        double moddedPartPrice = Double.parseDouble(modPartPriceTextField.getText());
+        int moddedPartInvMax = Integer.parseInt(modPartInvMaxTextField.getText());
+        int moddedPartInvMin = Integer.parseInt(modPartInvMinTextField.getText());
 
-        /**
-         * cycles through list of all parts
-         * compares part ID and class type to make sure they are the same object
-         * deletes said part to make a space for the modified part with the same ID
-         * breaks when condition is met to save time by not parsing the rest of the list
-         */
-        for (Part part : Inventory.getAllParts()){
-            if (part.getPartID() == modifiedPart.getPartID() && part.getClass().equals(modifiedPart.getClass())){
-                Inventory.deletePart(part);
-                break;
-            }
+        System.out.println("selected toggle: " + modPartToggleGroup.getSelectedToggle().toString());
+
+        if (modPartToggleGroup.getSelectedToggle().toString().contains("In-House")){
+            int moddedMachineID = Integer.parseInt(modPartChangedTextField.getText());
+            Part modifiedPart = new InHousePart(moddedPartID, moddedPartName, moddedPartPrice, moddedPartInv,
+                    moddedPartInvMin, moddedPartInvMax, moddedMachineID);
+            Inventory.modifyPart(modifiedPart);
+        } else if (modPartToggleGroup.getSelectedToggle().toString().contains("Outsourced")){
+            String moddedCompID = modPartChangedTextField.getText();
+            Part modifiedPart = new OutsourcedPart(moddedPartID, moddedPartName, moddedPartPrice, moddedPartInv,
+                    moddedPartInvMin, moddedPartInvMax, moddedCompID);
+            Inventory.modifyPart(modifiedPart);
         }
+        
+//        if (modPartToggleGroup.getSelectedToggle().toString().equals("In-House")){
+//            modifiedPart = new InHousePart(1, "", 1, 1, 1, 1);
+//        } else if (modPartToggleGroup.getSelectedToggle().toString().equals("Outsourced")){
+//            modifiedPart = new OutsourcedPart(1, "", 1, 1, 1, 1);
+//        }
+        System.out.println("makes it past the if statements");
 
-        /**
-         * add newly modified part and return to the main screen
-         */
-        Inventory.addPart(modifiedPart); // adds newly modified part
+
+//        modifiedPart.setPartID(Integer.parseInt(modPartIDTextField.getText()));
+//        modifiedPart.setPartName(modPartNameTextField.getText());
+//        modifiedPart.setPartStock(Integer.parseInt(modPartInventoryTextField.getText()));
+//        modifiedPart.setPartPrice(Double.parseDouble(modPartPriceTextField.getText()));
+//        modifiedPart.setPartStockMax(Integer.parseInt(modPartInvMaxTextField.getText()));
+//        modifiedPart.setPartStockMin(Integer.parseInt(modPartInvMinTextField.getText()));
+//
+//        System.out.println("makes it to second if statements");
+//        if (modifiedPart instanceof InHousePart){
+//            ((InHousePart) modifiedPart).setPartMachineID(Integer.parseInt(modPartChangedTextField.getText()));
+//        }
+//        if (modifiedPart instanceof OutsourcedPart){
+//            ((OutsourcedPart) modifiedPart).setCompanyName(modPartChangedTextField.getText());
+//        }
+//
+//        System.out.println("makes it past if statements");
+//
+//        /**
+//         * cycles through list of all parts
+//         * compares part ID and class type to make sure they are the same object
+//         * deletes said part to make a space for the modified part with the same ID
+//         * breaks when condition is met to save time by not parsing the rest of the list
+//         */
+//        for (Part part : Inventory.getAllParts()){
+//            if (part.getPartID() == modifiedPart.getPartID()){
+//                Inventory.deletePart(part);
+//                break;
+//            }
+//        }
+//
+//        System.out.println("makes it past for loop");
+//
+//        /**
+//         * add newly modified part and return to the main screen
+//         */
+//        Inventory.addPart(modifiedPart); // adds newly modified part
         mainScreenController.windowManager(event, "MainScreen.fxml", mainScreenController.MAIN_SCREEN_TITLE);
     }
 
@@ -118,10 +160,12 @@ public class ModifyPartScreenController {
      */
     public void setInHouseLabel() {
         System.out.println("In house radio button selected");
+        System.out.println(modPartToggleGroup.getSelectedToggle().toString());
         setRadioButtonLabels("Machine ID", "Enter Machine ID");
     }
     public void setOutsourcedLabel() {
         System.out.println("Outsourced radio button selected");
+        System.out.println(modPartToggleGroup.getSelectedToggle().toString());
         setRadioButtonLabels("Company ID", "Enter Company ID");
     }
 

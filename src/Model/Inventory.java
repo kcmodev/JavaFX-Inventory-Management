@@ -7,20 +7,23 @@ public class Inventory {
     static ObservableList<Part> allParts = FXCollections.observableArrayList();
     static ObservableList<Product> allProducts = FXCollections.observableArrayList();
 
+    /**
+     * used to show filtered lists for parts and products table views respectively
+     */
+    private static ObservableList<Part> filteredParts = FXCollections.observableArrayList();
+    private static ObservableList<Product> filteredProducts = FXCollections.observableArrayList();
+
     public Inventory() {
         /**
          * set default values to start with in parts table
          */
-        InHousePart graphicsCard = new InHousePart(1, "Graphics Card", 800, 5, 2, 10);
-        graphicsCard.setPartMachineID(24);
+        InHousePart graphicsCard = new InHousePart(1, "Graphics Card", 800, 5, 2, 10, 24);
         allParts.add(graphicsCard);
 
-        InHousePart motherboard = new InHousePart(2, "Motherboard", 500, 3, 2, 10);
-        motherboard.setPartMachineID(16);
+        InHousePart motherboard = new InHousePart(2, "Motherboard", 500, 3, 2, 10, 16);
         allParts.add(motherboard);
 
-        InHousePart CPU = new InHousePart(3, "CPU", 400, 7, 2, 10);
-        CPU.setPartMachineID(8);
+        InHousePart CPU = new InHousePart(3, "CPU", 400, 7, 2, 10, 8);
         allParts.add(CPU);
 
         /**
@@ -66,114 +69,106 @@ public class Inventory {
 
     /**
      * search field to search by part ID
-     * @return
      */
-    public static Part searchByPartID(int partID) {
+    public static ObservableList<Part> searchByPartID(int partID) {
         System.out.println("Searching by part ID. ID Entered = " + partID);
+        filteredParts.clear();
 
-        /**
-         * loop through observable list allParts
-         * check each part for a match with given partID
-         * return first part object found
-         */
+
         for (Part part : allParts){
-            System.out.println("part being checked: " + part.getPartName());
+            System.out.println("part being checked: " + part.getPartID());
+
             if (part.getPartID() == partID){
-                System.out.println("part being returned: " + part.getPartName());
-                return part;
+                System.out.println("match found. ID of part being added: " + part.getPartID());
+                filteredParts.add(part);
+                continue;
             }
-            System.out.println("not a match, continuing");
+            System.out.println("\"" + part.getPartID() + "\" not a match, continuing");
         }
-        return null;
+        return filteredParts;
     }
 
     /**
      * search field to search by product ID
      */
-    public static Product searchByProductID(int productID) {
+    public static ObservableList<Product> searchByProductID(int productID) {
         System.out.println("Searching by part ID. ID Entered = " + productID);
+        filteredProducts.clear();
 
-        /**
-         * loop through observable list allProducts
-         * check each part for a match with given productID
-         * return first pproduct object found
-         */
         for (Product product : allProducts){
-            System.out.println("product being checked " + product.getProductName());
+            System.out.println("product being checked: " + product.getProductID());
+
             if (product.getProductID() == productID){
-                System.out.println("product being returned: " + product.getProductName());
-                return product;
+                System.out.println("match found. ID of product being added: " + product.getProductID());
+                filteredProducts.add(product);
+                continue;
             }
-            System.out.println("not a match, continuing");
+            System.out.println("\"" + product.getProductID() + "\" not a match, continuing");
         }
-        return null;
+        return filteredProducts;
     }
 
     /**
      * search field to search by part name
      */
-    public static Part searchByPartName(String partName) {
+    public static ObservableList<Part> searchByPartName(String partName) {
         System.out.println("searching by part name with string/substring: \"" + partName + "\"");
+        filteredParts.clear();
 
         for (Part part : allParts){
             System.out.println("part being checked: " + part.getPartName());
 
-            /**
-             * checking if user input is either a full or partial match
-             * returns first instance if not an exact match
-             * also converts both string to lower case to ease in locating the appropriate object
-             * without case sensitivity
-             */
             if (part.getPartName().toLowerCase().contains(partName.toLowerCase())){
-                System.out.println("part name being returned: " + part.getPartName());
-                return part;
+                System.out.println("match found. name of part being added: " + part.getPartName());
+                filteredParts.add(part);
+                continue;
             }
-            System.out.println("not a match, continuing");
+            System.out.println("\"" + part.getPartName() + "\" not a match, continuing");
         }
-        return null;
+        return filteredParts;
     }
 
     /**
      * search  field to search by product name
      */
-    public static Product searchByProductName(String productName) {
-        System.out.println("searching by part namne with strin/substring: \"" + productName + "\"");
+    public static ObservableList<Product> searchByProductName(String productName) {
+        System.out.println("searching by part name with string/substring: \"" + productName + "\"");
+        filteredProducts.clear();
 
         for (Product product : allProducts){
             System.out.println("product being checked: " + product.getProductName());
 
-            /**
-             * checking if user input is either a full or partial match
-             * returns first instance if not an exact match
-             * also converts both string to lower case to ease in locating the appropriate object
-             * without case sensitivity
-             */
+
             if (product.getProductName().toLowerCase().contains(productName.toLowerCase())){
-                System.out.println("part name found: " + product.getProductName());
-                return product;
+                System.out.println("match found. name of product being added: " + product.getProductName());
+                filteredProducts.add(product);
+                continue;
             }
-            System.out.println("not a match, continuing");
+            System.out.println("\"" + product.getProductName() + "\" not a match, continuing");
         }
-        return null;
+        return filteredProducts;
     }
 
-    /**
-     * list used to search for parts related to a product
-     */
-//    public ObservableList<Part> searchByPart(Part part){
-//
-//    }
+    public static void modifyPart (Part part) {
+        System.out.println("passing part back to modify");
+        System.out.println("new class object type: " + part.getClass());
+        System.out.println("new part name: " + part.getPartName());
+        for (int i = 0; i < allParts.size(); i++){
+            if (part.getPartID() == allParts.get(i).getPartID()){
+                allParts.set(i, part);
+                break;
+            }
+        }
+    }
 
-    /**
-     * list used to search for products related to a part
-     */
-//    public ObservableList<Part> searchByProduct(Product product){
-//
-//    }
-
-    void modifyPart (int index /* selected part */) { }
-
-    void modifyProduct(int index /* selected product */) { }
+    public static void modifyProduct(int index, Product product) {
+        for (int i = 0; i < allProducts.size(); i++){
+            if (product.getProductID() == allProducts.get(i).getProductID()){
+                allProducts.set(i, product);
+                break;
+            }
+        }
+    }
 
     /**
      * remove instance of part from observable list

@@ -104,7 +104,7 @@ public class AddProductScreenController implements Initializable {
                 try {
                         System.out.println("attempting to search by part ID, checking input");
                         int userInputAsInt = Integer.parseInt(userInput); // testing to see if it will throw an error
-                        partTableView.getSelectionModel().select(searchByPartID(userInputAsInt));
+                        partTableView.setItems(searchByPartID(userInputAsInt));
 
                 } catch (NumberFormatException e) {
                         System.out.println("Not an int, searching by part name instead of ID");
@@ -113,7 +113,7 @@ public class AddProductScreenController implements Initializable {
                          * error thrown when attempting to parse input aas an int
                          * searching via name with string as input instead
                          */
-                        partTableView.getSelectionModel().select(searchByPartName(userInput));
+                        partTableView.setItems(searchByPartName(userInput));
                 }
         }
 
@@ -121,13 +121,16 @@ public class AddProductScreenController implements Initializable {
          * add selected part from parts list to associated parts list
          * populate associated parts list as items are added
          */
-        public void setAddButton(ActionEvent event){
+        public void setAddButton(){
                 System.out.println("Add part to associated parts button clicked");
                 Part selection = partTableView.getSelectionModel().getSelectedItem();
-                Product.addAssociatedPart(selection);
-                assocPartTableView.setItems(Product.getAllAssociatedParts());
-                filteredList.remove(selection);
-//                assocPartTableView.setItems(Product.getAllAssociatedParts());
+                if (selection != null) {
+                        Product.addAssociatedPart(selection);
+                        assocPartTableView.setItems(Product.getAllAssociatedParts());
+                        filteredList.remove(selection);
+                        assocPartTableView.getSelectionModel().clearSelection();
+                        partTableView.getSelectionModel().clearSelection();
+                }
         }
 
         /**
@@ -137,12 +140,16 @@ public class AddProductScreenController implements Initializable {
                 System.out.println("Delete part from associated parts button clicked");
 
                 Part selection = assocPartTableView.getSelectionModel().getSelectedItem(); // select from associated parts list
-                System.out.println("associated parts list before delete: " + Product.getAllAssociatedParts());
-                Product.deleteAssociatedPart(selection); // remove selected item from the list
-                System.out.println("associated parts list after delete: " + Product.getAllAssociatedParts());
-                assocPartTableView.setItems(Product.getAllAssociatedParts()); // reset associated parts list
-                filteredList.add(selection); // add removed part back to the filtered list
-                partTableView.setItems(filteredList);
+                if (selection != null) {
+                        System.out.println("associated parts list before delete: " + Product.getAllAssociatedParts());
+                        Product.deleteAssociatedPart(selection); // remove selected item from the list
+                        System.out.println("associated parts list after delete: " + Product.getAllAssociatedParts());
+                        assocPartTableView.setItems(Product.getAllAssociatedParts()); // reset associated parts list
+                        filteredList.add(selection); // add removed part back to the filtered list
+                        partTableView.setItems(filteredList);
+                        assocPartTableView.getSelectionModel().clearSelection();
+                        partTableView.getSelectionModel().clearSelection();
+                }
         }
 
         public void setCancelButton(ActionEvent event) {

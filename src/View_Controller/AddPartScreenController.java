@@ -56,8 +56,8 @@ public class AddPartScreenController {
         if (radioButtonLabelChanger.getText() == "Machine ID"){
             System.out.println("Adding with Machine ID w/ in house part");
 
-            InHousePart inHousePart = new InHousePart(partID, partName, partPrice, partInv, partInvMin, partInvMax);
-            inHousePart.setPartMachineID(Integer.parseInt(changedLabelTextField.getText()));
+            int machineID = Integer.parseInt(changedLabelTextField.getText());
+            InHousePart inHousePart = new InHousePart(partID, partName, partPrice, partInv, partInvMin, partInvMax, machineID);
             addPart(inHousePart);
             System.out.println("Current in house parts list: " + getAllParts());
         }
@@ -69,8 +69,8 @@ public class AddPartScreenController {
         if (radioButtonLabelChanger.getText() == "Company ID"){
             System.out.println("Adding with company ID to outsourced");
 
-            OutsourcedPart outsourcedPart = new OutsourcedPart(partID, partName, partPrice, partInv, partInvMin, partInvMax);
-            outsourcedPart.setCompanyName(changedLabelTextField.getText());
+            String companyName = changedLabelTextField.getText();
+            OutsourcedPart outsourcedPart = new OutsourcedPart(partID, partName, partPrice, partInv, partInvMin, partInvMax, companyName);
             addPart(outsourcedPart);
             System.out.println("Current in house parts list: " + getAllParts());
         }

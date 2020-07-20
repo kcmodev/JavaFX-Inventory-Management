@@ -6,8 +6,6 @@ import Model.Product;
 import static Model.Inventory.*;
 
 import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -84,7 +82,11 @@ public class MainScreenController implements Initializable {
      */
     public void setExitButtonClicked() {
         System.out.println("Exit button clicked");
-        confirmationAlert("close the program");
+
+        if (confirmationAlert("close the program") == true){
+            System.out.println("exiting by choice through popup");
+            System.exit(1);
+        }
     }
 
     /**
@@ -96,24 +98,61 @@ public class MainScreenController implements Initializable {
     }
 
     /**
+     * main screen add product button handler
+     */
+    public void setAddProductButtonClicked(ActionEvent event) {
+        System.out.println("Add product button clicked");
+        windowManager(event, "AddProductScreen.fxml", AddProductScreenController.ADD_PRODUCT_SCREEN_TITLE);
+    }
+
+    /**
      * main screen modify part button handler
      */
     public void setModifyPartClicked(ActionEvent event) throws IOException {
         System.out.println("Modify part button clicked");
 
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("ModifyPartScreen.fxml"));
-        Parent parent = loader.load();
-        Scene modPartScene = new Scene(parent);
+        if (partTableView.getSelectionModel().getSelectedItem() != null) {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("ModifyPartScreen.fxml"));
+            Parent parent = loader.load();
+            Scene modPartScene = new Scene(parent);
 
-        ModifyPartScreenController controller = loader.getController();
-        controller.setTextFields(partTableView.getSelectionModel().getSelectedItem());
+            ModifyPartScreenController controller = loader.getController();
+            controller.setTextFields(partTableView.getSelectionModel().getSelectedItem());
 
-        Stage newWindow = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        newWindow.setScene(modPartScene);
-        newWindow.setResizable(false);
-        newWindow.setTitle(ModifyPartScreenController.MOD_PART_SCREEN_TITLE);
-        newWindow.show();
+            Stage newWindow = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            newWindow.setScene(modPartScene);
+            newWindow.setResizable(false);
+            newWindow.setTitle(ModifyPartScreenController.MOD_PART_SCREEN_TITLE);
+            newWindow.show();
+        } else {
+            errorAlert("You must select an item to modify", "Error", "Please select an item");
+        }
+    }
+
+    /**
+     * main screen modify product button handler
+     */
+    public void setModifyProductButton(ActionEvent event) throws IOException {
+        System.out.println("Modify product button clicked");
+
+        if (productTableView.getSelectionModel().getSelectedItem() != null) {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("ModifyProductScreen.fxml"));
+            Parent parent = loader.load();
+            Scene modProductScene = new Scene(parent);
+
+            ModifyProductScreenController controller = loader.getController();
+            controller.setTextFields(productTableView.getSelectionModel().getSelectedItem());
+
+            Stage newWindow = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            newWindow.setScene(modProductScene);
+            newWindow.setResizable(false);
+            newWindow.setTitle(ModifyProductScreenController.MOD_PRODUCT_SCREEN_TITLE);
+            newWindow.show();
+        } else {
+            errorAlert("You must select an item to modify", "Error", "Please select an item");
+        }
     }
 
     /**
@@ -122,8 +161,28 @@ public class MainScreenController implements Initializable {
     public void setDeletePartClicked() {
         System.out.println("Delete part button clicked");
         Part selectedPart = partTableView.getSelectionModel().getSelectedItem();
-        errorAlert(selectedPart);
+        if (selectedPart == null){
+            errorAlert("You must select a part to delete.", "Unable to delete.", "Error");
+        } else {
+            deletePart(selectedPart);
+        }
         partTableView.getSelectionModel().clearSelection();
+    }
+
+    /**
+     * main screen delete product button handler
+     */
+    public void setDeleteProductButton() {
+        System.out.println("Delete product button clicked");
+
+        Product selectedProduct = productTableView.getSelectionModel().getSelectedItem();
+        if (selectedProduct == null){
+            errorAlert("You must select a product to delete.", "Unable to delete.", "Error");
+        } else {
+            System.out.println("deleting \"" + selectedProduct.getProductName() + "\"");
+            deleteProduct(selectedProduct);
+        }
+        productTableView.getSelectionModel().clearSelection();
     }
 
     /**
@@ -139,60 +198,24 @@ public class MainScreenController implements Initializable {
          * if successful it will search by part ID
          * if an error is thrown then the catch will run and search by part name
          */
-        try {
-            System.out.println("attempting to search by part ID, checking input");
-            userInputAsInt = Integer.parseInt(userInput); // testing to see if it will throw an error
-            partTableView.getSelectionModel().select(searchByPartID(userInputAsInt));
+        if (userInput.matches("^[a-zA-Z0-9]*$") && !userInput.isEmpty()) {
+            try {
+                System.out.println("attempting to search by part ID, checking input");
+                userInputAsInt = Integer.parseInt(userInput); // testing to see if it will throw an error
+                partTableView.setItems(searchByPartID(userInputAsInt));
 
-        } catch (NumberFormatException e) {
-            System.out.println("Not an int, searching by part name instead of ID");
+            } catch (NumberFormatException e) {
+                System.out.println("Not an int, searching by part name instead of ID");
 
-            /**
-             * error thrown when attempting to parse input aas an int
-             * searching via name with string as input instead
-             */
-            partTableView.getSelectionModel().select(searchByPartName(userInput));
+                /**
+                 * error thrown when attempting to parse input aas an int
+                 * searching via name with string as input instead
+                 */
+                partTableView.setItems(searchByPartName(userInput));
+            }
+        } else {
+            errorAlert("You must enter something in the search field", "Error", "No search parameters entered");
         }
-    }
-
-    /**
-     * main screen add product button handler
-     */
-    public void setAddProductButtonClicked(ActionEvent event) {
-        System.out.println("Add product button clicked");
-        windowManager(event, "AddProductScreen.fxml", AddProductScreenController.ADD_PRODUCT_SCREEN_TITLE);
-    }
-
-    /**
-     * main screen modify product button handler
-     */
-    public void setModifyProductButton(ActionEvent event) throws IOException {
-        System.out.println("Modify product button clicked");
-
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("ModifyProductScreen.fxml"));
-        Parent parent = loader.load();
-        Scene modProductScene = new Scene(parent);
-
-        ModifyProductScreenController controller = loader.getController();
-        controller.setTextFields(productTableView.getSelectionModel().getSelectedItem());
-
-        Stage newWindow = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        newWindow.setScene(modProductScene);
-        newWindow.setResizable(false);
-        newWindow.setTitle(ModifyProductScreenController.MOD_PRODUCT_SCREEN_TITLE);
-        newWindow.show();
-    }
-
-    /**
-     * main screen delete product button handler
-     */
-    public void setDeleteProductButton() {
-        System.out.println("Delete product button clicked");
-
-        Product selectedProduct = productTableView.getSelectionModel().getSelectedItem();
-        errorAlert(selectedProduct);
-        productTableView.getSelectionModel().clearSelection();
     }
 
     /**
@@ -208,20 +231,24 @@ public class MainScreenController implements Initializable {
          * if successful it will search by part ID
          * if an error is thrown then the catch will run and search by part name
          */
-        try {
-            System.out.println("attempting to search by part ID, checking input");
-            userInputAsInt = Integer.parseInt(userInput); // testing to see if it will throw an error
-            productTableView.getSelectionModel().select(searchByProductID(userInputAsInt));
+        if (userInput.matches("^[a-zA-Z0-9]*$") && !userInput.isEmpty()) {
+            try {
+                System.out.println("attempting to search by part ID, checking input");
+                userInputAsInt = Integer.parseInt(userInput); // testing to see if it will throw an error
+                productTableView.setItems(searchByProductID(userInputAsInt));
 
 
-        } catch (NumberFormatException e) {
-            System.out.println("Not an int, searching by part name instead of ID");
+            } catch (NumberFormatException e) {
+                System.out.println("Not an int, searching by part name instead of ID");
 
-            /**
-             * error thrown when attempting to parse input aas an int
-             * searching via name with string as input instead
-             */
-                productTableView.getSelectionModel().select(searchByProductName(userInput));
+                /**
+                 * error thrown when attempting to parse input aas an int
+                 * searching via name with string as input instead
+                 */
+                productTableView.setItems(searchByProductName(userInput));
+            }
+        } else {
+            errorAlert("You must enter something in the search field", "Error", "No search parameters entered");
         }
     }
 
@@ -244,7 +271,7 @@ public class MainScreenController implements Initializable {
     /**
      * method for selling table attributes for every scene
      */
-    public void setPartTableAttributes() {
+    public final void setPartTableAttributes() {
         /**
          * Set values for part id column
          * set styling to center text for the column
@@ -282,7 +309,7 @@ public class MainScreenController implements Initializable {
         partPriceTableCol.setResizable(false);
     }
 
-    public void setProductTableAttributes() {
+    public final void setProductTableAttributes() {
         /**
          * Set values for product ID column
          * set styling to center text for the column
@@ -324,12 +351,13 @@ public class MainScreenController implements Initializable {
      * confirmation alert popup handler
      * passes in string variable to define type of event in the text box
      */
-    public static void confirmationAlert(String action){
+    public static final boolean confirmationAlert(String action){
         /**
          * instantiate alert popup for exiting the program
          */
         Alert exiting = new Alert(Alert.AlertType.CONFIRMATION);
-        exiting.setTitle("Please confirm");
+        exiting.setTitle("Confirmation");
+        exiting.setHeaderText("Please confirm.");
         exiting.setContentText("Are you sure you would like to " + action + "?");
 
         /**
@@ -337,32 +365,26 @@ public class MainScreenController implements Initializable {
          */
         Optional<ButtonType> choice = exiting.showAndWait();
 
-        if (choice.get() == ButtonType.OK) { // user clicks OK
-            System.out.println("Closed through alert popup");
-            System.exit(1);
+        if (choice.get() == ButtonType.OK) { // user clicks yes
+            System.out.println("ok clicked in alert popup");
+            return true;
 
-        } else if (choice.get() == ButtonType.CANCEL){ // user clicks CANCEL
-            System.out.println("Cancel selected, returning to main");
+        } else if (choice.get() == ButtonType.CANCEL){ // user clicks no
+            System.out.println("no selected, closing alert popup");
             exiting.close();
         }
+        return false;
     }
 
     /**
      * error alert popup handler
      */
-    public static void errorAlert(Object object){
+    public static final void errorAlert(String errorText, String headerText, String titleText){
 
-         if (object != null) {
-             if (object instanceof Part) {
-                 deletePart((Part) object);
-             } else if (object instanceof Product) {
-                 deleteProduct((Product) object);
-             }
-         }else {
-                Alert invalidChoice = new Alert(Alert.AlertType.ERROR);
-                invalidChoice.setTitle("Error");
-                invalidChoice.setContentText("You must make a selection.");
-                invalidChoice.showAndWait();
-            }
+            Alert invalidChoice = new Alert(Alert.AlertType.ERROR);
+            invalidChoice.setHeaderText(headerText);
+            invalidChoice.setTitle(titleText);
+            invalidChoice.setContentText(errorText);
+            invalidChoice.showAndWait();
     }
 }
