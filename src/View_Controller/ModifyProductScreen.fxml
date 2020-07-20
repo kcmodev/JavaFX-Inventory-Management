@@ -98,25 +98,25 @@
         </AnchorPane>
         <AnchorPane layoutX="308.0" layoutY="60.0" prefHeight="204.0" prefWidth="347.0">
             <children>
-                <TableView prefHeight="157.0" prefWidth="341.0">
+                <TableView fx:id="partTableView" prefHeight="157.0" prefWidth="341.0">
                     <columns>
-                        <TableColumn prefWidth="75.0" text="Part ID" />
-                        <TableColumn prefWidth="106.0" text="Part Name" />
-                        <TableColumn prefWidth="78.0" text="Inv. Level" />
-                        <TableColumn prefWidth="81.0" text="Price / Unit" />
+                        <TableColumn fx:id="partIDTableCol" prefWidth="75.0" text="Part ID" />
+                        <TableColumn fx:id="partNameTableCol" prefWidth="106.0" text="Part Name" />
+                        <TableColumn fx:id="partInvLvlTableCol" prefWidth="78.0" text="Inv. Level" />
+                        <TableColumn fx:id="partPriceTableCol" prefWidth="81.0" text="Price / Unit" />
                     </columns>
                 </TableView>
             </children>
         </AnchorPane>
         <Button fx:id="modProductAdd" layoutX="579.0" layoutY="225.0" mnemonicParsing="false" onAction="#setModProductAdd" prefHeight="32.0" prefWidth="70.0" text="Add" />
-        <AnchorPane layoutX="308.0" layoutY="241.0" prefHeight="204.0" prefWidth="347.0">
+        <AnchorPane layoutX="305.0" layoutY="257.0" prefHeight="204.0" prefWidth="347.0">
             <children>
-                <TableView layoutX="3.0" layoutY="24.0" prefHeight="157.0" prefWidth="341.0">
+                <TableView fx:id="assocPartTableView" layoutX="3.0" layoutY="24.0" prefHeight="157.0" prefWidth="341.0">
                     <columns>
-                        <TableColumn prefWidth="75.0" text="Part ID" />
-                        <TableColumn prefWidth="106.0" text="Part Name" />
-                        <TableColumn prefWidth="78.0" text="Inv. Level" />
-                        <TableColumn prefWidth="81.0" text="Price / Unit" />
+                        <TableColumn fx:id="assocPartIDTableCol" prefWidth="75.0" text="Part ID" />
+                        <TableColumn fx:id="assocPartNameTableCol" prefWidth="106.0" text="Part Name" />
+                        <TableColumn fx:id="assocPartInvLvlTableCol" prefWidth="78.0" text="Inv. Level" />
+                        <TableColumn fx:id="assocPartPriceTableCol" prefWidth="81.0" text="Price / Unit" />
                     </columns>
                 </TableView>
             <Label layoutX="2.0" layoutY="1.0" prefHeight="24.0" prefWidth="158.0" text="Current Assoc Parts:">
@@ -124,9 +124,10 @@
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
+                <Button fx:id="modProductDelete" layoutX="274.0" layoutY="180.0" mnemonicParsing="false" onAction="#setModProductDelete" prefHeight="32.0" prefWidth="70.0" text="Delete" />
             </children>
         </AnchorPane>
-        <TextField fx:id="modProductPartSearch" layoutX="375.0" layoutY="14.0" prefHeight="32.0" prefWidth="207.0" promptText="Search all parts">
+        <TextField fx:id="searchField" layoutX="375.0" layoutY="14.0" prefHeight="32.0" prefWidth="207.0" promptText="Search all parts">
             <font>
                 <Font name="System Italic" size="16.0" />
             </font>
@@ -134,6 +135,5 @@
         <Button fx:id="modProductPartSearch" layoutX="579.0" layoutY="14.0" mnemonicParsing="false" onAction="#setModProductPartSearch" prefHeight="37.0" prefWidth="70.0" text="Search" />
           <Button fx:id="modProductSave" layoutX="14.0" layoutY="427.0" mnemonicParsing="false" onAction="#setModProductSave" prefHeight="34.0" prefWidth="70.0" text="Save" />
           <Button fx:id="modProductCancel" layoutX="91.0" layoutY="428.0" mnemonicParsing="false" onAction="#setModProductCancel" prefHeight="32.0" prefWidth="70.0" text="Cancel" />
-          <Button fx:id="modProductDelete" layoutX="229.0" layoutY="429.0" mnemonicParsing="false" onAction="#setModProductDelete" prefHeight="32.0" prefWidth="70.0" text="Delete" />
     </children>
 </AnchorPane>

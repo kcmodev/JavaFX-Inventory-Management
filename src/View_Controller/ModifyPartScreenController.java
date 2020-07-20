@@ -97,51 +97,8 @@ public class ModifyPartScreenController {
                     moddedPartInvMin, moddedPartInvMax, moddedCompID);
             Inventory.modifyPart(modifiedPart);
         }
-        
-//        if (modPartToggleGroup.getSelectedToggle().toString().equals("In-House")){
-//            modifiedPart = new InHousePart(1, "", 1, 1, 1, 1);
-//        } else if (modPartToggleGroup.getSelectedToggle().toString().equals("Outsourced")){
-//            modifiedPart = new OutsourcedPart(1, "", 1, 1, 1, 1);
-//        }
         System.out.println("makes it past the if statements");
 
-
-//        modifiedPart.setPartID(Integer.parseInt(modPartIDTextField.getText()));
-//        modifiedPart.setPartName(modPartNameTextField.getText());
-//        modifiedPart.setPartStock(Integer.parseInt(modPartInventoryTextField.getText()));
-//        modifiedPart.setPartPrice(Double.parseDouble(modPartPriceTextField.getText()));
-//        modifiedPart.setPartStockMax(Integer.parseInt(modPartInvMaxTextField.getText()));
-//        modifiedPart.setPartStockMin(Integer.parseInt(modPartInvMinTextField.getText()));
-//
-//        System.out.println("makes it to second if statements");
-//        if (modifiedPart instanceof InHousePart){
-//            ((InHousePart) modifiedPart).setPartMachineID(Integer.parseInt(modPartChangedTextField.getText()));
-//        }
-//        if (modifiedPart instanceof OutsourcedPart){
-//            ((OutsourcedPart) modifiedPart).setCompanyName(modPartChangedTextField.getText());
-//        }
-//
-//        System.out.println("makes it past if statements");
-//
-//        /**
-//         * cycles through list of all parts
-//         * compares part ID and class type to make sure they are the same object
-//         * deletes said part to make a space for the modified part with the same ID
-//         * breaks when condition is met to save time by not parsing the rest of the list
-//         */
-//        for (Part part : Inventory.getAllParts()){
-//            if (part.getPartID() == modifiedPart.getPartID()){
-//                Inventory.deletePart(part);
-//                break;
-//            }
-//        }
-//
-//        System.out.println("makes it past for loop");
-//
-//        /**
-//         * add newly modified part and return to the main screen
-//         */
-//        Inventory.addPart(modifiedPart); // adds newly modified part
         mainScreenController.windowManager(event, "MainScreen.fxml", mainScreenController.MAIN_SCREEN_TITLE);
     }
 

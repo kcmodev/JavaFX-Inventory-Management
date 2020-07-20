@@ -143,6 +143,7 @@ public class MainScreenController implements Initializable {
             Scene modProductScene = new Scene(parent);
 
             ModifyProductScreenController controller = loader.getController();
+//            controller.setTextFields(productTableView.getSelectionModel().getSelectedItem());
             controller.setTextFields(productTableView.getSelectionModel().getSelectedItem());
 
             Stage newWindow = (Stage) ((Node) event.getSource()).getScene().getWindow();

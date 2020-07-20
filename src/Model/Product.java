@@ -8,6 +8,7 @@ public class Product {
      * tracks all parts associated with the product object
      */
     static ObservableList<Part> associatedParts = FXCollections.observableArrayList();
+    static ObservableList<Part> excludedParts = FXCollections.observableArrayList();
 
     private int productID;
     private String productName;
@@ -16,8 +17,7 @@ public class Product {
 
     /**
      * product constructor
-     */
-    public Product(int productID, String productName, double productPrice,
+     */public Product(int productID, String productName, double productPrice,
                    int productInvLevel, int productInvMin, int productInvMax) {
         this.productID = productID; // product ID is unique and can't be changed by the user
         this.productName = productName;
@@ -78,5 +78,9 @@ public class Product {
 
     public void setProductInvMax(int productInvMax) {
         this.productInvMax = productInvMax;
+    }
+
+    public static void filterExcludedParts(){
+
     }
 }

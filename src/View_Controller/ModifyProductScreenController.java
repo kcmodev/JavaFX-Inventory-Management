@@ -1,38 +1,71 @@
 package View_Controller;
 
 import Model.Inventory;
+import Model.Part;
 import Model.Product;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 
-public class ModifyProductScreenController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+import static Model.Inventory.*;
+
+public class ModifyProductScreenController implements Initializable {
 
     static final String MOD_PRODUCT_SCREEN_TITLE = "Modify Product(s)";
     MainScreenController mainScreenController = new MainScreenController();
     private Product modifiedProduct;
+    private String userInput;
+    private ObservableList<Part> filteredSearchList = FXCollections.observableArrayList();
 
     /**
-     * instantiate all necessary text fields to receive user input
+     * defines structure for add product screen product table
      */
+    @FXML private TableView<Part> partTableView;
+    @FXML private TableColumn<Part, Integer> partIDTableCol;
+    @FXML private TableColumn<Part, SimpleStringProperty> partNameTableCol;
+    @FXML private TableColumn<Part, Integer> partInvLvlTableCol;
+    @FXML private TableColumn<Part, Double> partPriceTableCol;
+
+    /**
+     * defines structure for associated parts table
+     */
+    @FXML private TableView<Part> assocPartTableView;
+    @FXML private TableColumn<Part, Integer> assocPartIDTableCol;
+    @FXML private TableColumn<Part, SimpleStringProperty> assocPartNameTableCol;
+    @FXML private TableColumn<Part, Integer> assocPartInvLvlTableCol;
+    @FXML private TableColumn<Part, Double> assocPartPriceTableCol;
+
     @FXML private TextField modProductIDTextField;
     @FXML private TextField modProductNameTextField;
     @FXML private TextField modProductInventoryTextField;
     @FXML private TextField modProductPriceTextField;
     @FXML private TextField modProductInvMaxTextField;
     @FXML private TextField modProductInvMinTextField;
+    @FXML private TextField searchField;
 
     public void setTextFields(Product product){
-        modifiedProduct = product;
-
         modProductIDTextField.setText(Integer.toString(product.getProductID()));
         modProductNameTextField.setText(product.getProductName());
         modProductInventoryTextField.setText(Integer.toString((product.getProductInvLevel())));
         modProductPriceTextField.setText(Double.toString(product.getProductPrice()));
         modProductInvMaxTextField.setText(Integer.toString(product.getProductInvMax()));
         modProductInvMinTextField.setText(Integer.toString(product.getProductInvMin()));
+
+        modifiedProduct = product;
+        assocPartTableView.setItems(modifiedProduct.getAllAssociatedParts());
     }
+
     public void setModProductSave(ActionEvent event) {
         System.out.println("modify product save button clicked");
 
@@ -43,28 +76,173 @@ public class ModifyProductScreenController {
         modifiedProduct.setProductInvMax(Integer.parseInt(modProductInvMaxTextField.getText()));
         modifiedProduct.setProductInvMin(Integer.parseInt(modProductInvMinTextField.getText()));
 
-        for (Product product : Inventory.getAllProducts()){
-            if (product.getProductID() == modifiedProduct.getProductID()){
-                Inventory.deleteProduct(product);
-                break;
-            }
-        }
+        Inventory.modifyProduct(modifiedProduct);
 
-        Inventory.addProduct(modifiedProduct);
         mainScreenController.windowManager(event, "MainScreen.fxml", mainScreenController.MAIN_SCREEN_TITLE);
     }
 
     public void setModProductAdd() {
+        System.out.println("Add part to associated parts button clicked");
+
+        try {
+            Part selection = partTableView.getSelectionModel().getSelectedItem();
+            System.out.println("adding \"" + selection.getPartName() + "\" to your list of parts associated with this product");
+
+            modifiedProduct.addAssociatedPart(selection);
+            assocPartTableView.setItems(modifiedProduct.getAllAssociatedParts());
+
+            filteredSearchList.remove(selection);
+            partTableView.setItems(filteredSearchList);
+
+            assocPartTableView.getSelectionModel().clearSelection();
+            partTableView.getSelectionModel().clearSelection();
+        } catch (NullPointerException e){
+            MainScreenController.errorAlert("You must select an item to add", "Error", "No item selected");
+        }
     }
 
     public void setModProductDelete() {
+        System.out.println("Delete part from associated parts button clicked");
+
+        try {
+            Part selection = assocPartTableView.getSelectionModel().getSelectedItem(); // select from associated parts list
+            System.out.println("removing \"" + selection.getPartName() + "\" from your list of parts associated with this product");
+
+            modifiedProduct.deleteAssociatedPart(selection); // remove selected item from the list
+            assocPartTableView.setItems(modifiedProduct.getAllAssociatedParts()); // reset associated parts list
+
+            filteredSearchList.add(selection); // add removed part back to the filtered list
+            partTableView.setItems(filteredSearchList); // reset display for parts table with filtered list
+
+            assocPartTableView.getSelectionModel().clearSelection();
+            partTableView.getSelectionModel().clearSelection();
+        } catch (NullPointerException e){
+            MainScreenController.errorAlert("You must select an item to add", "Error", "No item selected");
+        }
     }
 
     public void setModProductPartSearch() {
+        System.out.println("add product search button clicked");
+
+        userInput = searchField.getText();
+
+        /**
+         * tries to parse to int
+         * if successful it will search by part ID
+         * if an error is thrown then the catch will run and search by part name
+         */
+        try {
+            System.out.println("attempting to search by part ID, checking input");
+            int userInputAsInt = Integer.parseInt(userInput); // testing to see if it will throw an error
+            partTableView.setItems(searchByPartID(userInputAsInt));
+
+        } catch (NumberFormatException e) {
+            System.out.println("Not an int, searching by part name instead of ID");
+
+            /**
+             * error thrown when attempting to parse input aas an int
+             * searching via name with string as input instead
+             */
+            partTableView.setItems(searchByPartName(userInput));
+        }
     }
 
     public void setModProductCancel(ActionEvent event) {
         System.out.println("Modify product cancel button clicked. Going back to main");
+
         mainScreenController.windowManager(event, "MainScreen.fxml", MainScreenController.MAIN_SCREEN_TITLE);
     }
+    public void setPartsTableProperties(){
+        /**
+         * Set values for part id column
+         * set styling to center text for the column
+         * disable resizability by user
+         */
+        partIDTableCol.setCellValueFactory(new PropertyValueFactory<>("partID"));
+        partIDTableCol.setStyle("-fx-alignment: CENTER;");
+        partIDTableCol.setResizable(false);
+
+        /**
+         * Set values for part name column
+         * set styling to center text for the column
+         * disable resizability by user
+         */
+        partNameTableCol.setCellValueFactory(new PropertyValueFactory<>("partName"));
+        partNameTableCol.setStyle("-fx-alignment: CENTER;");
+        partNameTableCol.setResizable(false);
+
+        /**
+         * Set values for part inventory level column
+         * set styling to center text for the column
+         * disable resizability by user
+         */
+        partInvLvlTableCol.setCellValueFactory(new PropertyValueFactory<>("partStock"));
+        partInvLvlTableCol.setStyle("-fx-alignment: CENTER;");
+        partInvLvlTableCol.setResizable(false);
+
+        /**
+         * Set values for part price column
+         * set styling to center text for the column
+         * disable resizability by user
+         */
+        partPriceTableCol.setCellValueFactory(new PropertyValueFactory<>("partPrice"));
+        partPriceTableCol.setStyle("-fx-alignment: CENTER;");
+        partPriceTableCol.setResizable(false);
+    }
+
+    /**
+     * set parts for associated parts table
+     */
+    public void setAssocPartsProperties(){
+        /**
+         * Set values for part id column
+         * set styling to center text for the column
+         * disable resizability by user
+         */
+        assocPartIDTableCol.setCellValueFactory(new PropertyValueFactory<>("partID"));
+        assocPartIDTableCol.setStyle("-fx-alignment: CENTER;");
+        assocPartIDTableCol.setResizable(false);
+
+        /**
+         * Set values for part name column
+         * set styling to center text for the column
+         * disable resizability by user
+         */
+        assocPartNameTableCol.setCellValueFactory(new PropertyValueFactory<>("partName"));
+        assocPartNameTableCol.setStyle("-fx-alignment: CENTER;");
+        assocPartNameTableCol.setResizable(false);
+
+        /**
+         * Set values for part inventory level column
+         * set styling to center text for the column
+         * disable resizability by user
+         */
+        assocPartInvLvlTableCol.setCellValueFactory(new PropertyValueFactory<>("partStock"));
+        assocPartInvLvlTableCol.setStyle("-fx-alignment: CENTER;");
+        assocPartInvLvlTableCol.setResizable(false);
+
+        /**
+         * Set values for part price column
+         * set styling to center text for the column
+         * disable resizability by user
+         */
+        assocPartPriceTableCol.setCellValueFactory(new PropertyValueFactory<>("partPrice"));
+        assocPartPriceTableCol.setStyle("-fx-alignment: CENTER;");
+        assocPartPriceTableCol.setResizable(false);
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        setPartsTableProperties();
+        setAssocPartsProperties();
+//        partTableView.setItems(getAllParts());
+        /**
+         * resets the filtered list every time to get an up to date list
+         * for users to search and view every time this screen is loaded
+         */
+        filteredSearchList.setAll(getAllParts());
+        partTableView.setItems(filteredSearchList);
+    }
+
+
 }

@@ -161,7 +161,7 @@ public class Inventory {
         }
     }
 
-    public static void modifyProduct(int index, Product product) {
+    public static void modifyProduct(Product product) {
         for (int i = 0; i < allProducts.size(); i++){
             if (product.getProductID() == allProducts.get(i).getProductID()){
                 allProducts.set(i, product);

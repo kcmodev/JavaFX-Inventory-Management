@@ -2,11 +2,7 @@ package View_Controller;
 
 import static Model.Inventory.*;
 import static Model.Inventory.searchByPartName;
-import static Model.Product.addAssociatedPart;
-import static Model.Product.getAllAssociatedParts;
-import static Model.Product.deleteAssociatedPart;
 
-import Model.Inventory;
 import Model.Part;
 import Model.Product;
 
@@ -29,7 +25,8 @@ public class AddProductScreenController implements Initializable {
 
         static final String ADD_PRODUCT_SCREEN_TITLE = "Add Product(s)";
         private String userInput;
-        private ObservableList<Part> filteredList = FXCollections.observableArrayList();
+        private Product newProduct;
+        private ObservableList<Part> filteredSearchList = FXCollections.observableArrayList();
 
         MainScreenController mainScreenController = new MainScreenController();
 
@@ -62,17 +59,17 @@ public class AddProductScreenController implements Initializable {
         @FXML TextField prodInvMinField;
         @FXML TextField searchField;
 
-        /**
-         * constructor
-         * will create temporary list to show a filtered list
-         */
-        public AddProductScreenController(){
-                setCopiedList(getAllParts());
-        }
+//        /**
+//         * constructor
+//         * will create temporary list to show a filtered list
+//         */
+//        public AddProductScreenController(){
+//                setCopiedList(getAllParts());
+//        }
 
-        private void setCopiedList(ObservableList<Part> list){
-                this.filteredList = list;
-        }
+//        private void setCopiedList(ObservableList<Part> list){
+//                this.filteredSearchList = list;
+//        }
 
         /**
          * save product button handler
@@ -85,9 +82,16 @@ public class AddProductScreenController implements Initializable {
                 int productInvMin = Integer.parseInt(prodInvMaxField.getText());
                 int productInvMax = Integer.parseInt(prodInvMinField.getText());
 
-                Product product = new Product(productID, productName, productPrice, productInv, productInvMin, productInvMax);
-                addProduct(product);
-                System.out.println("name of product added: \"" + product.getProductName() + "\"");
+                newProduct = new Product(productID, productName, productPrice, productInv, productInvMin, productInvMax);
+                addProduct(newProduct);
+
+                System.out.println("name of product added: \"" + newProduct.getProductName() + "\"");
+                System.out.println("list of associated parts: ");
+
+                for (Part p : newProduct.getAllAssociatedParts()){
+                        System.out.println(p.getPartName());
+                }
+
                 mainScreenController.windowManager(event, "MainScreen.fxml", MainScreenController.MAIN_SCREEN_TITLE);
         }
 
@@ -123,13 +127,21 @@ public class AddProductScreenController implements Initializable {
          */
         public void setAddButton(){
                 System.out.println("Add part to associated parts button clicked");
-                Part selection = partTableView.getSelectionModel().getSelectedItem();
-                if (selection != null) {
-                        Product.addAssociatedPart(selection);
-                        assocPartTableView.setItems(Product.getAllAssociatedParts());
-                        filteredList.remove(selection);
+
+                try {
+                        Part selection = partTableView.getSelectionModel().getSelectedItem();
+                        System.out.println("adding \"" + selection.getPartName() + "\" to your list of parts associated with this product");
+                        System.out.println("selection: " + selection);
+
+                        newProduct.addAssociatedPart(selection);
+
+                        assocPartTableView.setItems(newProduct.getAllAssociatedParts());
+                        filteredSearchList.remove(selection);
+
                         assocPartTableView.getSelectionModel().clearSelection();
                         partTableView.getSelectionModel().clearSelection();
+                } catch (NullPointerException e) {
+                        MainScreenController.errorAlert("You must select an item to add", "Error", "No item selected");
                 }
         }
 
@@ -137,18 +149,22 @@ public class AddProductScreenController implements Initializable {
          * remove selected part from associated parts list
          */
         public void setDeleteButton(){
-                System.out.println("Delete part from associated parts button clicked");
 
-                Part selection = assocPartTableView.getSelectionModel().getSelectedItem(); // select from associated parts list
-                if (selection != null) {
-                        System.out.println("associated parts list before delete: " + Product.getAllAssociatedParts());
-                        Product.deleteAssociatedPart(selection); // remove selected item from the list
-                        System.out.println("associated parts list after delete: " + Product.getAllAssociatedParts());
+                try {
+                        System.out.println("Delete part from associated parts button clicked");
+                        Part selection = assocPartTableView.getSelectionModel().getSelectedItem(); // select from associated parts list
+                        System.out.println("removing \"" + selection.getPartName() + "\" from your list of parts associated with this product");
+
+                        newProduct.deleteAssociatedPart(selection); // remove selected item from the list
                         assocPartTableView.setItems(Product.getAllAssociatedParts()); // reset associated parts list
-                        filteredList.add(selection); // add removed part back to the filtered list
-                        partTableView.setItems(filteredList);
+
+                        filteredSearchList.add(selection); // add removed part back to the filtered list
+                        partTableView.setItems(filteredSearchList);
+
                         assocPartTableView.getSelectionModel().clearSelection();
                         partTableView.getSelectionModel().clearSelection();
+                }catch (NullPointerException e) {
+                        MainScreenController.errorAlert("You must select an item to add", "Error", "No item selected");
                 }
         }
 
@@ -243,7 +259,9 @@ public class AddProductScreenController implements Initializable {
         public void initialize(URL location, ResourceBundle resources) {
                 setPartsTableProperties();
                 setAssocPartsProperties();
-                partTableView.setItems(getAllParts());
+//                partTableView.setItems(getAllParts());
+                filteredSearchList.setAll(getAllParts());
+                partTableView.setItems(filteredSearchList);
         }
 
 }
