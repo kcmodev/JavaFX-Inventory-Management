@@ -1,59 +1,68 @@
 package View_Controller;
 
-import static Model.Inventory.addPart;
-import static Model.Inventory.getAllParts;
-
 import Model.InHousePart;
 import Model.OutsourcedPart;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
+
+import java.net.URL;
+import java.util.ResourceBundle;
+
+import static Model.Inventory.*;
 
 
-public class AddPartScreenController {
+public class AddPartScreenController implements Initializable {
 
     /**
-     * title for add part screen to pass when switching screens
+     * title to pass when switching screens
      */
     static final String ADD_PART_SCREEN_TITLE = "Add Part(s)";
+
     MainScreenController mainScreenController = new MainScreenController();
 
     /**
      * initialize label and input fields on add part screen
      */
-    @FXML private Label radioButtonLabelChanger;
-    @FXML private TextField addPartIDTextField;
-    @FXML private TextField addPartNameTextField;
-    @FXML private TextField addPartInventoryTextField;
-    @FXML private TextField addPartPriceTextField;
-    @FXML private TextField addPartInvMaxTextField;
-    @FXML private TextField addPartInvMinTextField;
+    @FXML private Label textFieldLabel;
+    @FXML private TextField partIDTextField;
+    @FXML private TextField partNameTextField;
+    @FXML private TextField partInvTextField;
+    @FXML private TextField partPriceTextField;
+    @FXML private TextField partInvMaxTextField;
+    @FXML private TextField partInvMinTextField;
     @FXML private TextField changedLabelTextField;
 
+    /**
+     * used to set a default selection for the radio buttons
+     * depending on the type of object
+     */
+    @FXML private RadioButton inHouseRadio;
+    @FXML private RadioButton outsourcedRadio;
 
     /**
      * add part save button handler
      */
-    public void setAddPartScreenSaveButton(ActionEvent event) {
+    public void partScreenSaveButton(ActionEvent event) {
         System.out.println("Add part save button clicked");
         /**
          * assign and parse all test in text fields to the current part
          * and to the correct data type
          */
-        int partID = Integer.parseInt(addPartIDTextField.getText());
-        String partName = addPartNameTextField.getText();
-        int partInv = Integer.parseInt(addPartInventoryTextField.getText());
-        double partPrice = Double.parseDouble(addPartPriceTextField.getText());
-        int partInvMin = Integer.parseInt(addPartInvMinTextField.getText());
-        int partInvMax = Integer.parseInt(addPartInvMaxTextField.getText());
+        int partID = idGenerator();
+        String partName = partNameTextField.getText();
+        int partInv = Integer.parseInt(partInvTextField.getText());
+        double partPrice = Double.parseDouble(partPriceTextField.getText());
+        int partInvMin = Integer.parseInt(partInvMinTextField.getText());
+        int partInvMax = Integer.parseInt(partInvMaxTextField.getText());
 
         /**
          * checks corresponding label to determine radio button selection
          * "Machine ID" = in house
          */
-        if (radioButtonLabelChanger.getText() == "Machine ID"){
+        if (inHouseRadio.isSelected()){
             System.out.println("Adding with Machine ID w/ in house part");
 
             int machineID = Integer.parseInt(changedLabelTextField.getText());
@@ -66,7 +75,7 @@ public class AddPartScreenController {
          * checks corresponding label to determine radio button selection
          * "Company ID" = outsourced
          */
-        if (radioButtonLabelChanger.getText() == "Company ID"){
+        if (outsourcedRadio.isSelected()){
             System.out.println("Adding with company ID to outsourced");
 
             String companyName = changedLabelTextField.getText();
@@ -87,6 +96,7 @@ public class AddPartScreenController {
      */
     public void setAddPartScreenCancelButton(ActionEvent event) {
         System.out.println("Add part screen cancel button clicked");
+        idReducer();
         mainScreenController.windowManager(event, "MainScreen.fxml", MainScreenController.MAIN_SCREEN_TITLE);
     }
 
@@ -100,7 +110,7 @@ public class AddPartScreenController {
         enableTextFields();
     }
     public void setOutsourcedRadioButton() {
-        setRadioButtonLabelChanger("Company ID", "Enter Company ID");
+        setRadioButtonLabelChanger("Company", "Enter Company ID");
         enableTextFields();
     }
 
@@ -109,18 +119,21 @@ public class AddPartScreenController {
      * current radio button selection
      */
     private void setRadioButtonLabelChanger(String labelID, String textField) {
-        radioButtonLabelChanger.setText(labelID);
+        textFieldLabel.setText(labelID);
         changedLabelTextField.setPromptText(textField);
     }
 
     private void enableTextFields() {
-        addPartIDTextField.setDisable(false);
-        addPartNameTextField.setDisable(false);
-        addPartInventoryTextField.setDisable(false);
-        addPartPriceTextField.setDisable(false);
-        addPartInvMaxTextField.setDisable(false);
-        addPartInvMinTextField.setDisable(false);
+        partNameTextField.setDisable(false);
+        partInvTextField.setDisable(false);
+        partPriceTextField.setDisable(false);
+        partInvMaxTextField.setDisable(false);
+        partInvMinTextField.setDisable(false);
         changedLabelTextField.setDisable(false);
     }
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        partIDTextField.setPromptText("Auto Gen ID");
+    }
 }

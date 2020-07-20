@@ -3,9 +3,12 @@ package Model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.util.ArrayList;
+
 public class Inventory {
     static ObservableList<Part> allParts = FXCollections.observableArrayList();
     static ObservableList<Product> allProducts = FXCollections.observableArrayList();
+    static int generatedID = 1;
 
     /**
      * used to show filtered lists for parts and products table views respectively
@@ -14,31 +17,64 @@ public class Inventory {
     private static ObservableList<Product> filteredProducts = FXCollections.observableArrayList();
 
     public Inventory() {
+
+        ArrayList<String> parts = new ArrayList<>();
+        parts.add("Graphics Card");
+        parts.add("Motherboard");
+        parts.add("CPU");
+        parts.add("Monitor");
+        parts.add("Speakers");
+        parts.add("Dock");
+        parts.add("Case");
+        parts.add("Travel bag");
+
+        ArrayList<String> products = new ArrayList<>();
+        products.add("Computer");
+        products.add("Laptop setup");
+
         /**
          * set default values to start with in parts table
          */
-        InHousePart graphicsCard = new InHousePart(1, "Graphics Card", 800, 5, 2, 10, 24);
+        InHousePart graphicsCard = new InHousePart(idGenerator(), "Graphics Card", 800, 5, 2, 10, 24);
         allParts.add(graphicsCard);
 
-        InHousePart motherboard = new InHousePart(2, "Motherboard", 500, 3, 2, 10, 16);
+        InHousePart motherboard = new InHousePart(idGenerator(), "Motherboard", 500, 3, 2, 10, 16);
         allParts.add(motherboard);
 
-        InHousePart CPU = new InHousePart(3, "CPU", 400, 7, 2, 10, 8);
+        InHousePart CPU = new InHousePart(idGenerator(), "CPU", 400, 7, 2, 10, 8);
         allParts.add(CPU);
+
+        OutsourcedPart Monitor = new OutsourcedPart(idGenerator(), "Monitor", 400, 7, 2, 10, "Dell");
+        allParts.add(Monitor);
+
+        OutsourcedPart Speakers = new OutsourcedPart(idGenerator(), "Speakers", 400, 7, 2, 10, "Bose");
+        allParts.add(Speakers);
+
+        OutsourcedPart Dock = new OutsourcedPart(idGenerator(), "Dock", 400, 7, 2, 10, "Apple");
+        allParts.add(Dock);
+
+        OutsourcedPart Case = new OutsourcedPart(idGenerator(), "Case", 400, 7, 2, 10, "inCase");
+        allParts.add(Case);
+
+        OutsourcedPart travelBag = new OutsourcedPart(idGenerator(), "Travel Bag", 400, 7, 2, 10, "Oakley");
+        allParts.add(travelBag);
 
         /**
          * set default values to product table
          * used to associate the other 3 default parts to 1 product
          */
-        Product computer = new Product(1, "Computer", 1700, 2, 1, 5);
+        Product computer = new Product(idGenerator(), "Computer", 1700, 2, 1, 5);
         allProducts.add(computer);
 
-
+        Product laptopSetup = new Product(idGenerator(), "Laptop Setup", 2500, 2, 1, 5);
+        allProducts.add(laptopSetup);
     }
 
-    public static void addPart(Part part) {
-        System.out.println("allParts before add: " + allParts);
+    public static int idGenerator() { return generatedID++; }
 
+    public static void idReducer() { generatedID--; }
+
+    public static void addPart(Part part) {
         /**
          * check if part is an instance of in house
          * instantiate new in house object then cast method variable part as an in house part

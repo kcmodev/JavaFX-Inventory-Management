@@ -1,5 +1,6 @@
 package View_Controller;
 
+import Model.ErrorHandling;
 import Model.Inventory;
 import Model.Part;
 import Model.Product;
@@ -55,6 +56,9 @@ public class ModifyProductScreenController implements Initializable {
     @FXML private TextField searchField;
 
     public void setTextFields(Product product){
+        modifiedProduct = product;
+        modifiedProduct.getAllAssociatedParts();
+
         modProductIDTextField.setText(Integer.toString(product.getProductID()));
         modProductNameTextField.setText(product.getProductName());
         modProductInventoryTextField.setText(Integer.toString((product.getProductInvLevel())));
@@ -97,7 +101,7 @@ public class ModifyProductScreenController implements Initializable {
             assocPartTableView.getSelectionModel().clearSelection();
             partTableView.getSelectionModel().clearSelection();
         } catch (NullPointerException e){
-            MainScreenController.errorAlert("You must select an item to add", "Error", "No item selected");
+            ErrorHandling.errorAlert(1);
         }
     }
 
@@ -117,7 +121,7 @@ public class ModifyProductScreenController implements Initializable {
             assocPartTableView.getSelectionModel().clearSelection();
             partTableView.getSelectionModel().clearSelection();
         } catch (NullPointerException e){
-            MainScreenController.errorAlert("You must select an item to add", "Error", "No item selected");
+            ErrorHandling.errorAlert(1);
         }
     }
 
@@ -235,12 +239,11 @@ public class ModifyProductScreenController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         setPartsTableProperties();
         setAssocPartsProperties();
-//        partTableView.setItems(getAllParts());
+
         /**
          * resets the filtered list every time to get an up to date list
          * for users to search and view every time this screen is loaded
          */
-        filteredSearchList.setAll(getAllParts());
         partTableView.setItems(filteredSearchList);
     }
 

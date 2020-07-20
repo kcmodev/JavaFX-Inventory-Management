@@ -16,24 +16,25 @@ import javafx.scene.control.ToggleGroup;
 public class ModifyPartScreenController {
 
     /**
-     * title for modify part screen to pass when switching screens
+     * title to pass when switching screens
      */
     static final String MOD_PART_SCREEN_TITLE = "Modify Part(s)";
-    private Part modifiedPart;
+    int moddedPartID;
 
     MainScreenController mainScreenController = new MainScreenController();
 
     /**
      * initialize label and text fields for modify product screen
      */
-    @FXML private Label modPartLabelChanger;
     @FXML private TextField modPartIDTextField;
     @FXML private TextField modPartNameTextField;
-    @FXML private TextField modPartInventoryTextField;
+    @FXML private TextField modPartInvTextField;
     @FXML private TextField modPartPriceTextField;
     @FXML private TextField modPartInvMaxTextField;
     @FXML private TextField modPartInvMinTextField;
+
     @FXML private TextField modPartChangedTextField;
+    @FXML private Label modPartChangedLabel;
 
     /**
      * used to set a default selection for the radio buttons
@@ -50,9 +51,11 @@ public class ModifyPartScreenController {
     public void setTextFields(Part part){
         System.out.println("previous class object type: " + part.getClass());
 
+        moddedPartID = part.getPartID();
+
         modPartIDTextField.setText(Integer.toString(part.getPartID()));
         modPartNameTextField.setText(part.getPartName());
-        modPartInventoryTextField.setText(Integer.toString((part.getPartStock())));
+        modPartInvTextField.setText(Integer.toString((part.getPartStock())));
         modPartPriceTextField.setText(Double.toString(part.getPartPrice()));
         modPartInvMaxTextField.setText(Integer.toString(part.getPartStockMax()));
         modPartInvMinTextField.setText(Integer.toString(part.getPartStockMin()));
@@ -77,21 +80,20 @@ public class ModifyPartScreenController {
     public void setModPartSaveButton(ActionEvent event) {
         System.out.println("mod part save button clicked");
 
-        int moddedPartID = Integer.parseInt(modPartIDTextField.getText());
         String moddedPartName = modPartNameTextField.getText();
-        int moddedPartInv = Integer.parseInt(modPartInventoryTextField.getText());
+        int moddedPartInv = Integer.parseInt(modPartInvTextField.getText());
         double moddedPartPrice = Double.parseDouble(modPartPriceTextField.getText());
         int moddedPartInvMax = Integer.parseInt(modPartInvMaxTextField.getText());
         int moddedPartInvMin = Integer.parseInt(modPartInvMinTextField.getText());
 
         System.out.println("selected toggle: " + modPartToggleGroup.getSelectedToggle().toString());
 
-        if (modPartToggleGroup.getSelectedToggle().toString().contains("In-House")){
+        if (inHouseRadio.isSelected()){
             int moddedMachineID = Integer.parseInt(modPartChangedTextField.getText());
             Part modifiedPart = new InHousePart(moddedPartID, moddedPartName, moddedPartPrice, moddedPartInv,
                     moddedPartInvMin, moddedPartInvMax, moddedMachineID);
             Inventory.modifyPart(modifiedPart);
-        } else if (modPartToggleGroup.getSelectedToggle().toString().contains("Outsourced")){
+        } else if (outsourcedRadio.isSelected()){
             String moddedCompID = modPartChangedTextField.getText();
             Part modifiedPart = new OutsourcedPart(moddedPartID, moddedPartName, moddedPartPrice, moddedPartInv,
                     moddedPartInvMin, moddedPartInvMax, moddedCompID);
@@ -133,7 +135,7 @@ public class ModifyPartScreenController {
      * current part being modified
      */
     public void setRadioButtonLabels(String labelID, String textField) {
-        modPartLabelChanger.setText(labelID);
+        modPartChangedLabel.setText(labelID);
         modPartChangedTextField.setPromptText(textField);
     }
 
@@ -142,7 +144,7 @@ public class ModifyPartScreenController {
      */
     public void setModifyRemainingTextFields() {
         modPartNameTextField.setDisable(false);
-        modPartInventoryTextField.setDisable(false);
+        modPartInvTextField.setDisable(false);
         modPartPriceTextField.setDisable(false);
         modPartInvMaxTextField.setDisable(false);
         modPartInvMinTextField.setDisable(false);

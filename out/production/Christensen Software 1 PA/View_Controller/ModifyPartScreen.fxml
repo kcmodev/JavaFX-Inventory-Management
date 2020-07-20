@@ -60,7 +60,7 @@
                 </AnchorPane>
                 <AnchorPane layoutX="-2.0" layoutY="113.0">
                     <children>
-                        <TextField fx:id="modPartInventoryTextField" disable="true" layoutX="100.0" prefHeight="37.0" prefWidth="158.0" promptText="Enter Inv. Level">
+                        <TextField fx:id="modPartInvTextField" disable="true" layoutX="100.0" prefHeight="37.0" prefWidth="158.0" promptText="Enter Inv. Level">
                             <font>
                                 <Font name="System Italic" size="16.0" />
                             </font>
@@ -112,7 +112,7 @@
                                 <Font name="System Italic" size="16.0" />
                             </font>
                         </TextField>
-                        <Label fx:id="modPartLabelChanger" layoutY="6.0" prefHeight="25.0" prefWidth="95.0">
+                        <Label fx:id="modPartChangedLabel" layoutY="6.0" prefHeight="25.0" prefWidth="95.0">
                             <font>
                                 <Font name="System Bold" size="16.0" />
                             </font>

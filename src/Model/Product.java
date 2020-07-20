@@ -80,7 +80,12 @@ public class Product {
         this.productInvMax = productInvMax;
     }
 
-    public static void filterExcludedParts(){
-
+    public static void setExcludedParts(Part part) {
+        excludedParts.add(part);
     }
+
+    public static ObservableList<Part> getExcludedParts() {
+        return excludedParts;
+    }
+
 }

@@ -3,6 +3,7 @@ package View_Controller;
 import static Model.Inventory.*;
 import static Model.Inventory.searchByPartName;
 
+import Model.ErrorHandling;
 import Model.Part;
 import Model.Product;
 
@@ -85,11 +86,16 @@ public class AddProductScreenController implements Initializable {
                 newProduct = new Product(productID, productName, productPrice, productInv, productInvMin, productInvMax);
                 addProduct(newProduct);
 
+
                 System.out.println("name of product added: \"" + newProduct.getProductName() + "\"");
                 System.out.println("list of associated parts: ");
 
                 for (Part p : newProduct.getAllAssociatedParts()){
                         System.out.println(p.getPartName());
+                }
+
+                for (Part p : filteredSearchList){
+                        Product.setExcludedParts(p);
                 }
 
                 mainScreenController.windowManager(event, "MainScreen.fxml", MainScreenController.MAIN_SCREEN_TITLE);
@@ -141,7 +147,7 @@ public class AddProductScreenController implements Initializable {
                         assocPartTableView.getSelectionModel().clearSelection();
                         partTableView.getSelectionModel().clearSelection();
                 } catch (NullPointerException e) {
-                        MainScreenController.errorAlert("You must select an item to add", "Error", "No item selected");
+                        ErrorHandling.errorAlert(1);
                 }
         }
 
@@ -164,7 +170,7 @@ public class AddProductScreenController implements Initializable {
                         assocPartTableView.getSelectionModel().clearSelection();
                         partTableView.getSelectionModel().clearSelection();
                 }catch (NullPointerException e) {
-                        MainScreenController.errorAlert("You must select an item to add", "Error", "No item selected");
+                        ErrorHandling.errorAlert(1);
                 }
         }
 

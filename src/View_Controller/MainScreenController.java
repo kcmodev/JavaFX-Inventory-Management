@@ -2,6 +2,7 @@ package View_Controller;
 
 import Model.Part;
 import Model.Product;
+import Model.ErrorHandling;
 
 import static Model.Inventory.*;
 
@@ -18,14 +19,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 
 public class MainScreenController implements Initializable {
 
     /**
-     * title for main screen to pass when switching screens
+     * title to pass when switching screens
      */
     static final String MAIN_SCREEN_TITLE = "Christensen Software 1 Performance Assessment";
 
@@ -83,7 +83,7 @@ public class MainScreenController implements Initializable {
     public void setExitButtonClicked() {
         System.out.println("Exit button clicked");
 
-        if (confirmationAlert("close the program") == true){
+        if (ErrorHandling.confirmationAlert("close the program") == true){
             System.out.println("exiting by choice through popup");
             System.exit(1);
         }
@@ -126,7 +126,7 @@ public class MainScreenController implements Initializable {
             newWindow.setTitle(ModifyPartScreenController.MOD_PART_SCREEN_TITLE);
             newWindow.show();
         } else {
-            errorAlert("You must select an item to modify", "Error", "Please select an item");
+            ErrorHandling.errorAlert(1);
         }
     }
 
@@ -143,7 +143,6 @@ public class MainScreenController implements Initializable {
             Scene modProductScene = new Scene(parent);
 
             ModifyProductScreenController controller = loader.getController();
-//            controller.setTextFields(productTableView.getSelectionModel().getSelectedItem());
             controller.setTextFields(productTableView.getSelectionModel().getSelectedItem());
 
             Stage newWindow = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -152,7 +151,7 @@ public class MainScreenController implements Initializable {
             newWindow.setTitle(ModifyProductScreenController.MOD_PRODUCT_SCREEN_TITLE);
             newWindow.show();
         } else {
-            errorAlert("You must select an item to modify", "Error", "Please select an item");
+            ErrorHandling.errorAlert(1);
         }
     }
 
@@ -163,7 +162,7 @@ public class MainScreenController implements Initializable {
         System.out.println("Delete part button clicked");
         Part selectedPart = partTableView.getSelectionModel().getSelectedItem();
         if (selectedPart == null){
-            errorAlert("You must select a part to delete.", "Unable to delete.", "Error");
+            ErrorHandling.errorAlert(1);
         } else {
             deletePart(selectedPart);
         }
@@ -178,7 +177,7 @@ public class MainScreenController implements Initializable {
 
         Product selectedProduct = productTableView.getSelectionModel().getSelectedItem();
         if (selectedProduct == null){
-            errorAlert("You must select a product to delete.", "Unable to delete.", "Error");
+            ErrorHandling.errorAlert(1);
         } else {
             System.out.println("deleting \"" + selectedProduct.getProductName() + "\"");
             deleteProduct(selectedProduct);
@@ -215,7 +214,7 @@ public class MainScreenController implements Initializable {
                 partTableView.setItems(searchByPartName(userInput));
             }
         } else {
-            errorAlert("You must enter something in the search field", "Error", "No search parameters entered");
+            ErrorHandling.errorAlert(2);
         }
     }
 
@@ -249,30 +248,14 @@ public class MainScreenController implements Initializable {
                 productTableView.setItems(searchByProductName(userInput));
             }
         } else {
-            errorAlert("You must enter something in the search field", "Error", "No search parameters entered");
+            ErrorHandling.errorAlert(2);
         }
-    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-        /**
-         * sets attributes for both tables on main screen
-         */
-        setPartTableAttributes();
-        setProductTableAttributes();
-
-        /**
-         * populates main screen part and product tables
-         */
-        partTableView.setItems(getAllParts());
-        productTableView.setItems(getAllProducts());
     }
 
     /**
      * method for selling table attributes for every scene
      */
-    public final void setPartTableAttributes() {
+    public void setPartTableAttributes() {
         /**
          * Set values for part id column
          * set styling to center text for the column
@@ -310,7 +293,7 @@ public class MainScreenController implements Initializable {
         partPriceTableCol.setResizable(false);
     }
 
-    public final void setProductTableAttributes() {
+    public void setProductTableAttributes() {
         /**
          * Set values for product ID column
          * set styling to center text for the column
@@ -348,44 +331,19 @@ public class MainScreenController implements Initializable {
         productPriceTableCol.setResizable(false);
     }
 
-    /**
-     * confirmation alert popup handler
-     * passes in string variable to define type of event in the text box
-     */
-    public static final boolean confirmationAlert(String action){
-        /**
-         * instantiate alert popup for exiting the program
-         */
-        Alert exiting = new Alert(Alert.AlertType.CONFIRMATION);
-        exiting.setTitle("Confirmation");
-        exiting.setHeaderText("Please confirm.");
-        exiting.setContentText("Are you sure you would like to " + action + "?");
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
 
         /**
-         * set method for user to choose to quit by waiting on button press
+         * sets attributes for both tables on main screen
          */
-        Optional<ButtonType> choice = exiting.showAndWait();
+        setPartTableAttributes();
+        setProductTableAttributes();
 
-        if (choice.get() == ButtonType.OK) { // user clicks yes
-            System.out.println("ok clicked in alert popup");
-            return true;
-
-        } else if (choice.get() == ButtonType.CANCEL){ // user clicks no
-            System.out.println("no selected, closing alert popup");
-            exiting.close();
-        }
-        return false;
-    }
-
-    /**
-     * error alert popup handler
-     */
-    public static final void errorAlert(String errorText, String headerText, String titleText){
-
-            Alert invalidChoice = new Alert(Alert.AlertType.ERROR);
-            invalidChoice.setHeaderText(headerText);
-            invalidChoice.setTitle(titleText);
-            invalidChoice.setContentText(errorText);
-            invalidChoice.showAndWait();
+        /**
+         * populates main screen part and product tables
+         */
+        partTableView.setItems(getAllParts());
+        productTableView.setItems(getAllProducts());
     }
 }
