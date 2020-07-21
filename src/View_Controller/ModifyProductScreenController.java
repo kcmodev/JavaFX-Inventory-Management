@@ -27,9 +27,11 @@ public class ModifyProductScreenController implements Initializable {
     static final String MOD_PRODUCT_SCREEN_TITLE = "Modify Product(s)";
     MainScreenController mainScreenController = new MainScreenController();
 
-    private Product modifiedProduct;
     private String userInput;
-    private ObservableList<Part> filteredSearchList = FXCollections.observableArrayList();
+
+    /**
+     * eligible parts used to filter search results
+     */
     private ObservableList<Part> eligibleParts = FXCollections.observableArrayList();
 
     /**
@@ -67,34 +69,50 @@ public class ModifyProductScreenController implements Initializable {
      * method takes a product object from MainScreenController and uses it to fill the text fields
      */
     public void setTextFields(Product product){
-        modifiedProduct = product;
-        filteredSearchList.clear(); // resets filtered list every time modify product is called
+        System.out.println("object being passed in: " + product.getProductName());
+
+        System.out.println("temp list before clear:");
+        for (Part p : tempList) {
+            System.out.println(p.getPartName());
+        }
+
         eligibleParts.setAll(Inventory.getAllParts());
+
+        tempList.setAll(product.getAllAssociatedParts());
+        System.out.println("temp list after clear:");
+        for (Part p : tempList) {
+            System.out.println(p.getPartName());
+        }
+
+        System.out.println("actual list of associated parts: ");
+        for (Part p : product.getAllAssociatedParts()) {
+            System.out.println(p.getPartName());
+        }
+
 
         /**
          * loop through all parts to find matches in associated parts
          * remove parts from eligibleParts to be filtered out from initial table view population
          * and subsequent searches
          */
-        for (Part p : modifiedProduct.getAllAssociatedParts()){
-            filteredSearchList.add(p);
+        for (Part p : tempList){
             eligibleParts.remove(p);
         }
 
         /**
          * populate text field with imported product
          */
-        modProductIDTextField.setText(Integer.toString(modifiedProduct.getProductID()));
-        modProductNameTextField.setText(modifiedProduct.getProductName());
-        modProductInventoryTextField.setText(Integer.toString((modifiedProduct.getProductInvLevel())));
-        modProductPriceTextField.setText(Double.toString(modifiedProduct.getProductPrice()));
-        modProductInvMaxTextField.setText(Integer.toString(modifiedProduct.getProductInvMax()));
-        modProductInvMinTextField.setText(Integer.toString(modifiedProduct.getProductInvMin()));
+        modProductIDTextField.setText(Integer.toString(product.getProductID()));
+        modProductNameTextField.setText(product.getProductName());
+        modProductInventoryTextField.setText(Integer.toString((product.getProductInvLevel())));
+        modProductPriceTextField.setText(Double.toString(product.getProductPrice()));
+        modProductInvMaxTextField.setText(Integer.toString(product.getProductInvMax()));
+        modProductInvMinTextField.setText(Integer.toString(product.getProductInvMin()));
 
         /**
          * populate associated parts table with imported product
          */
-        assocPartTableView.setItems(modifiedProduct.getAllAssociatedParts());
+        assocPartTableView.setItems(product.getAllAssociatedParts());
         partTableView.setItems(eligibleParts);
 
     }
@@ -105,7 +123,7 @@ public class ModifyProductScreenController implements Initializable {
             /**
              * set attributes for modified product
              */
-            modifiedProduct = new Product();
+            Product modifiedProduct = new Product();
 
             modifiedProduct.setProductID(Integer.parseInt(modProductIDTextField.getText()));
             modifiedProduct.setProductName(modProductNameTextField.getText());
@@ -117,17 +135,19 @@ public class ModifyProductScreenController implements Initializable {
             /**
              * cycle through temp list and add the confirmed changes to the associated parts list
              */
+            System.out.println("temp list being save click:");
             for (Part p : tempList) {
+                System.out.println(p.getPartName());
                 modifiedProduct.addAssociatedPart(p);
             }
 
             /**
-             * update unmodified product with newly modified product
+             * update unmodified product with newly modified product then exit
              */
             modifiedProduct.productValidation();
             Inventory.modifyProduct(modifiedProduct);
-
             mainScreenController.windowManager(event, "MainScreen.fxml", mainScreenController.MAIN_SCREEN_TITLE);
+
         } catch (ValidationException e){
             ErrorHandling.errorAlert(2, e.getMessage());
         } catch (NumberFormatException e){
@@ -308,7 +328,6 @@ public class ModifyProductScreenController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         setPartsTableProperties();
         setAssocPartsProperties();
-        tempList.setAll(modifiedProduct.getAllAssociatedParts());
     }
 
 

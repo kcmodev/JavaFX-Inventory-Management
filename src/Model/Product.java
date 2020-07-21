@@ -9,7 +9,7 @@ public class Product {
     /**
      * tracks all parts associated with the product object
      */
-    private static ObservableList<Part> associatedParts = FXCollections.observableArrayList();
+    private ObservableList<Part> associatedParts = FXCollections.observableArrayList();
 
     private int productID;
     private String productName;
@@ -38,11 +38,11 @@ public class Product {
     /**
      * product getters and setters
      */
-    public static ObservableList<Part> getAllAssociatedParts() { return associatedParts; }
+    public ObservableList<Part> getAllAssociatedParts() { return associatedParts; }
 
-    public static void addAssociatedPart(Part part) { associatedParts.add(part); }
+    public void addAssociatedPart(Part part) { associatedParts.add(part); }
 
-    public static void deleteAssociatedPart(Part part){ associatedParts.remove(part);}
+    public void deleteAssociatedPart(Part part){ associatedParts.remove(part);}
 
     public int getProductID() {return productID; }
 

@@ -81,7 +81,7 @@ public class AddProductScreenController implements Initializable {
 
                         mainScreenController.windowManager(event, "MainScreen.fxml", MainScreenController.MAIN_SCREEN_TITLE);
                 } catch (NumberFormatException e){
-
+                        ErrorHandling.errorAlert(2, e.getMessage());
                 }
         }
 
