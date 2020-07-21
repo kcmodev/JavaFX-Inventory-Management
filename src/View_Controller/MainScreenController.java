@@ -81,8 +81,6 @@ public class MainScreenController implements Initializable {
      * main screen exit button handler
      */
     public void setExitButtonClicked() {
-        System.out.println("Exit button clicked");
-
         if (ErrorHandling.confirmationAlert("close the program") == true){
             System.out.println("exiting by choice through popup");
             System.exit(1);
@@ -93,7 +91,6 @@ public class MainScreenController implements Initializable {
      * main screen add part button handler
      */
     public void setAddPartClicked(ActionEvent event) {
-        System.out.println("Add part button clicked");
         windowManager(event, "AddPartScreen.fxml", AddPartScreenController.ADD_PART_SCREEN_TITLE);
     }
 
@@ -101,7 +98,6 @@ public class MainScreenController implements Initializable {
      * main screen add product button handler
      */
     public void setAddProductButtonClicked(ActionEvent event) {
-        System.out.println("Add product button clicked");
         windowManager(event, "AddProductScreen.fxml", AddProductScreenController.ADD_PRODUCT_SCREEN_TITLE);
     }
 
@@ -109,8 +105,6 @@ public class MainScreenController implements Initializable {
      * main screen modify part button handler
      */
     public void setModifyPartClicked(ActionEvent event) throws IOException {
-        System.out.println("Modify part button clicked");
-
         if (partTableView.getSelectionModel().getSelectedItem() != null) {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("ModifyPartScreen.fxml"));
@@ -134,8 +128,6 @@ public class MainScreenController implements Initializable {
      * main screen modify product button handler
      */
     public void setModifyProductButton(ActionEvent event) throws IOException {
-        System.out.println("Modify product button clicked");
-
         if (productTableView.getSelectionModel().getSelectedItem() != null) {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("ModifyProductScreen.fxml"));
@@ -159,7 +151,6 @@ public class MainScreenController implements Initializable {
      * main screen delete part button handler
      */
     public void setDeletePartClicked() {
-        System.out.println("Delete part button clicked");
         Part selectedPart = partTableView.getSelectionModel().getSelectedItem();
         if (selectedPart == null){
             ErrorHandling.errorAlert(1);
@@ -173,13 +164,10 @@ public class MainScreenController implements Initializable {
      * main screen delete product button handler
      */
     public void setDeleteProductButton() {
-        System.out.println("Delete product button clicked");
-
         Product selectedProduct = productTableView.getSelectionModel().getSelectedItem();
         if (selectedProduct == null){
             ErrorHandling.errorAlert(1);
         } else {
-            System.out.println("deleting \"" + selectedProduct.getProductName() + "\"");
             deleteProduct(selectedProduct);
         }
         productTableView.getSelectionModel().clearSelection();
@@ -189,8 +177,6 @@ public class MainScreenController implements Initializable {
      * main screen search by part button handler
      */
     public void setSearchByPartButton() {
-        System.out.println("Search by part button clicked");
-
         userInput = mainScreenSearchByPart.getText();
 
         /**
@@ -200,13 +186,9 @@ public class MainScreenController implements Initializable {
          */
         if (userInput.matches("^[a-zA-Z0-9]*$") && !userInput.isEmpty()) {
             try {
-                System.out.println("attempting to search by part ID, checking input");
                 userInputAsInt = Integer.parseInt(userInput); // testing to see if it will throw an error
                 partTableView.setItems(searchByPartID(userInputAsInt));
-
             } catch (NumberFormatException e) {
-                System.out.println("Not an int, searching by part name instead of ID");
-
                 /**
                  * error thrown when attempting to parse input aas an int
                  * searching via name with string as input instead
@@ -222,8 +204,6 @@ public class MainScreenController implements Initializable {
      * main screen search by product button handler
      */
     public void setSearchByProductButton() {
-        System.out.println("Search by product button clicked");
-
         userInput = mainScreenSearchByProduct.getText();
 
         /**
@@ -233,14 +213,9 @@ public class MainScreenController implements Initializable {
          */
         if (userInput.matches("^[a-zA-Z0-9]*$") && !userInput.isEmpty()) {
             try {
-                System.out.println("attempting to search by part ID, checking input");
                 userInputAsInt = Integer.parseInt(userInput); // testing to see if it will throw an error
                 productTableView.setItems(searchByProductID(userInputAsInt));
-
-
             } catch (NumberFormatException e) {
-                System.out.println("Not an int, searching by part name instead of ID");
-
                 /**
                  * error thrown when attempting to parse input aas an int
                  * searching via name with string as input instead
@@ -333,7 +308,6 @@ public class MainScreenController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         /**
          * sets attributes for both tables on main screen
          */

@@ -64,18 +64,14 @@ public class AddProductScreenController implements Initializable {
          * save product button handler
          */
         public void setSaveButton(ActionEvent event){
-                int productID = idGenerator();
                 String productName = prodNameField.getText();
                 int productInv = Integer.parseInt(prodInvField.getText());
                 double productPrice = Double.parseDouble(prodPriceField.getText());
                 int productInvMin = Integer.parseInt(prodInvMaxField.getText());
                 int productInvMax = Integer.parseInt(prodInvMinField.getText());
 
-                newProduct = new Product(productID, productName, productPrice, productInv, productInvMin, productInvMax);
+                newProduct = new Product(idGenerator(), productName, productPrice, productInv, productInvMin, productInvMax);
                 addProduct(newProduct);
-
-                System.out.println("name of product added: \"" + newProduct.getProductName() + "\"");
-                System.out.println("list of associated parts: ");
 
                 for (Part p : newProduct.getAllAssociatedParts()){
                         System.out.println(p.getPartName());
@@ -84,9 +80,10 @@ public class AddProductScreenController implements Initializable {
                 mainScreenController.windowManager(event, "MainScreen.fxml", MainScreenController.MAIN_SCREEN_TITLE);
         }
 
+        /**
+         * search button handler
+         */
         public void setSearchButton(){
-                System.out.println("add product search button clicked");
-
                 userInput = searchField.getText();
 
                 /**
@@ -95,13 +92,10 @@ public class AddProductScreenController implements Initializable {
                  * if an error is thrown then the catch will run and search by part name
                  */
                 try {
-                        System.out.println("attempting to search by part ID, checking input");
                         int userInputAsInt = Integer.parseInt(userInput); // testing to see if it will throw an error
                         partTableView.setItems(searchByPartID(userInputAsInt));
 
                 } catch (NumberFormatException e) {
-                        System.out.println("Not an int, searching by part name instead of ID");
-
                         /**
                          * error thrown when attempting to parse input aas an int
                          * searching via name with string as input instead
@@ -115,21 +109,23 @@ public class AddProductScreenController implements Initializable {
          * populate associated parts list as items are added
          */
         public void setAddButton(){
-                System.out.println("Add part to associated parts button clicked");
-
                 try {
                         Part selection = partTableView.getSelectionModel().getSelectedItem();
-                        System.out.println("adding \"" + selection.getPartName() + "\" to your list of parts associated with this product");
-                        System.out.println("selection: " + selection);
 
                         newProduct.addAssociatedPart(selection);
-
                         assocPartTableView.setItems(newProduct.getAllAssociatedParts());
                         filteredSearchList.remove(selection);
 
+                        /**
+                         * clears selections to prevent multiple simultaneous deletes
+                         */
                         assocPartTableView.getSelectionModel().clearSelection();
                         partTableView.getSelectionModel().clearSelection();
                 } catch (NullPointerException e) {
+                        /**
+                         * throws exception if nothing is selected
+                         * will alert user with popup
+                         */
                         ErrorHandling.errorAlert(1);
                 }
         }
@@ -140,9 +136,7 @@ public class AddProductScreenController implements Initializable {
         public void setDeleteButton(){
 
                 try {
-                        System.out.println("Delete part from associated parts button clicked");
                         Part selection = assocPartTableView.getSelectionModel().getSelectedItem(); // select from associated parts list
-                        System.out.println("removing \"" + selection.getPartName() + "\" from your list of parts associated with this product");
 
                         newProduct.deleteAssociatedPart(selection);
 
@@ -158,7 +152,6 @@ public class AddProductScreenController implements Initializable {
         }
 
         public void setCancelButton(ActionEvent event) {
-                System.out.println("Add product cancel button clicked. Going back to main.");
                 mainScreenController.windowManager(event, "MainScreen.fxml", MainScreenController.MAIN_SCREEN_TITLE);
         }
 

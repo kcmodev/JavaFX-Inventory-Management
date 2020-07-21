@@ -18,7 +18,11 @@ public class Product {
      * product constructor
      */public Product(int productID, String productName, double productPrice,
                    int productInvLevel, int productInvMin, int productInvMax) {
-        this.productID = productID; // product ID is unique and can't be changed by the user
+        /**
+         * product ID is unique and can't be changed by the user
+         * is assigned by the Inventory.idGenerator method
+         */
+        this.productID = productID;
         this.productName = productName;
         this.productPrice = productPrice;
         this.productInvLevel = productInvLevel;
@@ -35,9 +39,7 @@ public class Product {
 
     public static void deleteAssociatedPart(Part part){ associatedParts.remove(part);}
 
-    public int getProductID() {
-        return productID;
-    }
+    public int getProductID() {return productID; }
 
     public void setProductID(int productID) {
         this.productID = productID;

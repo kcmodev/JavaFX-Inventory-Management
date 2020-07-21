@@ -56,11 +56,13 @@ public class ModifyProductScreenController implements Initializable {
     @FXML private TextField modProductInvMinTextField;
     @FXML private TextField searchField;
 
+    /**
+     * method takes a product object from MainScreenController and uses it to fill the text fields
+     */
     public void setTextFields(Product product){
         modifiedProduct = product;
         filteredSearchList.clear(); // resets filtered list every time modify product is called
         eligibleParts.setAll(Inventory.getAllParts());
-        System.out.println("variables assigned");
 
         /**
          * loop through all parts to find matches in associated parts
@@ -92,6 +94,9 @@ public class ModifyProductScreenController implements Initializable {
 
     public void setModProductSave(ActionEvent event) {
 
+        /**
+         * set attributes for modified product
+         */
         modifiedProduct.setProductID(Integer.parseInt(modProductIDTextField.getText()));
         modifiedProduct.setProductName(modProductNameTextField.getText());
         modifiedProduct.setProductInvLevel(Integer.parseInt(modProductInventoryTextField.getText()));
@@ -99,15 +104,21 @@ public class ModifyProductScreenController implements Initializable {
         modifiedProduct.setProductInvMax(Integer.parseInt(modProductInvMaxTextField.getText()));
         modifiedProduct.setProductInvMin(Integer.parseInt(modProductInvMinTextField.getText()));
 
+        /**
+         * replace unmodified product with newly modified product
+         */
         Inventory.modifyProduct(modifiedProduct);
 
         mainScreenController.windowManager(event, "MainScreen.fxml", mainScreenController.MAIN_SCREEN_TITLE);
     }
 
+    /**
+     * method adds parts to the associated parts table and list
+     * also removes said part from the list of eligible parts
+     */
     public void setModProductAdd() {
         try {
             Part selection = partTableView.getSelectionModel().getSelectedItem();
-            System.out.println("adding \"" + selection.getPartName() + "\" to your list of parts associated with this product");
 
             modifiedProduct.addAssociatedPart(selection);// add item to list of associated parts
             assocPartTableView.setItems(modifiedProduct.getAllAssociatedParts()); // update list of assoc parts on table view
@@ -125,14 +136,16 @@ public class ModifyProductScreenController implements Initializable {
         }
     }
 
+    /**
+     * method removes parts from the associated parts table and list
+     * also adds said parts back to the eligible parts list
+     */
     public void setModProductDelete() {
         try {
             Part selection = assocPartTableView.getSelectionModel().getSelectedItem(); // select from associated parts list
-            System.out.println("removing \"" + selection.getPartName() + "\" from your list of parts associated with this product");
 
             modifiedProduct.deleteAssociatedPart(selection); // remove selected item from the list
             assocPartTableView.setItems(modifiedProduct.getAllAssociatedParts()); // reset associated parts list
-
             eligibleParts.add(selection); // add removed part back to the filtered list
             partTableView.setItems(eligibleParts); // reset display for parts table with filtered list
 
@@ -142,10 +155,17 @@ public class ModifyProductScreenController implements Initializable {
             assocPartTableView.getSelectionModel().clearSelection();
             partTableView.getSelectionModel().clearSelection();
         } catch (NullPointerException e){
+            /**
+             * throws exception if nothing is selected
+             * will alert user with popup
+             */
             ErrorHandling.errorAlert(1);
         }
     }
 
+    /**
+     * handles parts search button
+     */
     public void setModProductPartSearch() {
         userInput = searchField.getText();
 
@@ -170,9 +190,13 @@ public class ModifyProductScreenController implements Initializable {
         }
     }
 
+    /**
+     * handles cancel button
+     */
     public void setModProductCancel(ActionEvent event) {
         mainScreenController.windowManager(event, "MainScreen.fxml", MainScreenController.MAIN_SCREEN_TITLE);
     }
+
     public void setPartsTableProperties(){
         /**
          * Set values for part id column

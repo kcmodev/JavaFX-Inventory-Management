@@ -48,8 +48,6 @@ public class ModifyPartScreenController {
      * as well as sets the radio button to the appropriate selection according to the part selected
      */
     public void setTextFields(Part part){
-        System.out.println("previous class object type: " + part.getClass());
-
         modPartIDTextField.setText(Integer.toString(part.getPartID()));
         modPartNameTextField.setText(part.getPartName());
         modPartInvTextField.setText(Integer.toString((part.getPartStock())));
@@ -72,13 +70,14 @@ public class ModifyPartScreenController {
     }
 
     /**
-     * save button click handler
+     * save button handler
      */
     public void setModPartSaveButton(ActionEvent event) {
-        System.out.println("mod part save button clicked");
-
-        System.out.println("selected toggle: " + modPartToggleGroup.getSelectedToggle().toString());
-
+        /**
+         * differentiates between in house and outsourced
+         * creates the appropriate object, updates the infor and then
+         * modifies the existing object with the matching part ID
+         */
         if (inHouseRadio.isSelected()){
             InHousePart inHouseMod = new InHousePart();
 
@@ -106,8 +105,6 @@ public class ModifyPartScreenController {
             Inventory.modifyPart(outsourceMod);
         }
 
-        System.out.println("makes it past the if statements");
-
         mainScreenController.windowManager(event, "MainScreen.fxml", mainScreenController.MAIN_SCREEN_TITLE);
     }
 
@@ -116,12 +113,11 @@ public class ModifyPartScreenController {
      * returns user to main screen without any changes
      */
     public void setModPartCancelButton(ActionEvent event) {
-        System.out.println("mod part screen cancel button clicked");
         mainScreenController.windowManager(event, "MainScreen.fxml", MainScreenController.MAIN_SCREEN_TITLE);
     }
 
     /**
-     * the next 2 methods set the label to in house or outsourced
+     * the next 2 methods set the text label to in house or outsourced
      * based on the current radio button selection
      */
     public void setInHouseLabel() {

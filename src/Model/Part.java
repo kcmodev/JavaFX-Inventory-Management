@@ -15,7 +15,11 @@ public abstract class Part {
      */
     public Part(int partID, String partName, double partPrice, int partStock,
                 int partStockMin, int partStockMax) {
-        this.partID = partID; // part ID is unique and can't be changed by the user
+        /**
+         * product ID is unique and can't be changed by the user
+         * is assigned by the Inventory.idGenerator method
+         */
+        this.partID = partID;
         this.partName = new SimpleStringProperty(partName);
         this.partPrice = partPrice;
         this.partStock = partStock;
