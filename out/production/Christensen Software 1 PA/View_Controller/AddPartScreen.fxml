@@ -8,9 +8,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="480.0" prefWidth="379.0" style="-fx-background-color: a9a9a9;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View_Controller.AddPartScreenController">
+<AnchorPane prefHeight="500.0" prefWidth="400.0" style="-fx-background-color: a9a9a9;" stylesheets="@Stylesheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View_Controller.AddPartScreenController">
    <children>
-      <Label fx:id="titleLabel" layoutX="14.0" layoutY="47.0" prefHeight="30.0" prefWidth="90.0" text="Add Part">
+      <Label id="textLabel" fx:id="titleLabel" layoutX="14.0" layoutY="47.0" prefHeight="30.0" prefWidth="90.0" text="Add Part">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
@@ -28,16 +28,16 @@
             <Font size="16.0" />
          </font>
       </RadioButton>
-      <AnchorPane layoutX="38.0" layoutY="90.0" prefHeight="328.0" prefWidth="365.0">
+      <AnchorPane layoutX="59.0" layoutY="86.0" prefHeight="328.0" prefWidth="325.0" AnchorPane.bottomAnchor="86.0">
          <children>
             <AnchorPane layoutY="14.0">
                <children>
-                  <TextField fx:id="partIDTextField" disable="true" layoutX="98.0" prefHeight="37.0" prefWidth="158.0">
+                  <TextField id="textField" fx:id="partIDTextField" disable="true" layoutX="98.0" prefHeight="37.0" prefWidth="158.0" AnchorPane.bottomAnchor="10.0" AnchorPane.topAnchor="10.0">
                      <font>
                         <Font name="System Italic" size="16.0" />
                      </font>
                   </TextField>
-                  <Label layoutY="6.0" prefHeight="20.0" prefWidth="38.0" text="ID">
+                  <Label id="textFieldLabel" layoutY="6.0" prefHeight="20.0" prefWidth="38.0" text="ID">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
@@ -46,12 +46,12 @@
             </AnchorPane>
             <AnchorPane layoutX="-1.0" layoutY="68.0">
                <children>
-                  <TextField fx:id="partNameTextField" disable="true" layoutX="100.0" prefHeight="37.0" prefWidth="158.0" promptText="Enter Part Name">
+                  <TextField id="textField" fx:id="partNameTextField" disable="true" layoutX="100.0" prefHeight="37.0" prefWidth="158.0" promptText="Enter Part Name" AnchorPane.bottomAnchor="10.0" AnchorPane.topAnchor="10.0">
                      <font>
                         <Font name="System Italic" size="16.0" />
                      </font>
                   </TextField>
-                  <Label layoutY="6.0" prefHeight="25.0" prefWidth="53.0" text="Name">
+                  <Label id="textFieldLabel" layoutY="6.0" prefHeight="25.0" prefWidth="53.0" text="Name">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
@@ -60,12 +60,12 @@
             </AnchorPane>
             <AnchorPane layoutX="-2.0" layoutY="113.0">
                <children>
-                  <TextField fx:id="partInvTextField" disable="true" layoutX="100.0" prefHeight="37.0" prefWidth="158.0" promptText="Enter Inv. Level">
+                  <TextField id="textField" fx:id="partInvTextField" disable="true" layoutX="100.0" prefHeight="37.0" prefWidth="158.0" promptText="Enter Inv. Level" AnchorPane.bottomAnchor="10.0" AnchorPane.topAnchor="10.0">
                      <font>
                         <Font name="System Italic" size="16.0" />
                      </font>
                   </TextField>
-                  <Label layoutY="6.0" prefHeight="25.0" prefWidth="79.0" text="Inventory">
+                  <Label id="textFieldLabel" layoutY="6.0" prefHeight="25.0" prefWidth="79.0" text="Inventory">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
@@ -74,12 +74,12 @@
             </AnchorPane>
             <AnchorPane layoutX="-1.0" layoutY="162.0">
                <children>
-                  <TextField fx:id="partPriceTextField" disable="true" layoutX="100.0" prefHeight="37.0" prefWidth="158.0" promptText="Enter Price">
+                  <TextField id="textField" fx:id="partPriceTextField" disable="true" layoutX="100.0" prefHeight="37.0" prefWidth="158.0" promptText="Enter Price" AnchorPane.bottomAnchor="10.0" AnchorPane.topAnchor="10.0">
                      <font>
                         <Font name="System Italic" size="16.0" />
                      </font>
                   </TextField>
-                  <Label layoutY="6.0" prefHeight="25.0" prefWidth="79.0" text="Price">
+                  <Label id="textFieldLabel" layoutY="6.0" prefHeight="25.0" prefWidth="79.0" text="Price">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
@@ -88,17 +88,17 @@
             </AnchorPane>
             <AnchorPane layoutY="214.0" prefHeight="37.0" prefWidth="256.0">
                <children>
-                  <TextField fx:id="partInvMaxTextField" disable="true" layoutX="100.0" prefHeight="37.0" prefWidth="66.0" promptText="Max">
+                  <TextField id="textField" fx:id="partInvMaxTextField" disable="true" layoutX="100.0" prefHeight="37.0" prefWidth="66.0" promptText="Max" AnchorPane.bottomAnchor="10.0" AnchorPane.topAnchor="10.0">
                      <font>
                         <Font name="System Italic" size="16.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="partInvMinTextField" disable="true" layoutX="190.0" prefHeight="37.0" prefWidth="66.0" promptText="Min">
+                  <TextField id="textField" fx:id="partInvMinTextField" disable="true" layoutX="190.0" prefHeight="37.0" prefWidth="66.0" promptText="Min" AnchorPane.bottomAnchor="10.0" AnchorPane.topAnchor="10.0">
                      <font>
                         <Font name="System Italic" size="16.0" />
                      </font>
                   </TextField>
-                  <Label layoutY="6.0" prefHeight="25.0" prefWidth="79.0" text="Inv. Level">
+                  <Label id="textFieldLabel" layoutY="6.0" prefHeight="25.0" prefWidth="79.0" text="Inv. Level">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
@@ -107,12 +107,12 @@
             </AnchorPane>
             <AnchorPane layoutY="265.0">
                <children>
-                  <TextField fx:id="changedLabelTextField" disable="true" layoutX="98.0" prefHeight="37.0" prefWidth="158.0">
+                  <TextField id="textField" fx:id="changedLabelTextField" disable="true" layoutX="98.0" prefHeight="37.0" prefWidth="158.0" AnchorPane.bottomAnchor="10.0" AnchorPane.topAnchor="10.0">
                      <font>
                         <Font name="System Italic" size="16.0" />
                      </font>
                   </TextField>
-                  <Label fx:id="textFieldLabel" layoutY="6.0" prefHeight="25.0" prefWidth="97.0" text="-" textAlignment="CENTER">
+                  <Label id="textFieldLabel" fx:id="textFieldLabel" layoutY="6.0" prefHeight="25.0" prefWidth="97.0" text="-" textAlignment="CENTER">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
@@ -121,12 +121,12 @@
             </AnchorPane>
          </children>
       </AnchorPane>
-      <Button fx:id="addPartScreenCancelButton" layoutX="297.0" layoutY="418.0" mnemonicParsing="false" onAction="#setAddPartScreenCancelButton" prefHeight="37.0" prefWidth="66.0" text="Cancel">
+      <Button id="button" fx:id="addPartScreenCancelButton" layoutX="297.0" layoutY="437.0" mnemonicParsing="false" onAction="#setAddPartScreenCancelButton" prefHeight="37.0" prefWidth="66.0" text="Cancel">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <Button fx:id="addPartScreenSaveButton" disable="true" layoutX="220.0" layoutY="418.0" mnemonicParsing="false" onAction="#partScreenSaveButton" prefHeight="37.0" prefWidth="66.0" text="Save">
+      <Button id="button" fx:id="addPartScreenSaveButton" disable="true" layoutX="221.0" layoutY="437.0" mnemonicParsing="false" onAction="#partScreenSaveButton" prefHeight="37.0" prefWidth="66.0" text="Save">
          <font>
             <Font size="14.0" />
          </font>

@@ -11,22 +11,22 @@
 
 <AnchorPane prefHeight="497.0" prefWidth="685.0" style="-fx-background-color: a9a9a9;" styleClass="root" stylesheets="@Stylesheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View_Controller.AddProductScreenController">
    <children>
-      <Label layoutX="14.0" layoutY="14.0" prefHeight="39.0" prefWidth="112.0" text="Add Product">
+      <Label id="textLabel" layoutX="14.0" layoutY="14.0" prefHeight="39.0" prefWidth="112.0" text="Add Product">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Label>
       <AnchorPane id="menuAnchorPane" fx:id="menuAnchorPane" layoutX="14.0" layoutY="60.0" prefHeight="314.0" prefWidth="266.0">
          <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DARKGRAY" height="328.0" stroke="BLACK" strokeType="OUTSIDE" width="266.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DARKGRAY" height="403.0" layoutX="-2.0" layoutY="-2.0" stroke="BLACK" strokeType="OUTSIDE" width="270.0" />
             <AnchorPane layoutX="14.0" layoutY="42.0">
                <children>
-                  <Label layoutY="2.0" prefHeight="24.0" prefWidth="57.0" text="ID">
+                  <Label id="textFieldLabel" layoutY="2.0" prefHeight="24.0" prefWidth="57.0" text="ID">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="prodIDField" disable="true" layoutX="57.0" layoutY="-4.0" prefHeight="32.0" prefWidth="158.0" promptText="ID Generated">
+                  <TextField id="textField" fx:id="prodIDField" disable="true" layoutX="57.0" layoutY="-4.0" prefHeight="32.0" prefWidth="158.0" promptText="ID Generated">
                      <font>
                         <Font name="System Italic" size="16.0" />
                      </font>
@@ -35,12 +35,12 @@
             </AnchorPane>
             <AnchorPane layoutX="14.0" layoutY="91.0">
                <children>
-                  <Label layoutY="2.0" prefHeight="24.0" prefWidth="57.0" text="Name">
+                  <Label id="textFieldLabel" layoutY="2.0" prefHeight="24.0" prefWidth="57.0" text="Name">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="prodNameField" layoutX="57.0" layoutY="-2.0" prefHeight="32.0" prefWidth="158.0" promptText="Enter Product Name">
+                  <TextField id="textField" fx:id="prodNameField" layoutX="57.0" layoutY="-2.0" prefHeight="32.0" prefWidth="158.0" promptText="Enter Product Name">
                      <font>
                         <Font name="System Italic" size="16.0" />
                      </font>
@@ -49,12 +49,12 @@
             </AnchorPane>
             <AnchorPane layoutX="14.0" layoutY="148.0">
                <children>
-                  <Label layoutY="2.0" prefHeight="24.0" prefWidth="57.0" text="Inv">
+                  <Label id="textFieldLabel" layoutY="2.0" prefHeight="24.0" prefWidth="57.0" text="Inv">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="prodInvField" layoutX="57.0" layoutY="-4.0" prefHeight="32.0" prefWidth="158.0" promptText="Enter # in Inventory">
+                  <TextField id="textField" fx:id="prodInvField" layoutX="57.0" layoutY="-4.0" prefHeight="32.0" prefWidth="158.0" promptText="Enter # in Inventory">
                      <font>
                         <Font name="System Italic" size="16.0" />
                      </font>
@@ -63,12 +63,12 @@
             </AnchorPane>
             <AnchorPane layoutX="14.0" layoutY="205.0">
                <children>
-                  <Label layoutY="2.0" prefHeight="24.0" prefWidth="57.0" text="Price">
+                  <Label id="textFieldLabel" layoutY="2.0" prefHeight="24.0" prefWidth="57.0" text="Price">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="prodPriceField" layoutX="57.0" layoutY="-4.0" prefHeight="32.0" prefWidth="158.0" promptText="Enter Price">
+                  <TextField id="textField" fx:id="prodPriceField" layoutX="57.0" layoutY="-4.0" prefHeight="32.0" prefWidth="158.0" promptText="Enter Price">
                      <font>
                         <Font name="System Italic" size="16.0" />
                      </font>
@@ -77,23 +77,25 @@
             </AnchorPane>
             <AnchorPane layoutX="14.0" layoutY="258.0" prefHeight="33.0" prefWidth="215.0">
                <children>
-                  <Label layoutY="2.0" prefHeight="24.0" prefWidth="57.0" text="Inv">
+                  <Label id="textFieldLabel" layoutY="2.0" prefHeight="24.0" prefWidth="57.0" text="Inv">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="prodInvMaxField" layoutX="57.0" layoutY="-4.0" prefHeight="37.0" prefWidth="57.0" promptText="Max">
+                  <TextField id="textField" fx:id="prodInvMaxField" layoutX="57.0" layoutY="-4.0" prefHeight="37.0" prefWidth="57.0" promptText="Max">
                      <font>
                         <Font name="System Italic" size="16.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="prodInvMinField" layoutX="158.0" layoutY="-4.0" prefHeight="37.0" prefWidth="57.0" promptText="Min">
+                  <TextField id="textField" fx:id="prodInvMinField" layoutX="158.0" layoutY="-4.0" prefHeight="37.0" prefWidth="57.0" promptText="Min">
                      <font>
                         <Font name="System Italic" size="16.0" />
                      </font>
                   </TextField>
                </children>
             </AnchorPane>
+            <Button id="button" fx:id="cancelButton" layoutX="87.0" layoutY="344.0" mnemonicParsing="false" onAction="#setCancelButton" prefHeight="32.0" prefWidth="70.0" text="Cancel" />
+            <Button id="button" fx:id="saveButton" layoutX="14.0" layoutY="343.0" mnemonicParsing="false" onAction="#setSaveButton" prefHeight="34.0" prefWidth="70.0" text="Save" />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="308.0" layoutY="60.0" prefHeight="204.0" prefWidth="347.0">
@@ -108,7 +110,7 @@
             </TableView>
          </children>
       </AnchorPane>
-      <Button layoutX="579.0" layoutY="225.0" mnemonicParsing="false" onAction="#setAddButton" prefHeight="32.0" prefWidth="70.0" text="Add" />
+      <Button id="button" layoutX="579.0" layoutY="225.0" mnemonicParsing="false" onAction="#setAddButton" prefHeight="32.0" prefWidth="70.0" text="Add" />
       <AnchorPane layoutX="308.0" layoutY="257.0" prefHeight="204.0" prefWidth="347.0">
          <children>
             <TableView fx:id="assocPartTableView" layoutX="3.0" layoutY="24.0" prefHeight="157.0" prefWidth="341.0">
@@ -119,7 +121,7 @@
                   <TableColumn fx:id="assocPartPriceTableCol" prefWidth="81.0" text="Price / Unit" />
                </columns>
             </TableView>
-            <Button fx:id="deleteButton" layoutX="274.0" layoutY="187.0" mnemonicParsing="false" onAction="#setDeleteButton" prefHeight="32.0" prefWidth="70.0" text="Delete" />
+            <Button id="button" fx:id="deleteButton" layoutX="274.0" layoutY="187.0" mnemonicParsing="false" onAction="#setDeleteButton" prefHeight="32.0" prefWidth="70.0" text="Delete" />
             <Label layoutX="5.0" layoutY="-4.0" prefHeight="25.0" prefWidth="131.0" text="Associated Parts:">
                <font>
                   <Font name="System Bold" size="16.0" />
@@ -127,13 +129,11 @@
             </Label>
          </children>
       </AnchorPane>
-      <TextField fx:id="searchField" layoutX="354.0" layoutY="15.0" prefHeight="32.0" prefWidth="207.0" promptText="Search all parts">
+      <TextField id="textField" fx:id="searchField" layoutX="354.0" layoutY="15.0" prefHeight="32.0" prefWidth="207.0" promptText="Search all parts">
          <font>
             <Font name="System Italic" size="16.0" />
          </font>
       </TextField>
-      <Button layoutX="579.0" layoutY="14.0" mnemonicParsing="false" onAction="#setSearchButton" prefHeight="37.0" prefWidth="70.0" text="Search" />
-      <Button fx:id="saveButton" layoutX="21.0" layoutY="434.0" mnemonicParsing="false" onAction="#setSaveButton" prefHeight="34.0" prefWidth="70.0" text="Save" />
-      <Button fx:id="cancelButton" layoutX="102.0" layoutY="434.0" mnemonicParsing="false" onAction="#setCancelButton" prefHeight="32.0" prefWidth="70.0" text="Cancel" />
+      <Button id="button" layoutX="579.0" layoutY="14.0" mnemonicParsing="false" onAction="#setSearchButton" prefHeight="37.0" prefWidth="70.0" text="Search" />
    </children>
 </AnchorPane>

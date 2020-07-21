@@ -108,7 +108,8 @@ public class Product {
             throw new ValidationException("Inventory level must be between min and max");
 
         } else if (getProductPrice() < totalPartCost){
-            throw new ValidationException("You can't sell the cost of the product for less than the cost of parts.");
+            throw new ValidationException("You can't sell the cost of the product for less than the cost of parts." +
+                    "please ensure your price is at least $" + totalPartCost);
         }
     }
 }

@@ -9,24 +9,24 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="479.0" prefWidth="674.0" style="-fx-background-color: a9a9a9;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View_Controller.ModifyProductScreenController">
+<AnchorPane prefHeight="493.0" prefWidth="683.0" style="-fx-background-color: a9a9a9;" stylesheets="@Stylesheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View_Controller.ModifyProductScreenController">
     <children>
-        <Label layoutX="14.0" layoutY="14.0" prefHeight="39.0" prefWidth="131.0" text="Modify Product">
+        <Label id="textLabel" layoutX="14.0" layoutY="14.0" prefHeight="39.0" prefWidth="158.0" text="Modify Product">
             <font>
                 <Font name="System Bold" size="16.0" />
             </font>
         </Label>
         <AnchorPane id="menuAnchorPane" fx:id="menuAnchorPane" layoutX="14.0" layoutY="60.0" prefHeight="314.0" prefWidth="266.0">
             <children>
-                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DARKGRAY" height="328.0" stroke="BLACK" strokeType="OUTSIDE" width="266.0" />
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DARKGRAY" height="389.0" layoutX="-3.0" layoutY="-3.0" stroke="BLACK" strokeType="OUTSIDE" width="272.0" />
                 <AnchorPane layoutX="14.0" layoutY="42.0">
                     <children>
-                        <Label layoutY="2.0" prefHeight="24.0" prefWidth="57.0" text="ID">
+                        <Label id="textFieldLabel" layoutY="2.0" prefHeight="24.0" prefWidth="57.0" text="ID">
                             <font>
                                 <Font name="System Bold" size="16.0" />
                             </font>
                         </Label>
-                        <TextField fx:id="modProductIDTextField" disable="true" layoutX="57.0" layoutY="-4.0" prefHeight="32.0" prefWidth="158.0" promptText="Enter Product ID">
+                        <TextField id="textField" fx:id="modProductIDTextField" disable="true" layoutX="57.0" layoutY="-4.0" prefHeight="32.0" prefWidth="158.0" promptText="Enter Product ID">
                             <font>
                                 <Font name="System Italic" size="16.0" />
                             </font>
@@ -35,12 +35,12 @@
                 </AnchorPane>
                 <AnchorPane layoutX="14.0" layoutY="81.0">
                     <children>
-                        <Label layoutY="2.0" prefHeight="24.0" prefWidth="57.0" text="Name">
+                        <Label id="textFieldLabel" layoutY="2.0" prefHeight="24.0" prefWidth="57.0" text="Name">
                             <font>
                                 <Font name="System Bold" size="16.0" />
                             </font>
                         </Label>
-                        <TextField fx:id="modProductNameTextField" layoutX="57.0" layoutY="-2.0" prefHeight="32.0" prefWidth="158.0" promptText="Enter Product Name">
+                        <TextField id="textField" fx:id="modProductNameTextField" layoutX="57.0" layoutY="-2.0" prefHeight="32.0" prefWidth="158.0" promptText="Enter Product Name">
                             <font>
                                 <Font name="System Italic" size="16.0" />
                             </font>
@@ -49,12 +49,12 @@
                 </AnchorPane>
                 <AnchorPane layoutX="14.0" layoutY="124.0">
                     <children>
-                        <Label layoutY="2.0" prefHeight="24.0" prefWidth="57.0" text="Inv">
+                        <Label id="textFieldLabel" layoutY="2.0" prefHeight="24.0" prefWidth="57.0" text="Inv">
                             <font>
                                 <Font name="System Bold" size="16.0" />
                             </font>
                         </Label>
-                        <TextField fx:id="modProductInventoryTextField" layoutX="57.0" layoutY="-4.0" prefHeight="32.0" prefWidth="158.0" promptText="Enter # in Inventory">
+                        <TextField id="textField" fx:id="modProductInventoryTextField" layoutX="57.0" layoutY="-4.0" prefHeight="32.0" prefWidth="158.0" promptText="Enter # in Inventory">
                             <font>
                                 <Font name="System Italic" size="16.0" />
                             </font>
@@ -63,12 +63,12 @@
                 </AnchorPane>
                 <AnchorPane layoutX="14.0" layoutY="164.0">
                     <children>
-                        <Label layoutY="2.0" prefHeight="24.0" prefWidth="57.0" text="Price">
+                        <Label id="textFieldLabel" layoutY="2.0" prefHeight="24.0" prefWidth="57.0" text="Price">
                             <font>
                                 <Font name="System Bold" size="16.0" />
                             </font>
                         </Label>
-                        <TextField fx:id="modProductPriceTextField" layoutX="57.0" layoutY="-4.0" prefHeight="32.0" prefWidth="158.0" promptText="Enter Price">
+                        <TextField id="textField" fx:id="modProductPriceTextField" layoutX="57.0" layoutY="-4.0" prefHeight="32.0" prefWidth="158.0" promptText="Enter Price">
                             <font>
                                 <Font name="System Italic" size="16.0" />
                             </font>
@@ -77,23 +77,25 @@
                 </AnchorPane>
                 <AnchorPane layoutX="14.0" layoutY="205.0" prefHeight="33.0" prefWidth="215.0">
                     <children>
-                        <Label layoutY="2.0" prefHeight="24.0" prefWidth="57.0" text="Inv">
+                        <Label id="textFieldLabel" layoutY="2.0" prefHeight="24.0" prefWidth="57.0" text="Inv">
                             <font>
                                 <Font name="System Bold" size="16.0" />
                             </font>
                         </Label>
-                        <TextField fx:id="modProductInvMaxTextField" layoutX="57.0" layoutY="-4.0" prefHeight="37.0" prefWidth="57.0" promptText="Max">
+                        <TextField id="textField" fx:id="modProductInvMaxTextField" layoutX="57.0" layoutY="-4.0" prefHeight="37.0" prefWidth="57.0" promptText="Max">
                             <font>
                                 <Font name="System Italic" size="16.0" />
                             </font>
                         </TextField>
-                        <TextField fx:id="modProductInvMinTextField" layoutX="158.0" layoutY="-4.0" prefHeight="37.0" prefWidth="57.0" promptText="Min">
+                        <TextField id="textField" fx:id="modProductInvMinTextField" layoutX="158.0" layoutY="-4.0" prefHeight="37.0" prefWidth="57.0" promptText="Min">
                             <font>
                                 <Font name="System Italic" size="16.0" />
                             </font>
                         </TextField>
                     </children>
                 </AnchorPane>
+                <Button id="button" fx:id="modProductCancel" layoutX="87.0" layoutY="333.0" mnemonicParsing="false" onAction="#setModProductCancel" prefHeight="32.0" prefWidth="70.0" text="Cancel" />
+                <Button id="button" fx:id="modProductSave" layoutX="14.0" layoutY="332.0" mnemonicParsing="false" onAction="#setModProductSave" prefHeight="34.0" prefWidth="70.0" text="Save" />
             </children>
         </AnchorPane>
         <AnchorPane layoutX="308.0" layoutY="60.0" prefHeight="204.0" prefWidth="347.0">
@@ -106,10 +108,10 @@
                         <TableColumn fx:id="partPriceTableCol" prefWidth="81.0" text="Price / Unit" />
                     </columns>
                 </TableView>
-              <Button fx:id="modProductAdd" layoutX="271.0" layoutY="157.0" mnemonicParsing="false" onAction="#setModProductAdd" prefHeight="32.0" prefWidth="70.0" text="Add" />
+              <Button id="button" fx:id="modProductAdd" layoutX="271.0" layoutY="165.0" mnemonicParsing="false" onAction="#setModProductAdd" prefHeight="32.0" prefWidth="70.0" text="Add" />
             </children>
         </AnchorPane>
-        <AnchorPane layoutX="305.0" layoutY="257.0" prefHeight="204.0" prefWidth="347.0">
+        <AnchorPane layoutX="305.0" layoutY="264.0" prefHeight="204.0" prefWidth="347.0">
             <children>
                 <TableView fx:id="assocPartTableView" layoutX="3.0" layoutY="24.0" prefHeight="157.0" prefWidth="341.0">
                     <columns>
@@ -124,16 +126,14 @@
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
-                <Button fx:id="modProductDelete" layoutX="274.0" layoutY="180.0" mnemonicParsing="false" onAction="#setModProductDelete" prefHeight="32.0" prefWidth="70.0" text="Delete" />
+                <Button id="button" fx:id="modProductDelete" layoutX="274.0" layoutY="189.0" mnemonicParsing="false" onAction="#setModProductDelete" prefHeight="32.0" prefWidth="70.0" text="Delete" />
             </children>
         </AnchorPane>
-        <TextField fx:id="searchField" layoutX="375.0" layoutY="14.0" prefHeight="32.0" prefWidth="207.0" promptText="Search all parts">
+        <TextField id="textField" fx:id="searchField" layoutX="363.0" layoutY="12.0" prefHeight="33.0" prefWidth="207.0" promptText="Search all parts">
             <font>
                 <Font name="System Italic" size="16.0" />
             </font>
         </TextField>
-        <Button fx:id="modProductPartSearch" layoutX="579.0" layoutY="14.0" mnemonicParsing="false" onAction="#setModProductPartSearch" prefHeight="37.0" prefWidth="70.0" text="Search" />
-          <Button fx:id="modProductSave" layoutX="14.0" layoutY="427.0" mnemonicParsing="false" onAction="#setModProductSave" prefHeight="34.0" prefWidth="70.0" text="Save" />
-          <Button fx:id="modProductCancel" layoutX="91.0" layoutY="428.0" mnemonicParsing="false" onAction="#setModProductCancel" prefHeight="32.0" prefWidth="70.0" text="Cancel" />
+        <Button id="button" fx:id="modProductPartSearch" layoutX="579.0" layoutY="14.0" mnemonicParsing="false" onAction="#setModProductPartSearch" prefHeight="37.0" prefWidth="70.0" text="Search" />
     </children>
 </AnchorPane>

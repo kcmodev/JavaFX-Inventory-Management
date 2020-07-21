@@ -9,24 +9,40 @@
     divider-color: #BDBDBD;
 }
 
-.button {
+#button {
     -fx-font-size: 12px;
-    -fx-padding: 10;
+    -fx-padding: 8;
     -fx-pref-height: 30;
     -fx-pref-width: 70;
 }
 
-.TextField {
-    -fx-pref-height: 35;
-    -fx-pref-width: 185;
+#textField {
+    -fx-font-size: 16px;
+    -fx-pref-height: 28;
 }
 
 .root {
     -fx-background-color: default-primary-color;
 }
 
-.rectangle {
+#anchor {
+    -fx-background-color: default-primary-color;
+}
+
+#rectangle {
     -fx-fill: default-primary-color;
+    -fx-stroke-line-cap: round;
+    -fx-stroke-type: outside;
+}
+
+#textLabel {
+    -fx-font-size: 18;
+    -fx-font-weight: bold;
+}
+
+#textFieldLabel {
+    -fx-font-size: 16;
+    -fx-font-weight: bold;
 }
 
 

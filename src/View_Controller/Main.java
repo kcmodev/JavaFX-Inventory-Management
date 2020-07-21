@@ -16,6 +16,7 @@ public class Main extends Application {
         primaryStage.setTitle(MainScreenController.MAIN_SCREEN_TITLE);
         primaryStage.setScene(new Scene(root));
         Inventory initData = new Inventory(); // call inventory constructor to initialize data to table doesn't start blank
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 
