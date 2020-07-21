@@ -10,7 +10,7 @@ public class ErrorHandling {
 
     /**
      * confirmation alert popup handler
-     * passes in string variable to define type of event in the text box
+     * passes in string variable to define text in the text box
      */
     public static final boolean confirmationAlert(String action){
         /**
@@ -27,14 +27,35 @@ public class ErrorHandling {
         Optional<ButtonType> choice = exiting.showAndWait();
 
         if (choice.get() == ButtonType.OK) { // user clicks yes
-            System.out.println("ok clicked in alert popup");
             return true;
 
         } else if (choice.get() == ButtonType.CANCEL){ // user clicks no
-            System.out.println("no selected, closing alert popup");
             exiting.close();
         }
         return false;
+    }
+
+    /**
+     * overloaded error alert popup handler to receive error code
+     * and custom message in alert popup
+     */
+    public static final void errorAlert(int errorCode, String errorText){
+
+        if (errorCode == 1){ // no selection made
+            headerText = "Error";
+            titleText = "No selection made";
+            errorText = "You must make a selection";
+        }
+        if (errorCode == 2){ // invalid input
+            headerText = "Error";
+            titleText = "Invalid input";
+        }
+
+        Alert invalidChoice = new Alert(Alert.AlertType.ERROR);
+        invalidChoice.setHeaderText(headerText);
+        invalidChoice.setTitle(titleText);
+        invalidChoice.setContentText(errorText);
+        invalidChoice.showAndWait();
     }
 
     /**

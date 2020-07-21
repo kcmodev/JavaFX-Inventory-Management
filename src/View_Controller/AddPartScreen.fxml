@@ -126,7 +126,7 @@
             <Font size="14.0" />
          </font>
       </Button>
-      <Button fx:id="addPartScreenSaveButton" layoutX="220.0" layoutY="418.0" mnemonicParsing="false" onAction="#partScreenSaveButton" prefHeight="37.0" prefWidth="66.0" text="Save">
+      <Button fx:id="addPartScreenSaveButton" disable="true" layoutX="220.0" layoutY="418.0" mnemonicParsing="false" onAction="#partScreenSaveButton" prefHeight="37.0" prefWidth="66.0" text="Save">
          <font>
             <Font size="14.0" />
          </font>

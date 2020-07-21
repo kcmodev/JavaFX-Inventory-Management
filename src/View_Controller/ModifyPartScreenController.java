@@ -1,9 +1,6 @@
 package View_Controller;
 
-import Model.InHousePart;
-import Model.Inventory;
-import Model.OutsourcedPart;
-import Model.Part;
+import Model.*;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,6 +8,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+
+import javax.xml.bind.ValidationException;
 
 
 public class ModifyPartScreenController {
@@ -78,34 +77,43 @@ public class ModifyPartScreenController {
          * creates the appropriate object, updates the infor and then
          * modifies the existing object with the matching part ID
          */
-        if (inHouseRadio.isSelected()){
-            InHousePart inHouseMod = new InHousePart();
+        try {
+            if (inHouseRadio.isSelected()) {
+                InHousePart inHouseMod = new InHousePart();
 
-            inHouseMod.setPartID(Integer.parseInt(modPartIDTextField.getText()));
-            inHouseMod.setPartName(modPartNameTextField.getText());
-            inHouseMod.setPartStock(Integer.parseInt(modPartInvTextField.getText()));
-            inHouseMod.setPartPrice(Double.parseDouble(modPartPriceTextField.getText()));
-            inHouseMod.setPartStockMax(Integer.parseInt(modPartInvMaxTextField.getText()));
-            inHouseMod.setPartStockMin(Integer.parseInt(modPartInvMinTextField.getText()));
-            inHouseMod.setPartMachineID(Integer.parseInt(modPartChangedTextField.getText()));
+                inHouseMod.setPartID(Integer.parseInt(modPartIDTextField.getText()));
+                inHouseMod.setPartName(modPartNameTextField.getText());
+                inHouseMod.setPartStock(Integer.parseInt(modPartInvTextField.getText()));
+                inHouseMod.setPartPrice(Double.parseDouble(modPartPriceTextField.getText()));
+                inHouseMod.setPartStockMax(Integer.parseInt(modPartInvMaxTextField.getText()));
+                inHouseMod.setPartStockMin(Integer.parseInt(modPartInvMinTextField.getText()));
+                inHouseMod.setPartMachineID(Integer.parseInt(modPartChangedTextField.getText()));
 
-            Inventory.modifyPart(inHouseMod);
+                inHouseMod.partValidation();
+                Inventory.modifyPart(inHouseMod);
+                mainScreenController.windowManager(event, "MainScreen.fxml", mainScreenController.MAIN_SCREEN_TITLE);
 
-        } else if (outsourcedRadio.isSelected()){
-            OutsourcedPart outsourceMod = new OutsourcedPart();
+            } else if (outsourcedRadio.isSelected()) {
+                OutsourcedPart outsourceMod = new OutsourcedPart();
 
-            outsourceMod.setPartID(Integer.parseInt(modPartIDTextField.getText()));
-            outsourceMod.setPartName(modPartNameTextField.getText());
-            outsourceMod.setPartStock(Integer.parseInt(modPartInvTextField.getText()));
-            outsourceMod.setPartPrice(Double.parseDouble(modPartPriceTextField.getText()));
-            outsourceMod.setPartStockMax(Integer.parseInt(modPartInvMaxTextField.getText()));
-            outsourceMod.setPartStockMin(Integer.parseInt(modPartInvMinTextField.getText()));
-            outsourceMod.setCompanyName(modPartChangedTextField.getText());
+                outsourceMod.setPartID(Integer.parseInt(modPartIDTextField.getText()));
+                outsourceMod.setPartName(modPartNameTextField.getText());
+                outsourceMod.setPartStock(Integer.parseInt(modPartInvTextField.getText()));
+                outsourceMod.setPartPrice(Double.parseDouble(modPartPriceTextField.getText()));
+                outsourceMod.setPartStockMax(Integer.parseInt(modPartInvMaxTextField.getText()));
+                outsourceMod.setPartStockMin(Integer.parseInt(modPartInvMinTextField.getText()));
+                outsourceMod.setCompanyName(modPartChangedTextField.getText());
 
-            Inventory.modifyPart(outsourceMod);
+                outsourceMod.partValidation();
+                Inventory.modifyPart(outsourceMod);
+                mainScreenController.windowManager(event, "MainScreen.fxml", mainScreenController.MAIN_SCREEN_TITLE);
+            }
+        } catch (ValidationException e){
+                ErrorHandling.errorAlert(2, e.getMessage());
+        } catch (NumberFormatException e){
+                ErrorHandling.errorAlert(2, "Please enter valid input");
+                e.getStackTrace();
         }
-
-        mainScreenController.windowManager(event, "MainScreen.fxml", mainScreenController.MAIN_SCREEN_TITLE);
     }
 
     /**
@@ -113,7 +121,9 @@ public class ModifyPartScreenController {
      * returns user to main screen without any changes
      */
     public void setModPartCancelButton(ActionEvent event) {
-        mainScreenController.windowManager(event, "MainScreen.fxml", MainScreenController.MAIN_SCREEN_TITLE);
+        if (ErrorHandling.confirmationAlert("cancel all changes and return to the main screen")){
+            mainScreenController.windowManager(event, "MainScreen.fxml", MainScreenController.MAIN_SCREEN_TITLE);
+        }
     }
 
     /**
@@ -128,7 +138,7 @@ public class ModifyPartScreenController {
     public void setOutsourcedLabel() {
         System.out.println("Outsourced radio button selected");
         System.out.println(modPartToggleGroup.getSelectedToggle().toString());
-        setRadioButtonLabels("Company ID", "Enter Company ID");
+        setRadioButtonLabels("Company", "Enter Company Name");
     }
 
     /**

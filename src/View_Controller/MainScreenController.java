@@ -72,7 +72,7 @@ public class MainScreenController implements Initializable {
             newWindow.setTitle(windowTitle);
             newWindow.show();
         } catch (IOException e){
-            System.out.println("Failed to load new window. Goodbye.");
+            System.out.println("Failed to load new window");
             System.exit(-1);
         }
     }
@@ -81,8 +81,7 @@ public class MainScreenController implements Initializable {
      * main screen exit button handler
      */
     public void setExitButtonClicked() {
-        if (ErrorHandling.confirmationAlert("close the program") == true){
-            System.out.println("exiting by choice through popup");
+        if (ErrorHandling.confirmationAlert("close the program")){
             System.exit(1);
         }
     }
@@ -155,7 +154,9 @@ public class MainScreenController implements Initializable {
         if (selectedPart == null){
             ErrorHandling.errorAlert(1);
         } else {
-            deletePart(selectedPart);
+            if (ErrorHandling.confirmationAlert("delete the selected part")) {
+                deletePart(selectedPart);
+            }
         }
         partTableView.getSelectionModel().clearSelection();
     }
@@ -168,7 +169,9 @@ public class MainScreenController implements Initializable {
         if (selectedProduct == null){
             ErrorHandling.errorAlert(1);
         } else {
-            deleteProduct(selectedProduct);
+            if (ErrorHandling.confirmationAlert("delete the selected product")) {
+                deleteProduct(selectedProduct);
+            }
         }
         productTableView.getSelectionModel().clearSelection();
     }

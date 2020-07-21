@@ -16,6 +16,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import javax.xml.bind.ValidationException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -25,10 +26,16 @@ public class ModifyProductScreenController implements Initializable {
 
     static final String MOD_PRODUCT_SCREEN_TITLE = "Modify Product(s)";
     MainScreenController mainScreenController = new MainScreenController();
+
     private Product modifiedProduct;
     private String userInput;
     private ObservableList<Part> filteredSearchList = FXCollections.observableArrayList();
     private ObservableList<Part> eligibleParts = FXCollections.observableArrayList();
+
+    /**
+     * extra list to keep track of changes dynamically in the event the user presses the cancel button
+     */
+    private ObservableList<Part> tempList = FXCollections.observableArrayList();
 
     /**
      * defines structure for add product screen product table
@@ -77,12 +84,12 @@ public class ModifyProductScreenController implements Initializable {
         /**
          * populate text field with imported product
          */
-        modProductIDTextField.setText(Integer.toString(product.getProductID()));
-        modProductNameTextField.setText(product.getProductName());
-        modProductInventoryTextField.setText(Integer.toString((product.getProductInvLevel())));
-        modProductPriceTextField.setText(Double.toString(product.getProductPrice()));
-        modProductInvMaxTextField.setText(Integer.toString(product.getProductInvMax()));
-        modProductInvMinTextField.setText(Integer.toString(product.getProductInvMin()));
+        modProductIDTextField.setText(Integer.toString(modifiedProduct.getProductID()));
+        modProductNameTextField.setText(modifiedProduct.getProductName());
+        modProductInventoryTextField.setText(Integer.toString((modifiedProduct.getProductInvLevel())));
+        modProductPriceTextField.setText(Double.toString(modifiedProduct.getProductPrice()));
+        modProductInvMaxTextField.setText(Integer.toString(modifiedProduct.getProductInvMax()));
+        modProductInvMinTextField.setText(Integer.toString(modifiedProduct.getProductInvMin()));
 
         /**
          * populate associated parts table with imported product
@@ -94,22 +101,38 @@ public class ModifyProductScreenController implements Initializable {
 
     public void setModProductSave(ActionEvent event) {
 
-        /**
-         * set attributes for modified product
-         */
-        modifiedProduct.setProductID(Integer.parseInt(modProductIDTextField.getText()));
-        modifiedProduct.setProductName(modProductNameTextField.getText());
-        modifiedProduct.setProductInvLevel(Integer.parseInt(modProductInventoryTextField.getText()));
-        modifiedProduct.setProductPrice(Double.parseDouble(modProductPriceTextField.getText()));
-        modifiedProduct.setProductInvMax(Integer.parseInt(modProductInvMaxTextField.getText()));
-        modifiedProduct.setProductInvMin(Integer.parseInt(modProductInvMinTextField.getText()));
+        try {
+            /**
+             * set attributes for modified product
+             */
+            modifiedProduct = new Product();
 
-        /**
-         * replace unmodified product with newly modified product
-         */
-        Inventory.modifyProduct(modifiedProduct);
+            modifiedProduct.setProductID(Integer.parseInt(modProductIDTextField.getText()));
+            modifiedProduct.setProductName(modProductNameTextField.getText());
+            modifiedProduct.setProductInvLevel(Integer.parseInt(modProductInventoryTextField.getText()));
+            modifiedProduct.setProductPrice(Double.parseDouble(modProductPriceTextField.getText()));
+            modifiedProduct.setProductInvMax(Integer.parseInt(modProductInvMaxTextField.getText()));
+            modifiedProduct.setProductInvMin(Integer.parseInt(modProductInvMinTextField.getText()));
 
-        mainScreenController.windowManager(event, "MainScreen.fxml", mainScreenController.MAIN_SCREEN_TITLE);
+            /**
+             * cycle through temp list and add the confirmed changes to the associated parts list
+             */
+            for (Part p : tempList) {
+                modifiedProduct.addAssociatedPart(p);
+            }
+
+            /**
+             * update unmodified product with newly modified product
+             */
+            modifiedProduct.productValidation();
+            Inventory.modifyProduct(modifiedProduct);
+
+            mainScreenController.windowManager(event, "MainScreen.fxml", mainScreenController.MAIN_SCREEN_TITLE);
+        } catch (ValidationException e){
+            ErrorHandling.errorAlert(2, e.getMessage());
+        } catch (NumberFormatException e){
+            ErrorHandling.errorAlert(2);
+        }
     }
 
     /**
@@ -120,8 +143,8 @@ public class ModifyProductScreenController implements Initializable {
         try {
             Part selection = partTableView.getSelectionModel().getSelectedItem();
 
-            modifiedProduct.addAssociatedPart(selection);// add item to list of associated parts
-            assocPartTableView.setItems(modifiedProduct.getAllAssociatedParts()); // update list of assoc parts on table view
+            tempList.add(selection);
+            assocPartTableView.setItems(tempList);
 
             eligibleParts.remove(selection); // remove assoc part from eligible parts
             partTableView.setItems(eligibleParts); // set the new table view with only eligible parts
@@ -144,16 +167,19 @@ public class ModifyProductScreenController implements Initializable {
         try {
             Part selection = assocPartTableView.getSelectionModel().getSelectedItem(); // select from associated parts list
 
-            modifiedProduct.deleteAssociatedPart(selection); // remove selected item from the list
-            assocPartTableView.setItems(modifiedProduct.getAllAssociatedParts()); // reset associated parts list
-            eligibleParts.add(selection); // add removed part back to the filtered list
-            partTableView.setItems(eligibleParts); // reset display for parts table with filtered list
+            if (ErrorHandling.confirmationAlert("remove " + selection.getPartName() + " from associated parts")) {
 
-            /**
-             * clear selections so the user doesn't accidentally delete multiples
-             */
-            assocPartTableView.getSelectionModel().clearSelection();
-            partTableView.getSelectionModel().clearSelection();
+                tempList.remove(selection);
+                assocPartTableView.setItems(tempList);
+                eligibleParts.add(selection); // add removed part back to the filtered list
+                partTableView.setItems(eligibleParts); // reset display for parts table with filtered list
+
+                /**
+                 * clear selections so the user doesn't accidentally delete multiples
+                 */
+                assocPartTableView.getSelectionModel().clearSelection();
+                partTableView.getSelectionModel().clearSelection();
+            }
         } catch (NullPointerException e){
             /**
              * throws exception if nothing is selected
@@ -194,7 +220,9 @@ public class ModifyProductScreenController implements Initializable {
      * handles cancel button
      */
     public void setModProductCancel(ActionEvent event) {
-        mainScreenController.windowManager(event, "MainScreen.fxml", MainScreenController.MAIN_SCREEN_TITLE);
+        if (ErrorHandling.confirmationAlert("cancel all changes and return to the main screen")){
+            mainScreenController.windowManager(event, "MainScreen.fxml", MainScreenController.MAIN_SCREEN_TITLE);
+        }
     }
 
     public void setPartsTableProperties(){
@@ -280,6 +308,7 @@ public class ModifyProductScreenController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         setPartsTableProperties();
         setAssocPartsProperties();
+        tempList.setAll(modifiedProduct.getAllAssociatedParts());
     }
 
 

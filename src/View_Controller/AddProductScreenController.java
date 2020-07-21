@@ -64,20 +64,25 @@ public class AddProductScreenController implements Initializable {
          * save product button handler
          */
         public void setSaveButton(ActionEvent event){
-                String productName = prodNameField.getText();
-                int productInv = Integer.parseInt(prodInvField.getText());
-                double productPrice = Double.parseDouble(prodPriceField.getText());
-                int productInvMin = Integer.parseInt(prodInvMaxField.getText());
-                int productInvMax = Integer.parseInt(prodInvMinField.getText());
 
-                newProduct = new Product(idGenerator(), productName, productPrice, productInv, productInvMin, productInvMax);
-                addProduct(newProduct);
+                try {
+                        String productName = prodNameField.getText();
+                        int productInv = Integer.parseInt(prodInvField.getText());
+                        double productPrice = Double.parseDouble(prodPriceField.getText());
+                        int productInvMin = Integer.parseInt(prodInvMaxField.getText());
+                        int productInvMax = Integer.parseInt(prodInvMinField.getText());
 
-                for (Part p : newProduct.getAllAssociatedParts()){
-                        System.out.println(p.getPartName());
+                        newProduct = new Product(idGenerator(), productName, productPrice, productInv, productInvMin, productInvMax);
+                        addProduct(newProduct);
+
+                        for (Part p : newProduct.getAllAssociatedParts()) {
+                                System.out.println(p.getPartName());
+                        }
+
+                        mainScreenController.windowManager(event, "MainScreen.fxml", MainScreenController.MAIN_SCREEN_TITLE);
+                } catch (NumberFormatException e){
+
                 }
-
-                mainScreenController.windowManager(event, "MainScreen.fxml", MainScreenController.MAIN_SCREEN_TITLE);
         }
 
         /**
@@ -136,23 +141,29 @@ public class AddProductScreenController implements Initializable {
         public void setDeleteButton(){
 
                 try {
+
                         Part selection = assocPartTableView.getSelectionModel().getSelectedItem(); // select from associated parts list
 
-                        newProduct.deleteAssociatedPart(selection);
+                        if (ErrorHandling.confirmationAlert("remove " + selection.getPartName() + " from associated parts")){
 
-                        assocPartTableView.setItems(newProduct.getAllAssociatedParts());
-                        filteredSearchList.add(selection);
-                        partTableView.setItems(filteredSearchList);
+                                newProduct.deleteAssociatedPart(selection);
 
-                        assocPartTableView.getSelectionModel().clearSelection();
-                        partTableView.getSelectionModel().clearSelection();
+                                assocPartTableView.setItems(newProduct.getAllAssociatedParts());
+                                filteredSearchList.add(selection);
+                                partTableView.setItems(filteredSearchList);
+
+                                assocPartTableView.getSelectionModel().clearSelection();
+                                partTableView.getSelectionModel().clearSelection();
+                        }
                 }catch (NullPointerException e) {
                         ErrorHandling.errorAlert(1);
                 }
         }
 
         public void setCancelButton(ActionEvent event) {
-                mainScreenController.windowManager(event, "MainScreen.fxml", MainScreenController.MAIN_SCREEN_TITLE);
+                if (ErrorHandling.confirmationAlert("cancel all changes and return to the main screen")){
+                        mainScreenController.windowManager(event, "MainScreen.fxml", MainScreenController.MAIN_SCREEN_TITLE);
+                }
         }
 
         /**

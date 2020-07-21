@@ -55,29 +55,15 @@ public class Inventory {
         allProducts.add(laptopSetup);
     }
 
-    public static int idGenerator() {
-        return generatedID++;
-    }
+    /**
+     * generates ID in numerical increasing order
+     */
+    public static int idGenerator() { return generatedID++; }
 
-    public static void addPart(Part part) {
-        /**
-         * check if part is an instance of in house
-         * instantiates new in house object then uses new part object as an in house part
-         */
-        if (part instanceof InHousePart) {
-            InHousePart partAsInHouse = (InHousePart) part;
-            allParts.add(partAsInHouse);
-        }
-
-        /**
-         * check if part is an instance of outsourced
-         * instantiates new outsourced object then uses new part object as an outsourced part
-         */
-        if (part instanceof OutsourcedPart){
-            OutsourcedPart partAsOutsourced = (OutsourcedPart) part;
-            allParts.add(partAsOutsourced);
-        }
-    }
+    /**
+     * adds part to list
+     */
+    public static void addPart(Part part) { allParts.add(part); }
 
     /**
      * adds product to list
