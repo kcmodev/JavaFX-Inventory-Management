@@ -19,40 +19,43 @@ public class Inventory {
          * set default in house part values in parts table
          */
         InHousePart graphicsCard = new InHousePart(idGenerator(), "Graphics Card", 800, 5, 2, 10, 24);
-        allParts.add(graphicsCard);
-
         InHousePart motherboard = new InHousePart(idGenerator(), "Motherboard", 500, 3, 2, 10, 16);
-        allParts.add(motherboard);
+        InHousePart cpu = new InHousePart(idGenerator(), "CPU", 400, 7, 2, 10, 8);
 
-        InHousePart CPU = new InHousePart(idGenerator(), "CPU", 400, 7, 2, 10, 8);
-        allParts.add(CPU);
+        allParts.add(graphicsCard);
+        allParts.add(motherboard);
+        allParts.add(cpu);
 
         /**
-         * set defualt outsourced part values in parts table
+         * set default outsourced part values in parts table
          */
-        OutsourcedPart Monitor = new OutsourcedPart(idGenerator(), "Monitor", 400, 7, 2, 10, "Dell");
-        allParts.add(Monitor);
+        OutsourcedPart monitor = new OutsourcedPart(idGenerator(), "Monitor", 750, 7, 2, 10, "Dell");
+        OutsourcedPart speakers = new OutsourcedPart(idGenerator(), "Speakers", 250, 9, 2, 10, "Bose");
+        OutsourcedPart dock = new OutsourcedPart(idGenerator(), "Dock", 50, 4, 2, 10, "Apple");
+        OutsourcedPart pcCase = new OutsourcedPart(idGenerator(), "Case", 100, 10, 2, 10, "inCase");
+        OutsourcedPart travelBag = new OutsourcedPart(idGenerator(), "Travel Bag", 25, 8, 2, 10, "Oakley");
 
-        OutsourcedPart Speakers = new OutsourcedPart(idGenerator(), "Speakers", 400, 9, 2, 10, "Bose");
-        allParts.add(Speakers);
-
-        OutsourcedPart Dock = new OutsourcedPart(idGenerator(), "Dock", 400, 4, 2, 10, "Apple");
-        allParts.add(Dock);
-
-        OutsourcedPart Case = new OutsourcedPart(idGenerator(), "Case", 400, 10, 2, 10, "inCase");
-        allParts.add(Case);
-
-        OutsourcedPart travelBag = new OutsourcedPart(idGenerator(), "Travel Bag", 400, 8, 2, 10, "Oakley");
+        allParts.add(monitor);
+        allParts.add(speakers);
+        allParts.add(dock);
+        allParts.add(pcCase);
         allParts.add(travelBag);
 
         /**
          * set default values to product table
+         * and add a few default associated parts to each product
          */
-        Product computer = new Product(idGenerator(), "Computer", 1700, 3, 1, 5);
+        Product computer = new Product(idGenerator(), "Computer", 2500, 3, 1, 5);
         allProducts.add(computer);
+        computer.addAssociatedPart(monitor);
+        computer.addAssociatedPart(cpu);
+        computer.addAssociatedPart(motherboard);
+        computer.addAssociatedPart(graphicsCard);
 
-        Product laptopSetup = new Product(idGenerator(), "Laptop Setup", 2500, 4, 1, 5);
+        Product laptopSetup = new Product(idGenerator(), "Laptop Setup", 150, 4, 1, 5);
         allProducts.add(laptopSetup);
+        laptopSetup.addAssociatedPart(dock);
+        laptopSetup.addAssociatedPart(travelBag);
     }
 
     /**
@@ -79,7 +82,7 @@ public class Inventory {
         filteredParts.clear();
 
         /**
-         * parses all parts and checks text entered in search box
+         * parses all parts and checks text entered in search box against the list of parts
          * will return all related parts and filter out anything irrelevant
          */
         for (Part part : allParts){
@@ -97,7 +100,7 @@ public class Inventory {
         filteredProducts.clear();
 
         /**
-         * parses all products and checks text entered in search box
+         * parses all products and checks text entered in search box against the list of products
          * will return all related products and filter out anything irrelevant
          */
         for (Product product : allProducts){
@@ -112,11 +115,10 @@ public class Inventory {
      * search field to search by part name
      */
     public static ObservableList<Part> searchByPartName(String partName) {
-        System.out.println("searching by part name with string/substring: \"" + partName + "\"");
         filteredParts.clear();
 
         /**
-         * parses all parts and checks text entered in search box
+         * parses all parts and checks text entered in search box against the list of parts
          * will return all related parts and filter out anything irrelevant
          */
         for (Part part : allParts){
@@ -134,7 +136,7 @@ public class Inventory {
         filteredProducts.clear(); // clears filtered list for a fresh start with every search
 
         /**
-         * parses all products and checks text entered in search box
+         * parses all products and checks text entered in search box against the list of products
          * will return all related products and filter out anything irrelevant
          */
         for (Product product : allProducts){

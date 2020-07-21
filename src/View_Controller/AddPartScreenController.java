@@ -89,7 +89,7 @@ public class AddPartScreenController implements Initializable {
             ErrorHandling.errorAlert(2, e.getMessage());
 
         } catch (NumberFormatException e) {
-            ErrorHandling.errorAlert(2, "Please enter valid input");
+            ErrorHandling.errorAlert(2);
 
         }
     }

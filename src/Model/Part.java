@@ -58,6 +58,9 @@ public abstract class Part {
 
     public void setPartStockMax(int partStockMax) { this.partStockMax = partStockMax; }
 
+    /**
+     * method is used for input validation when a part is added or modified
+     */
     public void partValidation () throws ValidationException {
 
         // checks for a name to be entered

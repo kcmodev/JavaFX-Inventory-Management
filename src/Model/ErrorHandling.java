@@ -10,7 +10,7 @@ public class ErrorHandling {
 
     /**
      * confirmation alert popup handler
-     * passes in string variable to define text in the text box
+     * passes in string variable to define text in the alert
      */
     public static final boolean confirmationAlert(String action){
         /**
@@ -37,7 +37,7 @@ public class ErrorHandling {
 
     /**
      * overloaded error alert popup handler to receive error code
-     * and custom message in alert popup
+     * and custom message to display in alert popup
      */
     public static final void errorAlert(int errorCode, String errorText){
 

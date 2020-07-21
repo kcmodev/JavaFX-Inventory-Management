@@ -81,7 +81,7 @@ public class MainScreenController implements Initializable {
      * main screen exit button handler
      */
     public void setExitButtonClicked() {
-        if (ErrorHandling.confirmationAlert("close the program")){
+        if (ErrorHandling.confirmationAlert("close the program")){ // continues to exit if user presses OK
             System.exit(1);
         }
     }
@@ -199,7 +199,7 @@ public class MainScreenController implements Initializable {
                 partTableView.setItems(searchByPartName(userInput));
             }
         } else {
-            ErrorHandling.errorAlert(2);
+            ErrorHandling.errorAlert(2, "Alphanumeric entries only");
         }
     }
 
@@ -226,7 +226,7 @@ public class MainScreenController implements Initializable {
                 productTableView.setItems(searchByProductName(userInput));
             }
         } else {
-            ErrorHandling.errorAlert(2);
+            ErrorHandling.errorAlert(2, "Alphanumeric entries only");
         }
     }
 

@@ -111,7 +111,7 @@ public class ModifyPartScreenController {
         } catch (ValidationException e){
                 ErrorHandling.errorAlert(2, e.getMessage());
         } catch (NumberFormatException e){
-                ErrorHandling.errorAlert(2, "Please enter valid input");
+                ErrorHandling.errorAlert(2);
                 e.getStackTrace();
         }
     }

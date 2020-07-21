@@ -11,10 +11,9 @@ public class Product {
      */
     private ObservableList<Part> associatedParts = FXCollections.observableArrayList();
 
-    private int productID;
-    private String productName;
+    private int productID, productInvLevel, productInvMin, productInvMax;;
     private double productPrice;
-    private int productInvLevel, productInvMin, productInvMax;
+    private String productName;
 
     /**
      * product constructor
@@ -68,7 +67,15 @@ public class Product {
 
     public void setProductInvMax(int productInvMax) { this.productInvMax = productInvMax; }
 
+    /**
+     * method is used for input validation when a product is added or modified
+     */
     public void productValidation () throws ValidationException {
+        int totalPartCost = 0;
+
+        for (Part p : getAllAssociatedParts()){
+            totalPartCost += p.getPartPrice();
+        }
 
         // checks for a name to be entered
         if (getProductName().isEmpty()){
@@ -100,6 +107,8 @@ public class Product {
         } else if (getProductInvLevel() < getProductInvMin() || getProductInvLevel() > getProductInvMax()){
             throw new ValidationException("Inventory level must be between min and max");
 
+        } else if (getProductPrice() < totalPartCost){
+            throw new ValidationException("You can't sell the cost of the product for less than the cost of parts.");
         }
     }
 }

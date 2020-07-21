@@ -18,6 +18,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import javax.xml.bind.ValidationException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -63,16 +64,18 @@ public class AddProductScreenController implements Initializable {
         /**
          * save product button handler
          */
-        public void setSaveButton(ActionEvent event){
+        public void setSaveButton(ActionEvent event) {
 
                 try {
-                        String productName = prodNameField.getText();
-                        int productInv = Integer.parseInt(prodInvField.getText());
-                        double productPrice = Double.parseDouble(prodPriceField.getText());
-                        int productInvMin = Integer.parseInt(prodInvMaxField.getText());
-                        int productInvMax = Integer.parseInt(prodInvMinField.getText());
+                        Product newProduct = new Product();
 
-                        newProduct = new Product(idGenerator(), productName, productPrice, productInv, productInvMin, productInvMax);
+                        newProduct.setProductName(prodNameField.getText());
+                        newProduct.setProductInvLevel(Integer.parseInt(prodInvField.getText()));
+                        newProduct.setProductPrice(Double.parseDouble(prodPriceField.getText()));
+                        newProduct.setProductInvMax(Integer.parseInt(prodInvMaxField.getText()));
+                        newProduct.setProductInvMin(Integer.parseInt(prodInvMinField.getText()));
+
+                        newProduct.productValidation();
                         addProduct(newProduct);
 
                         for (Part p : newProduct.getAllAssociatedParts()) {
@@ -80,8 +83,11 @@ public class AddProductScreenController implements Initializable {
                         }
 
                         mainScreenController.windowManager(event, "MainScreen.fxml", MainScreenController.MAIN_SCREEN_TITLE);
-                } catch (NumberFormatException e){
+                } catch (ValidationException e){
                         ErrorHandling.errorAlert(2, e.getMessage());
+
+                } catch (NumberFormatException e){
+                        ErrorHandling.errorAlert(2);
                 }
         }
 
@@ -95,17 +101,22 @@ public class AddProductScreenController implements Initializable {
                  * tries to parse to int
                  * if successful it will search by part ID
                  * if an error is thrown then the catch will run and search by part name
+                 * also checks that input is alphanumeric using regex
                  */
-                try {
-                        int userInputAsInt = Integer.parseInt(userInput); // testing to see if it will throw an error
-                        partTableView.setItems(searchByPartID(userInputAsInt));
+                if (userInput.matches("^[a-zA-Z0-9]*$") && !userInput.isEmpty()) {
+                        try {
+                                int userInputAsInt = Integer.parseInt(userInput); // testing to see if it will throw an error
+                                partTableView.setItems(searchByPartID(userInputAsInt));
 
-                } catch (NumberFormatException e) {
-                        /**
-                         * error thrown when attempting to parse input aas an int
-                         * searching via name with string as input instead
-                         */
-                        partTableView.setItems(searchByPartName(userInput));
+                        } catch (NumberFormatException e) {
+                                /**
+                                 * error thrown when attempting to parse input aas an int
+                                 * searching via name with string as input instead
+                                 */
+                                partTableView.setItems(searchByPartName(userInput));
+                        }
+                } else {
+                        ErrorHandling.errorAlert(2, "Alphanumeric entries only");
                 }
         }
 

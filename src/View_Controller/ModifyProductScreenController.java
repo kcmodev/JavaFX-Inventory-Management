@@ -219,20 +219,25 @@ public class ModifyProductScreenController implements Initializable {
          * tries to parse to int
          * if successful it will search by part ID
          * if an error is thrown then the catch will run and search by part name
+         * also checks that input is alphanumeric using regex
          */
-        try {
-            System.out.println("attempting to search by part ID, checking input");
-            int userInputAsInt = Integer.parseInt(userInput); // testing to see if it will throw an error
-            partTableView.setItems(searchByPartID(userInputAsInt));
+        if (userInput.matches("^[a-zA-Z0-9]*$") && !userInput.isEmpty()) {
+            try {
+                System.out.println("attempting to search by part ID, checking input");
+                int userInputAsInt = Integer.parseInt(userInput); // testing to see if it will throw an error
+                partTableView.setItems(searchByPartID(userInputAsInt));
 
-        } catch (NumberFormatException e) {
-            System.out.println("Not an int, searching by part name instead of ID");
+            } catch (NumberFormatException e) {
+                System.out.println("Not an int, searching by part name instead of ID");
 
-            /**
-             * error thrown when attempting to parse input aas an int
-             * searching via name with string as input instead
-             */
-            partTableView.setItems(searchByPartName(userInput));
+                /**
+                 * error thrown when attempting to parse input aas an int
+                 * searching via name with string as input instead
+                 */
+                partTableView.setItems(searchByPartName(userInput));
+            }
+        } else {
+            ErrorHandling.errorAlert(2, "Alphanumeric entries only");
         }
     }
 
