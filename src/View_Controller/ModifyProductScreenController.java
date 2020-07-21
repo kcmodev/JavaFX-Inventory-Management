@@ -28,6 +28,7 @@ public class ModifyProductScreenController implements Initializable {
     private Product modifiedProduct;
     private String userInput;
     private ObservableList<Part> filteredSearchList = FXCollections.observableArrayList();
+    private ObservableList<Part> eligibleParts = FXCollections.observableArrayList();
 
     /**
      * defines structure for add product screen product table
@@ -57,8 +58,23 @@ public class ModifyProductScreenController implements Initializable {
 
     public void setTextFields(Product product){
         modifiedProduct = product;
-        modifiedProduct.getAllAssociatedParts();
+        filteredSearchList.clear(); // resets filtered list every time modify product is called
+        eligibleParts.setAll(Inventory.getAllParts());
+        System.out.println("variables assigned");
 
+        /**
+         * loop through all parts to find matches in associated parts
+         * remove parts from eligibleParts to be filtered out from initial table view population
+         * and subsequent searches
+         */
+        for (Part p : modifiedProduct.getAllAssociatedParts()){
+            filteredSearchList.add(p);
+            eligibleParts.remove(p);
+        }
+
+        /**
+         * populate text field with imported product
+         */
         modProductIDTextField.setText(Integer.toString(product.getProductID()));
         modProductNameTextField.setText(product.getProductName());
         modProductInventoryTextField.setText(Integer.toString((product.getProductInvLevel())));
@@ -66,12 +82,15 @@ public class ModifyProductScreenController implements Initializable {
         modProductInvMaxTextField.setText(Integer.toString(product.getProductInvMax()));
         modProductInvMinTextField.setText(Integer.toString(product.getProductInvMin()));
 
-        modifiedProduct = product;
+        /**
+         * populate associated parts table with imported product
+         */
         assocPartTableView.setItems(modifiedProduct.getAllAssociatedParts());
+        partTableView.setItems(eligibleParts);
+
     }
 
     public void setModProductSave(ActionEvent event) {
-        System.out.println("modify product save button clicked");
 
         modifiedProduct.setProductID(Integer.parseInt(modProductIDTextField.getText()));
         modifiedProduct.setProductName(modProductNameTextField.getText());
@@ -86,18 +105,19 @@ public class ModifyProductScreenController implements Initializable {
     }
 
     public void setModProductAdd() {
-        System.out.println("Add part to associated parts button clicked");
-
         try {
             Part selection = partTableView.getSelectionModel().getSelectedItem();
             System.out.println("adding \"" + selection.getPartName() + "\" to your list of parts associated with this product");
 
-            modifiedProduct.addAssociatedPart(selection);
-            assocPartTableView.setItems(modifiedProduct.getAllAssociatedParts());
+            modifiedProduct.addAssociatedPart(selection);// add item to list of associated parts
+            assocPartTableView.setItems(modifiedProduct.getAllAssociatedParts()); // update list of assoc parts on table view
 
-            filteredSearchList.remove(selection);
-            partTableView.setItems(filteredSearchList);
+            eligibleParts.remove(selection); // remove assoc part from eligible parts
+            partTableView.setItems(eligibleParts); // set the new table view with only eligible parts
 
+            /**
+             * clear selections so the user doesn't accidentally delete multiples
+             */
             assocPartTableView.getSelectionModel().clearSelection();
             partTableView.getSelectionModel().clearSelection();
         } catch (NullPointerException e){
@@ -106,8 +126,6 @@ public class ModifyProductScreenController implements Initializable {
     }
 
     public void setModProductDelete() {
-        System.out.println("Delete part from associated parts button clicked");
-
         try {
             Part selection = assocPartTableView.getSelectionModel().getSelectedItem(); // select from associated parts list
             System.out.println("removing \"" + selection.getPartName() + "\" from your list of parts associated with this product");
@@ -115,9 +133,12 @@ public class ModifyProductScreenController implements Initializable {
             modifiedProduct.deleteAssociatedPart(selection); // remove selected item from the list
             assocPartTableView.setItems(modifiedProduct.getAllAssociatedParts()); // reset associated parts list
 
-            filteredSearchList.add(selection); // add removed part back to the filtered list
-            partTableView.setItems(filteredSearchList); // reset display for parts table with filtered list
+            eligibleParts.add(selection); // add removed part back to the filtered list
+            partTableView.setItems(eligibleParts); // reset display for parts table with filtered list
 
+            /**
+             * clear selections so the user doesn't accidentally delete multiples
+             */
             assocPartTableView.getSelectionModel().clearSelection();
             partTableView.getSelectionModel().clearSelection();
         } catch (NullPointerException e){
@@ -126,8 +147,6 @@ public class ModifyProductScreenController implements Initializable {
     }
 
     public void setModProductPartSearch() {
-        System.out.println("add product search button clicked");
-
         userInput = searchField.getText();
 
         /**
@@ -152,8 +171,6 @@ public class ModifyProductScreenController implements Initializable {
     }
 
     public void setModProductCancel(ActionEvent event) {
-        System.out.println("Modify product cancel button clicked. Going back to main");
-
         mainScreenController.windowManager(event, "MainScreen.fxml", MainScreenController.MAIN_SCREEN_TITLE);
     }
     public void setPartsTableProperties(){
@@ -239,12 +256,6 @@ public class ModifyProductScreenController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         setPartsTableProperties();
         setAssocPartsProperties();
-
-        /**
-         * resets the filtered list every time to get an up to date list
-         * for users to search and view every time this screen is loaded
-         */
-        partTableView.setItems(filteredSearchList);
     }
 
 

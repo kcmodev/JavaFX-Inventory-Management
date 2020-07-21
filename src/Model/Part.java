@@ -3,12 +3,12 @@ package Model;
 import javafx.beans.property.SimpleStringProperty;
 
 public abstract class Part {
-    private int partID;
-    private SimpleStringProperty partName;
-    private double partPrice;
-    private int partStock;
-    private int partStockMin;
-    private int partStockMax;
+    protected int partID;
+    protected SimpleStringProperty partName;
+    protected double partPrice;
+    protected int partStock;
+    protected int partStockMin;
+    protected int partStockMax;
 
     /**
      * part constructor
@@ -22,6 +22,8 @@ public abstract class Part {
         this.partStockMin = partStockMin;
         this.partStockMax = partStockMax;
     }
+
+    public Part() { }
 
     /**
      * Part getters and setters

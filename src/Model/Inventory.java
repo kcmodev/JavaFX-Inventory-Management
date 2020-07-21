@@ -6,9 +6,9 @@ import javafx.collections.ObservableList;
 import java.util.ArrayList;
 
 public class Inventory {
-    static ObservableList<Part> allParts = FXCollections.observableArrayList();
-    static ObservableList<Product> allProducts = FXCollections.observableArrayList();
-    static int generatedID = 1;
+    private static ObservableList<Part> allParts = FXCollections.observableArrayList();
+    private static ObservableList<Product> allProducts = FXCollections.observableArrayList();
+    private static int generatedID = 1;
 
     /**
      * used to show filtered lists for parts and products table views respectively
@@ -70,9 +70,9 @@ public class Inventory {
         allProducts.add(laptopSetup);
     }
 
-    public static int idGenerator() { return generatedID++; }
-
-    public static void idReducer() { generatedID--; }
+    public static int idGenerator() {
+        return generatedID++;
+    }
 
     public static void addPart(Part part) {
         /**
@@ -186,7 +186,7 @@ public class Inventory {
     }
 
     public static void modifyPart (Part part) {
-        System.out.println("passing part back to modify");
+        System.out.println("passing part to modify");
         System.out.println("new class object type: " + part.getClass());
         System.out.println("new part name: " + part.getPartName());
         for (int i = 0; i < allParts.size(); i++){

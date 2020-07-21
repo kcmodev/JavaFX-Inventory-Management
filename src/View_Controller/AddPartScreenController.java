@@ -51,7 +51,6 @@ public class AddPartScreenController implements Initializable {
          * assign and parse all test in text fields to the current part
          * and to the correct data type
          */
-        int partID = idGenerator();
         String partName = partNameTextField.getText();
         int partInv = Integer.parseInt(partInvTextField.getText());
         double partPrice = Double.parseDouble(partPriceTextField.getText());
@@ -66,7 +65,7 @@ public class AddPartScreenController implements Initializable {
             System.out.println("Adding with Machine ID w/ in house part");
 
             int machineID = Integer.parseInt(changedLabelTextField.getText());
-            InHousePart inHousePart = new InHousePart(partID, partName, partPrice, partInv, partInvMin, partInvMax, machineID);
+            InHousePart inHousePart = new InHousePart(idGenerator(), partName, partPrice, partInv, partInvMin, partInvMax, machineID);
             addPart(inHousePart);
             System.out.println("Current in house parts list: " + getAllParts());
         }
@@ -79,7 +78,7 @@ public class AddPartScreenController implements Initializable {
             System.out.println("Adding with company ID to outsourced");
 
             String companyName = changedLabelTextField.getText();
-            OutsourcedPart outsourcedPart = new OutsourcedPart(partID, partName, partPrice, partInv, partInvMin, partInvMax, companyName);
+            OutsourcedPart outsourcedPart = new OutsourcedPart(idGenerator(), partName, partPrice, partInv, partInvMin, partInvMax, companyName);
             addPart(outsourcedPart);
             System.out.println("Current in house parts list: " + getAllParts());
         }
@@ -96,7 +95,6 @@ public class AddPartScreenController implements Initializable {
      */
     public void setAddPartScreenCancelButton(ActionEvent event) {
         System.out.println("Add part screen cancel button clicked");
-        idReducer();
         mainScreenController.windowManager(event, "MainScreen.fxml", MainScreenController.MAIN_SCREEN_TITLE);
     }
 
@@ -110,7 +108,7 @@ public class AddPartScreenController implements Initializable {
         enableTextFields();
     }
     public void setOutsourcedRadioButton() {
-        setRadioButtonLabelChanger("Company", "Enter Company ID");
+        setRadioButtonLabelChanger("Company", "Enter Company Name");
         enableTextFields();
     }
 

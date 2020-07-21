@@ -19,7 +19,6 @@ public class ModifyPartScreenController {
      * title to pass when switching screens
      */
     static final String MOD_PART_SCREEN_TITLE = "Modify Part(s)";
-    int moddedPartID;
 
     MainScreenController mainScreenController = new MainScreenController();
 
@@ -51,8 +50,6 @@ public class ModifyPartScreenController {
     public void setTextFields(Part part){
         System.out.println("previous class object type: " + part.getClass());
 
-        moddedPartID = part.getPartID();
-
         modPartIDTextField.setText(Integer.toString(part.getPartID()));
         modPartNameTextField.setText(part.getPartName());
         modPartInvTextField.setText(Integer.toString((part.getPartStock())));
@@ -80,25 +77,35 @@ public class ModifyPartScreenController {
     public void setModPartSaveButton(ActionEvent event) {
         System.out.println("mod part save button clicked");
 
-        String moddedPartName = modPartNameTextField.getText();
-        int moddedPartInv = Integer.parseInt(modPartInvTextField.getText());
-        double moddedPartPrice = Double.parseDouble(modPartPriceTextField.getText());
-        int moddedPartInvMax = Integer.parseInt(modPartInvMaxTextField.getText());
-        int moddedPartInvMin = Integer.parseInt(modPartInvMinTextField.getText());
-
         System.out.println("selected toggle: " + modPartToggleGroup.getSelectedToggle().toString());
 
         if (inHouseRadio.isSelected()){
-            int moddedMachineID = Integer.parseInt(modPartChangedTextField.getText());
-            Part modifiedPart = new InHousePart(moddedPartID, moddedPartName, moddedPartPrice, moddedPartInv,
-                    moddedPartInvMin, moddedPartInvMax, moddedMachineID);
-            Inventory.modifyPart(modifiedPart);
+            InHousePart inHouseMod = new InHousePart();
+
+            inHouseMod.setPartID(Integer.parseInt(modPartIDTextField.getText()));
+            inHouseMod.setPartName(modPartNameTextField.getText());
+            inHouseMod.setPartStock(Integer.parseInt(modPartInvTextField.getText()));
+            inHouseMod.setPartPrice(Double.parseDouble(modPartPriceTextField.getText()));
+            inHouseMod.setPartStockMax(Integer.parseInt(modPartInvMaxTextField.getText()));
+            inHouseMod.setPartStockMin(Integer.parseInt(modPartInvMinTextField.getText()));
+            inHouseMod.setPartMachineID(Integer.parseInt(modPartChangedTextField.getText()));
+
+            Inventory.modifyPart(inHouseMod);
+
         } else if (outsourcedRadio.isSelected()){
-            String moddedCompID = modPartChangedTextField.getText();
-            Part modifiedPart = new OutsourcedPart(moddedPartID, moddedPartName, moddedPartPrice, moddedPartInv,
-                    moddedPartInvMin, moddedPartInvMax, moddedCompID);
-            Inventory.modifyPart(modifiedPart);
+            OutsourcedPart outsourceMod = new OutsourcedPart();
+
+            outsourceMod.setPartID(Integer.parseInt(modPartIDTextField.getText()));
+            outsourceMod.setPartName(modPartNameTextField.getText());
+            outsourceMod.setPartStock(Integer.parseInt(modPartInvTextField.getText()));
+            outsourceMod.setPartPrice(Double.parseDouble(modPartPriceTextField.getText()));
+            outsourceMod.setPartStockMax(Integer.parseInt(modPartInvMaxTextField.getText()));
+            outsourceMod.setPartStockMin(Integer.parseInt(modPartInvMinTextField.getText()));
+            outsourceMod.setCompanyName(modPartChangedTextField.getText());
+
+            Inventory.modifyPart(outsourceMod);
         }
+
         System.out.println("makes it past the if statements");
 
         mainScreenController.windowManager(event, "MainScreen.fxml", mainScreenController.MAIN_SCREEN_TITLE);

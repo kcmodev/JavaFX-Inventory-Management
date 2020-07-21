@@ -7,8 +7,7 @@ public class Product {
     /**
      * tracks all parts associated with the product object
      */
-    static ObservableList<Part> associatedParts = FXCollections.observableArrayList();
-    static ObservableList<Part> excludedParts = FXCollections.observableArrayList();
+    private static ObservableList<Part> associatedParts = FXCollections.observableArrayList();
 
     private int productID;
     private String productName;
@@ -79,13 +78,4 @@ public class Product {
     public void setProductInvMax(int productInvMax) {
         this.productInvMax = productInvMax;
     }
-
-    public static void setExcludedParts(Part part) {
-        excludedParts.add(part);
-    }
-
-    public static ObservableList<Part> getExcludedParts() {
-        return excludedParts;
-    }
-
 }

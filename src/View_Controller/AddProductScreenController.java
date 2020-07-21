@@ -60,23 +60,11 @@ public class AddProductScreenController implements Initializable {
         @FXML TextField prodInvMinField;
         @FXML TextField searchField;
 
-//        /**
-//         * constructor
-//         * will create temporary list to show a filtered list
-//         */
-//        public AddProductScreenController(){
-//                setCopiedList(getAllParts());
-//        }
-
-//        private void setCopiedList(ObservableList<Part> list){
-//                this.filteredSearchList = list;
-//        }
-
         /**
          * save product button handler
          */
         public void setSaveButton(ActionEvent event){
-                int productID = Integer.parseInt(prodIDField.getText());
+                int productID = idGenerator();
                 String productName = prodNameField.getText();
                 int productInv = Integer.parseInt(prodInvField.getText());
                 double productPrice = Double.parseDouble(prodPriceField.getText());
@@ -86,16 +74,11 @@ public class AddProductScreenController implements Initializable {
                 newProduct = new Product(productID, productName, productPrice, productInv, productInvMin, productInvMax);
                 addProduct(newProduct);
 
-
                 System.out.println("name of product added: \"" + newProduct.getProductName() + "\"");
                 System.out.println("list of associated parts: ");
 
                 for (Part p : newProduct.getAllAssociatedParts()){
                         System.out.println(p.getPartName());
-                }
-
-                for (Part p : filteredSearchList){
-                        Product.setExcludedParts(p);
                 }
 
                 mainScreenController.windowManager(event, "MainScreen.fxml", MainScreenController.MAIN_SCREEN_TITLE);
@@ -161,10 +144,10 @@ public class AddProductScreenController implements Initializable {
                         Part selection = assocPartTableView.getSelectionModel().getSelectedItem(); // select from associated parts list
                         System.out.println("removing \"" + selection.getPartName() + "\" from your list of parts associated with this product");
 
-                        newProduct.deleteAssociatedPart(selection); // remove selected item from the list
-                        assocPartTableView.setItems(Product.getAllAssociatedParts()); // reset associated parts list
+                        newProduct.deleteAssociatedPart(selection);
 
-                        filteredSearchList.add(selection); // add removed part back to the filtered list
+                        assocPartTableView.setItems(newProduct.getAllAssociatedParts());
+                        filteredSearchList.add(selection);
                         partTableView.setItems(filteredSearchList);
 
                         assocPartTableView.getSelectionModel().clearSelection();
@@ -265,7 +248,7 @@ public class AddProductScreenController implements Initializable {
         public void initialize(URL location, ResourceBundle resources) {
                 setPartsTableProperties();
                 setAssocPartsProperties();
-//                partTableView.setItems(getAllParts());
+
                 filteredSearchList.setAll(getAllParts());
                 partTableView.setItems(filteredSearchList);
         }

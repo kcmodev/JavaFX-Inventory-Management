@@ -26,14 +26,14 @@
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="prodIDField" layoutX="57.0" layoutY="-4.0" prefHeight="32.0" prefWidth="158.0" promptText="Enter Product ID">
+                  <TextField fx:id="prodIDField" disable="true" layoutX="57.0" layoutY="-4.0" prefHeight="32.0" prefWidth="158.0" promptText="ID Generated">
                      <font>
                         <Font name="System Italic" size="16.0" />
                      </font>
                   </TextField>
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="14.0" layoutY="81.0">
+            <AnchorPane layoutX="14.0" layoutY="91.0">
                <children>
                   <Label layoutY="2.0" prefHeight="24.0" prefWidth="57.0" text="Name">
                      <font>
@@ -47,7 +47,7 @@
                   </TextField>
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="14.0" layoutY="124.0">
+            <AnchorPane layoutX="14.0" layoutY="148.0">
                <children>
                   <Label layoutY="2.0" prefHeight="24.0" prefWidth="57.0" text="Inv">
                      <font>
@@ -61,7 +61,7 @@
                   </TextField>
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="14.0" layoutY="164.0">
+            <AnchorPane layoutX="14.0" layoutY="205.0">
                <children>
                   <Label layoutY="2.0" prefHeight="24.0" prefWidth="57.0" text="Price">
                      <font>
@@ -75,7 +75,7 @@
                   </TextField>
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="14.0" layoutY="205.0" prefHeight="33.0" prefWidth="215.0">
+            <AnchorPane layoutX="14.0" layoutY="258.0" prefHeight="33.0" prefWidth="215.0">
                <children>
                   <Label layoutY="2.0" prefHeight="24.0" prefWidth="57.0" text="Inv">
                      <font>
@@ -94,8 +94,6 @@
                   </TextField>
                </children>
             </AnchorPane>
-            <Button fx:id="saveButton" layoutX="12.0" layoutY="278.0" mnemonicParsing="false" onAction="#setSaveButton" prefHeight="34.0" prefWidth="70.0" text="Save" />
-            <Button fx:id="cancelButton" layoutX="87.0" layoutY="279.0" mnemonicParsing="false" onAction="#setCancelButton" prefHeight="32.0" prefWidth="70.0" text="Cancel" />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="308.0" layoutY="60.0" prefHeight="204.0" prefWidth="347.0">
@@ -135,5 +133,7 @@
          </font>
       </TextField>
       <Button layoutX="579.0" layoutY="14.0" mnemonicParsing="false" onAction="#setSearchButton" prefHeight="37.0" prefWidth="70.0" text="Search" />
+      <Button fx:id="saveButton" layoutX="21.0" layoutY="434.0" mnemonicParsing="false" onAction="#setSaveButton" prefHeight="34.0" prefWidth="70.0" text="Save" />
+      <Button fx:id="cancelButton" layoutX="102.0" layoutY="434.0" mnemonicParsing="false" onAction="#setCancelButton" prefHeight="32.0" prefWidth="70.0" text="Cancel" />
    </children>
 </AnchorPane>
