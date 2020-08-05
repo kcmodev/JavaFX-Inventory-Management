@@ -1,3 +1,10 @@
+/**
+ * Author: kcmodev
+ * Class: C482 Software 1
+ * Email: ****@wgu.edu
+ * Date Submitted: 7/21/2020
+ */
+
 package View_Controller;
 
 import Model.*;
@@ -11,14 +18,11 @@ import javafx.scene.control.ToggleGroup;
 
 import javax.xml.bind.ValidationException;
 
-
 public class ModifyPartScreenController {
-
     /**
      * title to pass when switching screens
      */
     static final String MOD_PART_SCREEN_TITLE = "Modify Part(s)";
-
     MainScreenController mainScreenController = new MainScreenController();
 
     /**
@@ -47,6 +51,7 @@ public class ModifyPartScreenController {
      * as well as sets the radio button to the appropriate selection according to the part selected
      */
     public void setTextFields(Part part){
+
         modPartIDTextField.setText(Integer.toString(part.getPartID()));
         modPartNameTextField.setText(part.getPartName());
         modPartInvTextField.setText(Integer.toString((part.getPartStock())));

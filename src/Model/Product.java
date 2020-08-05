@@ -1,3 +1,10 @@
+/**
+ * Author: kcmodev
+ * Class: C482 Software 1
+ * Email: @wgu.edu
+ * Date Submitted: 7/21/2020
+ */
+
 package Model;
 
 import javafx.collections.FXCollections;
@@ -11,7 +18,7 @@ public class Product {
      */
     private ObservableList<Part> associatedParts = FXCollections.observableArrayList();
 
-    private int productID, productInvLevel, productInvMin, productInvMax;;
+    private int productID, productInvLevel, productInvMin, productInvMax;
     private double productPrice;
     private String productName;
 
@@ -28,7 +35,7 @@ public class Product {
          */
         this.productID = productID;
         this.productName = productName;
-        this.productPrice = productPrice;
+        this.productPrice = Math.round(productPrice * 100.00)/100.00;
         this.productInvLevel = productInvLevel;
         this.productInvMin = productInvMin;
         this.productInvMax = productInvMax;
@@ -51,9 +58,9 @@ public class Product {
 
     public void setProductName(String productName) { this.productName = productName; }
 
-    public double getProductPrice() { return productPrice; }
+    public double getProductPrice() { return this.productPrice; }
 
-    public void setProductPrice(double productPrice) { this.productPrice = productPrice; }
+    public void setProductPrice(double productPrice) { this.productPrice = Math.round(productPrice * 100.00)/100.00; }
 
     public int getProductInvLevel() { return productInvLevel; }
 
@@ -71,45 +78,49 @@ public class Product {
      * method is used for input validation when a product is added or modified
      */
     public void productValidation () throws ValidationException {
-        int totalPartCost = 0;
+
+        double totalCost = 0;
 
         for (Part p : getAllAssociatedParts()){
-            totalPartCost += p.getPartPrice();
+            totalCost += p.getPartPrice();
         }
 
-        // checks for a name to be entered
-        if (getProductName().isEmpty()){
-            throw new ValidationException("Name field is blank");
+        totalCost = Math.round(totalCost * 100.00) / 100.00;
 
-            // checks that minimum stock isn't less than 0
-        }else if (getProductInvMin() <= 0) {
+        // checks for a name to be entered
+        if (getProductName().isEmpty() || !getProductName().matches("^[a-zA-Z0-9_ ]*$")){
+            throw new ValidationException("Name field is invalid. Can't be blank. Must be alphanumeric.");
+
+        // checks that minimum stock isn't less than 0
+        }else if (getProductInvMin() < 0) {
             throw new ValidationException("Inventory minimum can't be less than 0");
 
-        } else if (getProductInvMax() <= 0) {
+        } else if (getProductInvMax() < 0) {
             throw new ValidationException("Inventory max must be greater than 0");
 
-            // checks to make sure max stock is not less than the minimum
+        // checks to make sure max stock is not less than the minimum
         }else if (getProductInvMax() < getProductInvMin()) {
-            throw new ValidationException("Max inventory can't be less than the minimum");
+            throw new ValidationException("Max inventory can't be set to less than the minimum");
 
         } else if (getProductInvLevel() < getProductInvMin()){
             throw new ValidationException("Part inventory can't be less than the minimum");
 
-            // part price can't be 0 or less
-        }else if (getProductPrice() <= 0){
+        // part price can't be less than 0
+        }else if (getProductPrice() < 0){
             throw new ValidationException("Price has to be a positive number");
 
-            // max stock can't be less than what you already have
+        // max stock can't be less than what you already have
         }else if (getProductInvMax() < getProductInvLevel()){
-            throw new ValidationException("Max inventory can't be less than what you have on hand");
+            throw new ValidationException("Max inventory can't be less set to than what you have on hand");
 
-            // check stock is between min and max
+        // check stock is between min and max
         } else if (getProductInvLevel() < getProductInvMin() || getProductInvLevel() > getProductInvMax()){
             throw new ValidationException("Inventory level must be between min and max");
 
-        } else if (getProductPrice() < totalPartCost){
+        // checks that product price is not less than the cost of the parts
+        } else if (getProductPrice() < totalCost){
             throw new ValidationException("You can't sell the cost of the product for less than the cost of parts." +
-                    "please ensure your price is at least $" + totalPartCost);
+                    " Please ensure your price is at least $" + totalCost);
         }
     }
 }

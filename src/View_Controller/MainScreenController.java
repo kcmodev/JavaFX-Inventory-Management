@@ -1,3 +1,10 @@
+/**
+ * Author: kcmodev
+ * Class: C482 Software 1
+ * Email: ****@wgu.edu
+ * Date Submitted: 7/21/2020
+ */
+
 package View_Controller;
 
 import Model.Part;
@@ -187,7 +194,7 @@ public class MainScreenController implements Initializable {
          * if successful it will search by part ID
          * if an error is thrown then the catch will run and search by part name
          */
-        if (userInput.matches("^[a-zA-Z0-9]*$") && !userInput.isEmpty()) {
+        if (userInput.matches("^[a-zA-Z0-9_ ]*$") && !userInput.isEmpty()) {
             try {
                 userInputAsInt = Integer.parseInt(userInput); // testing to see if it will throw an error
                 partTableView.setItems(searchByPartID(userInputAsInt));
@@ -214,7 +221,7 @@ public class MainScreenController implements Initializable {
          * if successful it will search by part ID
          * if an error is thrown then the catch will run and search by part name
          */
-        if (userInput.matches("^[a-zA-Z0-9]*$") && !userInput.isEmpty()) {
+        if (userInput.matches("^[a-zA-Z0-9_ ]*$") && !userInput.isEmpty()) {
             try {
                 userInputAsInt = Integer.parseInt(userInput); // testing to see if it will throw an error
                 productTableView.setItems(searchByProductID(userInputAsInt));

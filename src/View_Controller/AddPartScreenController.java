@@ -1,3 +1,10 @@
+/**
+ * Author: kcmodev
+ * Class: C482 Software 1
+ * Email: ****@wgu.edu
+ * Date Submitted: 7/21/2020
+ */
+
 package View_Controller;
 
 import Model.ErrorHandling;
@@ -10,9 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
 import javax.xml.bind.ValidationException;
-import java.io.IOException;
 import java.net.URL;
-import java.util.InputMismatchException;
 import java.util.ResourceBundle;
 
 import static Model.Inventory.*;
@@ -68,8 +73,9 @@ public class AddPartScreenController implements Initializable {
              */
             if (inHouseRadio.isSelected()) {
                 int machineID = Integer.parseInt(changedLabelTextField.getText());
-                InHousePart inHousePart = new InHousePart(idGenerator(), partName, partPrice, partInv, partInvMin, partInvMax, machineID);
+                InHousePart inHousePart = new InHousePart(99, partName, partPrice, partInv, partInvMin, partInvMax, machineID);
                 inHousePart.partValidation();
+                inHousePart.setPartID(idGenerator());
                 addPart(inHousePart);
                 mainScreenController.windowManager(event, "MainScreen.fxml", mainScreenController.MAIN_SCREEN_TITLE);
             }
@@ -80,8 +86,9 @@ public class AddPartScreenController implements Initializable {
              */
             if (outsourcedRadio.isSelected()) {
                 String companyName = changedLabelTextField.getText();
-                OutsourcedPart outsourcedPart = new OutsourcedPart(idGenerator(), partName, partPrice, partInv, partInvMin, partInvMax, companyName);
+                OutsourcedPart outsourcedPart = new OutsourcedPart(99, partName, partPrice, partInv, partInvMin, partInvMax, companyName);
                 outsourcedPart.partValidation();
+                outsourcedPart.setPartID(idGenerator());
                 addPart(outsourcedPart);
                 mainScreenController.windowManager(event, "MainScreen.fxml", mainScreenController.MAIN_SCREEN_TITLE);
             }

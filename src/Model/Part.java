@@ -1,3 +1,10 @@
+/**
+ * Author: kcmodev
+ * Class: C482 Software 1
+ * Email: @wgu.edu
+ * Date Submitted: 7/21/2020
+ */
+
 package Model;
 
 import javafx.beans.property.SimpleStringProperty;
@@ -17,13 +24,14 @@ public abstract class Part {
      */
     public Part(int partID, String partName, double partPrice, int partStock,
                 int partStockMin, int partStockMax) {
+
         /**
          * product ID is unique and can't be changed by the user
          * is assigned by the Inventory.idGenerator method
          */
         this.partID = partID;
         this.partName = new SimpleStringProperty(partName);
-        this.partPrice = partPrice;
+        this.partPrice = Math.round(partPrice * 100.00)/100.00;
         this.partStock = partStock;
         this.partStockMin = partStockMin;
         this.partStockMax = partStockMax;
@@ -42,9 +50,9 @@ public abstract class Part {
 
     public void setPartName(String partName) { this.partName = new SimpleStringProperty(partName); }
 
-    public double getPartPrice() { return partPrice; }
+    public double getPartPrice() { return this.partPrice; }
 
-    public void setPartPrice(double partPrice) { this.partPrice = partPrice; }
+    public void setPartPrice(double partPrice) { this.partPrice = Math.round(partPrice * 100.00)/100.00; }
 
     public int getPartStock() { return partStock; }
 
@@ -64,25 +72,26 @@ public abstract class Part {
     public void partValidation () throws ValidationException {
 
         // checks for a name to be entered
-        if (getPartName().isEmpty()){
-            throw new ValidationException("Name field is blank");
+        if (getPartName().isEmpty() || !getPartName().matches("^[a-zA-Z0-9_ ]*$")){
+            throw new ValidationException("Name field is invalid. Can't be blank. Must be alphanumeric");
 
         // checks that minimum stock isn't less than 0
-        }else if (getPartStockMin() <= 0) {
+        }else if (getPartStockMin() < 0) {
             throw new ValidationException("Inventory minimum can't be less than 0");
 
-        } else if (getPartStockMax() <= 0) {
+        } else if (getPartStockMax() < 0) {
             throw new ValidationException("Inventory max must be greater than 0");
 
         // checks to make sure max stock is not less than the minimum
         }else if (getPartStockMax() < getPartStockMin()) {
             throw new ValidationException("Max inventory can't be less than the minimum");
 
+        // checks that stock on hadn is not less than the minimum
         } else if (getPartStock() < getPartStockMin()){
             throw new ValidationException("Part inventory can't be less than the minimum");
 
         // part price can't be 0 or less
-        }else if (getPartPrice() <= 0){
+        }else if (getPartPrice() < 0){
             throw new ValidationException("Price has to be a positive number");
 
         // max stock can't be less than what you already have

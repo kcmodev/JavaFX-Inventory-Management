@@ -1,7 +1,16 @@
+/**
+ * Author: kcmodev
+ * Class: C482 Software 1
+ * Email: ****@wgu.edu
+ * Date Submitted: 7/21/2020
+ */
+
 package Model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
+import java.util.ArrayList;
 
 public class Inventory {
     private static ObservableList<Part> allParts = FXCollections.observableArrayList();
@@ -18,8 +27,8 @@ public class Inventory {
         /**
          * set default in house part values in parts table
          */
-        InHousePart graphicsCard = new InHousePart(idGenerator(), "Graphics Card", 800, 5, 2, 10, 24);
-        InHousePart motherboard = new InHousePart(idGenerator(), "Motherboard", 500, 3, 2, 10, 16);
+        InHousePart graphicsCard = new InHousePart(idGenerator(), "Graphics Card", 799.999, 5, 2, 10, 24);
+        InHousePart motherboard = new InHousePart(idGenerator(), "Motherboard", 500.999, 3, 2, 10, 16);
         InHousePart cpu = new InHousePart(idGenerator(), "CPU", 400, 7, 2, 10, 8);
 
         allParts.add(graphicsCard);
@@ -31,7 +40,7 @@ public class Inventory {
          */
         OutsourcedPart monitor = new OutsourcedPart(idGenerator(), "Monitor", 750, 7, 2, 10, "Dell");
         OutsourcedPart speakers = new OutsourcedPart(idGenerator(), "Speakers", 250, 9, 2, 10, "Bose");
-        OutsourcedPart dock = new OutsourcedPart(idGenerator(), "Dock", 50, 4, 2, 10, "Apple");
+        OutsourcedPart dock = new OutsourcedPart(idGenerator(), "Dock", 49.99, 4, 2, 10, "Apple");
         OutsourcedPart pcCase = new OutsourcedPart(idGenerator(), "Case", 100, 10, 2, 10, "inCase");
         OutsourcedPart travelBag = new OutsourcedPart(idGenerator(), "Travel Bag", 25, 8, 2, 10, "Oakley");
 

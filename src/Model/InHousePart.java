@@ -1,3 +1,10 @@
+/**
+ * Author: kcmodev
+ * Class: C482 Software 1
+ * Email: ****@wgu.edu
+ * Date Submitted: 7/21/2020
+ */
+
 package Model;
 
 public class InHousePart extends Part {

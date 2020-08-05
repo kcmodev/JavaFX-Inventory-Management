@@ -1,3 +1,10 @@
+/**
+ * Author: kcmodev
+ * Class: C482 Software 1
+ * Email: *****@wgu.edu
+ * Date Submitted: 7/21/2020
+ */
+
 package View_Controller;
 
 import Model.ErrorHandling;
@@ -69,26 +76,8 @@ public class ModifyProductScreenController implements Initializable {
      * method takes a product object from MainScreenController and uses it to fill the text fields
      */
     public void setTextFields(Product product){
-        System.out.println("object being passed in: " + product.getProductName());
-
-        System.out.println("temp list before clear:");
-        for (Part p : tempList) {
-            System.out.println(p.getPartName());
-        }
-
         eligibleParts.setAll(Inventory.getAllParts());
-
         tempList.setAll(product.getAllAssociatedParts());
-        System.out.println("temp list after clear:");
-        for (Part p : tempList) {
-            System.out.println(p.getPartName());
-        }
-
-        System.out.println("actual list of associated parts: ");
-        for (Part p : product.getAllAssociatedParts()) {
-            System.out.println(p.getPartName());
-        }
-
 
         /**
          * loop through all parts to find matches in associated parts
@@ -135,9 +124,7 @@ public class ModifyProductScreenController implements Initializable {
             /**
              * cycle through temp list and add the confirmed changes to the associated parts list
              */
-            System.out.println("temp list being save click:");
             for (Part p : tempList) {
-                System.out.println(p.getPartName());
                 modifiedProduct.addAssociatedPart(p);
             }
 
@@ -163,17 +150,22 @@ public class ModifyProductScreenController implements Initializable {
         try {
             Part selection = partTableView.getSelectionModel().getSelectedItem();
 
-            tempList.add(selection);
-            assocPartTableView.setItems(tempList);
+            if (selection != null) {
+                tempList.add(selection);
+                assocPartTableView.setItems(tempList);
 
-            eligibleParts.remove(selection); // remove assoc part from eligible parts
-            partTableView.setItems(eligibleParts); // set the new table view with only eligible parts
+                eligibleParts.remove(selection); // remove assoc part from eligible parts
+                partTableView.setItems(eligibleParts); // set the new table view with only eligible parts
 
-            /**
-             * clear selections so the user doesn't accidentally delete multiples
-             */
-            assocPartTableView.getSelectionModel().clearSelection();
-            partTableView.getSelectionModel().clearSelection();
+                /**
+                 * clear selections so the user doesn't accidentally delete multiples
+                 */
+                assocPartTableView.getSelectionModel().clearSelection();
+                partTableView.getSelectionModel().clearSelection();
+            } else {
+                ErrorHandling.errorAlert(1);
+            }
+
         } catch (NullPointerException e){
             ErrorHandling.errorAlert(1);
         }

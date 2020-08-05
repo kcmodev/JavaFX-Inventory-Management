@@ -1,3 +1,10 @@
+/**
+ * Author: kcmodev
+ * Class: C482 Software 1
+ * Email: ****@wgu.edu
+ * Date Submitted: 7/21/2020
+ */
+
 package View_Controller;
 
 import static Model.Inventory.*;
@@ -67,8 +74,9 @@ public class AddProductScreenController implements Initializable {
         public void setSaveButton(ActionEvent event) {
 
                 try {
-                        Product newProduct = new Product();
+//                        Product newProduct = new Product();
 
+                        newProduct.setProductID(99);
                         newProduct.setProductName(prodNameField.getText());
                         newProduct.setProductInvLevel(Integer.parseInt(prodInvField.getText()));
                         newProduct.setProductPrice(Double.parseDouble(prodPriceField.getText()));
@@ -76,11 +84,8 @@ public class AddProductScreenController implements Initializable {
                         newProduct.setProductInvMin(Integer.parseInt(prodInvMinField.getText()));
 
                         newProduct.productValidation();
+                        newProduct.setProductID(idGenerator());
                         addProduct(newProduct);
-
-                        for (Part p : newProduct.getAllAssociatedParts()) {
-                                System.out.println(p.getPartName());
-                        }
 
                         mainScreenController.windowManager(event, "MainScreen.fxml", MainScreenController.MAIN_SCREEN_TITLE);
                 } catch (ValidationException e){
@@ -128,15 +133,19 @@ public class AddProductScreenController implements Initializable {
                 try {
                         Part selection = partTableView.getSelectionModel().getSelectedItem();
 
-                        newProduct.addAssociatedPart(selection);
-                        assocPartTableView.setItems(newProduct.getAllAssociatedParts());
-                        filteredSearchList.remove(selection);
+                        if (selection != null) {
+                                newProduct.addAssociatedPart(selection);
+                                assocPartTableView.setItems(newProduct.getAllAssociatedParts());
+                                filteredSearchList.remove(selection);
 
-                        /**
-                         * clears selections to prevent multiple simultaneous deletes
-                         */
-                        assocPartTableView.getSelectionModel().clearSelection();
-                        partTableView.getSelectionModel().clearSelection();
+                                /**
+                                 * clears selections to prevent multiple simultaneous deletes
+                                 */
+                                assocPartTableView.getSelectionModel().clearSelection();
+                                partTableView.getSelectionModel().clearSelection();
+                        } else {
+                                ErrorHandling.errorAlert(1);
+                        }
                 } catch (NullPointerException e) {
                         /**
                          * throws exception if nothing is selected
@@ -263,6 +272,8 @@ public class AddProductScreenController implements Initializable {
         public void initialize(URL location, ResourceBundle resources) {
                 setPartsTableProperties();
                 setAssocPartsProperties();
+
+                newProduct = new Product();
 
                 filteredSearchList.setAll(getAllParts());
                 partTableView.setItems(filteredSearchList);
