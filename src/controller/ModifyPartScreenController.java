@@ -5,9 +5,9 @@
  * Date Submitted: 7/21/2020
  */
 
-package View_Controller;
+package controller;
 
-import Model.*;
+import model.*;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

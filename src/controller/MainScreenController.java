@@ -5,13 +5,13 @@
  * Date Submitted: 7/21/2020
  */
 
-package View_Controller;
+package controller;
 
-import Model.Part;
-import Model.Product;
-import Model.ErrorHandling;
+import model.Part;
+import model.Product;
+import model.ErrorHandling;
 
-import static Model.Inventory.*;
+import static model.Inventory.*;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;

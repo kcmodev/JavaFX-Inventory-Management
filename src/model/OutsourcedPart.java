@@ -5,7 +5,7 @@
  * Date Submitted: 7/21/2020
  */
 
-package Model;
+package model;
 
 
 import javafx.beans.property.SimpleStringProperty;

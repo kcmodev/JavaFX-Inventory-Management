@@ -5,7 +5,7 @@
  * Date Submitted: 7/21/2020
  */
 
-package Model;
+package model;
 
 public class InHousePart extends Part {
 

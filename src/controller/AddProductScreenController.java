@@ -5,14 +5,14 @@
  * Date Submitted: 7/21/2020
  */
 
-package View_Controller;
+package controller;
 
-import static Model.Inventory.*;
-import static Model.Inventory.searchByPartName;
+import static model.Inventory.*;
+import static model.Inventory.searchByPartName;
 
-import Model.ErrorHandling;
-import Model.Part;
-import Model.Product;
+import model.ErrorHandling;
+import model.Part;
+import model.Product;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;

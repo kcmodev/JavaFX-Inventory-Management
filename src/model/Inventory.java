@@ -5,12 +5,10 @@
  * Date Submitted: 7/21/2020
  */
 
-package Model;
+package model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
-import java.util.ArrayList;
 
 public class Inventory {
     private static ObservableList<Part> allParts = FXCollections.observableArrayList();

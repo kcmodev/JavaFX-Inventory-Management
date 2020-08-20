@@ -5,9 +5,9 @@
  * Date Submitted: 7/21/2020
  */
 
-package View_Controller;
+package controller;
 
-import Model.Inventory;
+import model.Inventory;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,7 +18,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("MainScreen.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("../gui/MainScreen.fxml"));
 
         primaryStage.setTitle(MainScreenController.MAIN_SCREEN_TITLE);
         primaryStage.setScene(new Scene(root));

@@ -5,11 +5,11 @@
  * Date Submitted: 7/21/2020
  */
 
-package View_Controller;
+package controller;
 
-import Model.ErrorHandling;
-import Model.InHousePart;
-import Model.OutsourcedPart;
+import model.ErrorHandling;
+import model.InHousePart;
+import model.OutsourcedPart;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,7 +20,7 @@ import javax.xml.bind.ValidationException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import static Model.Inventory.*;
+import static model.Inventory.*;
 
 
 public class AddPartScreenController implements Initializable {

@@ -5,12 +5,12 @@
  * Date Submitted: 7/21/2020
  */
 
-package View_Controller;
+package controller;
 
-import Model.ErrorHandling;
-import Model.Inventory;
-import Model.Part;
-import Model.Product;
+import model.ErrorHandling;
+import model.Inventory;
+import model.Part;
+import model.Product;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -27,7 +27,7 @@ import javax.xml.bind.ValidationException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import static Model.Inventory.*;
+import static model.Inventory.*;
 
 public class ModifyProductScreenController implements Initializable {
 
