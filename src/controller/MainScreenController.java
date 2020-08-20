@@ -9,7 +9,7 @@ package controller;
 
 import model.Part;
 import model.Product;
-import model.ErrorHandling;
+import error_handling.PopupHandler;
 
 import static model.Inventory.*;
 
@@ -34,7 +34,7 @@ public class MainScreenController implements Initializable {
     /**
      * title to pass when switching screens
      */
-    static final String MAIN_SCREEN_TITLE = "Christensen Software 1 Performance Assessment";
+    public static final String MAIN_SCREEN_TITLE = "Christensen Software 1 Performance Assessment";
 
     private String userInput; // used to take input in search fields
     private int userInputAsInt; // used to convert userInput to check for errors and pass correct data
@@ -42,26 +42,38 @@ public class MainScreenController implements Initializable {
     /**
      * defines structure for main screen part table
      */
-    @FXML private TableView<Part> partTableView;
-    @FXML private TableColumn<Part, Integer> partIDTableCol;
-    @FXML private TableColumn<Part, SimpleStringProperty> partNameTableCol;
-    @FXML private TableColumn<Part, Integer> partInvLvlTableCol;
-    @FXML private TableColumn<Part, Double> partPriceTableCol;
+    @FXML
+    private TableView<Part> partTableView;
+    @FXML
+    private TableColumn<Part, Integer> partIDTableCol;
+    @FXML
+    private TableColumn<Part, SimpleStringProperty> partNameTableCol;
+    @FXML
+    private TableColumn<Part, Integer> partInvLvlTableCol;
+    @FXML
+    private TableColumn<Part, Double> partPriceTableCol;
 
     /**
      * defines structure for main screen product table
      */
-    @FXML private TableView<Product> productTableView;
-    @FXML private TableColumn<Product, Integer> productIDTableCol;
-    @FXML private TableColumn<Product, SimpleStringProperty> productNameTableCol;
-    @FXML private TableColumn<Product, Integer> productInvLvlTableCol;
-    @FXML private TableColumn<Product, Double> productPriceTableCol;
+    @FXML
+    private TableView<Product> productTableView;
+    @FXML
+    private TableColumn<Product, Integer> productIDTableCol;
+    @FXML
+    private TableColumn<Product, SimpleStringProperty> productNameTableCol;
+    @FXML
+    private TableColumn<Product, Integer> productInvLvlTableCol;
+    @FXML
+    private TableColumn<Product, Double> productPriceTableCol;
 
     /**
      * defines search fields for main screen
      */
-    @FXML private TextField mainScreenSearchByPart;
-    @FXML private TextField mainScreenSearchByProduct;
+    @FXML
+    private TextField mainScreenSearchByPart;
+    @FXML
+    private TextField mainScreenSearchByProduct;
 
     /**
      * creates a method for managing changing windows
@@ -88,7 +100,7 @@ public class MainScreenController implements Initializable {
      * main screen exit button handler
      */
     public void setExitButtonClicked() {
-        if (ErrorHandling.confirmationAlert("close the program")){ // continues to exit if user presses OK
+        if (PopupHandler.confirmationAlert("close the program")){ // continues to exit if user presses OK
             System.exit(1);
         }
     }
@@ -97,14 +109,14 @@ public class MainScreenController implements Initializable {
      * main screen add part button handler
      */
     public void setAddPartClicked(ActionEvent event) {
-        windowManager(event, "AddPartScreen.fxml", AddPartScreenController.ADD_PART_SCREEN_TITLE);
+        windowManager(event, "/gui/AddPart.fxml", AddPartController.ADD_PART_SCREEN_TITLE);
     }
 
     /**
      * main screen add product button handler
      */
     public void setAddProductButtonClicked(ActionEvent event) {
-        windowManager(event, "AddProductScreen.fxml", AddProductScreenController.ADD_PRODUCT_SCREEN_TITLE);
+        windowManager(event, "/gui/AddProduct.fxml", AddProductController.ADD_PRODUCT_SCREEN_TITLE);
     }
 
     /**
@@ -113,20 +125,20 @@ public class MainScreenController implements Initializable {
     public void setModifyPartClicked(ActionEvent event) throws IOException {
         if (partTableView.getSelectionModel().getSelectedItem() != null) {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("ModifyPartScreen.fxml"));
+            loader.setLocation(getClass().getResource("/gui/ModifyPart.fxml"));
             Parent parent = loader.load();
             Scene modPartScene = new Scene(parent);
 
-            ModifyPartScreenController controller = loader.getController();
+            ModifyPartController controller = loader.getController();
             controller.setTextFields(partTableView.getSelectionModel().getSelectedItem());
 
             Stage newWindow = (Stage) ((Node) event.getSource()).getScene().getWindow();
             newWindow.setScene(modPartScene);
             newWindow.setResizable(false);
-            newWindow.setTitle(ModifyPartScreenController.MOD_PART_SCREEN_TITLE);
+            newWindow.setTitle(ModifyPartController.MOD_PART_SCREEN_TITLE);
             newWindow.show();
         } else {
-            ErrorHandling.errorAlert(1);
+            PopupHandler.errorAlert(1);
         }
     }
 
@@ -136,20 +148,20 @@ public class MainScreenController implements Initializable {
     public void setModifyProductButton(ActionEvent event) throws IOException {
         if (productTableView.getSelectionModel().getSelectedItem() != null) {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("ModifyProductScreen.fxml"));
+            loader.setLocation(getClass().getResource("/gui/ModifyProduct.fxml"));
             Parent parent = loader.load();
             Scene modProductScene = new Scene(parent);
 
-            ModifyProductScreenController controller = loader.getController();
+            ModifyProductController controller = loader.getController();
             controller.setTextFields(productTableView.getSelectionModel().getSelectedItem());
 
             Stage newWindow = (Stage) ((Node) event.getSource()).getScene().getWindow();
             newWindow.setScene(modProductScene);
             newWindow.setResizable(false);
-            newWindow.setTitle(ModifyProductScreenController.MOD_PRODUCT_SCREEN_TITLE);
+            newWindow.setTitle(ModifyProductController.MOD_PRODUCT_SCREEN_TITLE);
             newWindow.show();
         } else {
-            ErrorHandling.errorAlert(1);
+            PopupHandler.errorAlert(1);
         }
     }
 
@@ -159,9 +171,9 @@ public class MainScreenController implements Initializable {
     public void setDeletePartClicked() {
         Part selectedPart = partTableView.getSelectionModel().getSelectedItem();
         if (selectedPart == null){
-            ErrorHandling.errorAlert(1);
+            PopupHandler.errorAlert(1);
         } else {
-            if (ErrorHandling.confirmationAlert("delete the selected part")) {
+            if (PopupHandler.confirmationAlert("delete the selected part")) {
                 deletePart(selectedPart);
             }
         }
@@ -174,9 +186,9 @@ public class MainScreenController implements Initializable {
     public void setDeleteProductButton() {
         Product selectedProduct = productTableView.getSelectionModel().getSelectedItem();
         if (selectedProduct == null){
-            ErrorHandling.errorAlert(1);
+            PopupHandler.errorAlert(1);
         } else {
-            if (ErrorHandling.confirmationAlert("delete the selected product")) {
+            if (PopupHandler.confirmationAlert("delete the selected product")) {
                 deleteProduct(selectedProduct);
             }
         }
@@ -199,14 +211,13 @@ public class MainScreenController implements Initializable {
                 userInputAsInt = Integer.parseInt(userInput); // testing to see if it will throw an error
                 partTableView.setItems(searchByPartID(userInputAsInt));
             } catch (NumberFormatException e) {
-                /**
-                 * error thrown when attempting to parse input aas an int
-                 * searching via name with string as input instead
-                 */
+
+                // error thrown when attempting to parse input aas an int
+                // searching via name with string as input instead
                 partTableView.setItems(searchByPartName(userInput));
             }
         } else {
-            ErrorHandling.errorAlert(2, "Alphanumeric entries only");
+            PopupHandler.errorAlert(2, "Alphanumeric entries only");
         }
     }
 
@@ -216,11 +227,9 @@ public class MainScreenController implements Initializable {
     public void setSearchByProductButton() {
         userInput = mainScreenSearchByProduct.getText();
 
-        /**
-         * tries to parse to int
-         * if successful it will search by part ID
-         * if an error is thrown then the catch will run and search by part name
-         */
+        // tries to parse to int
+        // if successful it will search by part ID
+        // if an error is thrown then the catch will run and search by part name
         if (userInput.matches("^[a-zA-Z0-9_ ]*$") && !userInput.isEmpty()) {
             try {
                 userInputAsInt = Integer.parseInt(userInput); // testing to see if it will throw an error
@@ -233,7 +242,7 @@ public class MainScreenController implements Initializable {
                 productTableView.setItems(searchByProductName(userInput));
             }
         } else {
-            ErrorHandling.errorAlert(2, "Alphanumeric entries only");
+            PopupHandler.errorAlert(2, "Alphanumeric entries only");
         }
     }
 

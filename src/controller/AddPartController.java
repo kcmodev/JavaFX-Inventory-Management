@@ -7,7 +7,7 @@
 
 package controller;
 
-import model.ErrorHandling;
+import error_handling.PopupHandler;
 import model.InHousePart;
 import model.OutsourcedPart;
 
@@ -23,34 +23,45 @@ import java.util.ResourceBundle;
 import static model.Inventory.*;
 
 
-public class AddPartScreenController implements Initializable {
+public class AddPartController implements Initializable {
 
     /**
      * title to pass when switching screens
      */
     static final String ADD_PART_SCREEN_TITLE = "Add Part(s)";
 
-    MainScreenController mainScreenController = new MainScreenController();
+    private static final MainScreenController mainScreenController = new MainScreenController();
 
     /**
      * initialize label and input fields on add part screen
      */
-    @FXML private Label textFieldLabel;
-    @FXML private TextField partIDTextField;
-    @FXML private TextField partNameTextField;
-    @FXML private TextField partInvTextField;
-    @FXML private TextField partPriceTextField;
-    @FXML private TextField partInvMaxTextField;
-    @FXML private TextField partInvMinTextField;
-    @FXML private TextField changedLabelTextField;
+    @FXML
+    private Label textFieldLabel;
+    @FXML
+    private TextField partIDTextField;
+    @FXML
+    private TextField partNameTextField;
+    @FXML
+    private TextField partInvTextField;
+    @FXML
+    private TextField partPriceTextField;
+    @FXML
+    private TextField partInvMaxTextField;
+    @FXML
+    private TextField partInvMinTextField;
+    @FXML
+    private TextField changedLabelTextField;
 
     /**
      * used to set a default selection for the radio buttons
      * depending on the type of object
      */
-    @FXML private RadioButton inHouseRadio;
-    @FXML private RadioButton outsourcedRadio;
-    @FXML private Button addPartScreenSaveButton;
+    @FXML
+    private RadioButton inHouseRadio;
+    @FXML
+    private RadioButton outsourcedRadio;
+    @FXML
+    private Button addPartScreenSaveButton;
 
     /**
      * add part save button handler
@@ -77,7 +88,7 @@ public class AddPartScreenController implements Initializable {
                 inHousePart.partValidation();
                 inHousePart.setPartID(idGenerator());
                 addPart(inHousePart);
-                mainScreenController.windowManager(event, "MainScreen.fxml", mainScreenController.MAIN_SCREEN_TITLE);
+                mainScreenController.windowManager(event, "/gui/MainScreen.fxml", mainScreenController.MAIN_SCREEN_TITLE);
             }
 
             /**
@@ -90,13 +101,13 @@ public class AddPartScreenController implements Initializable {
                 outsourcedPart.partValidation();
                 outsourcedPart.setPartID(idGenerator());
                 addPart(outsourcedPart);
-                mainScreenController.windowManager(event, "MainScreen.fxml", mainScreenController.MAIN_SCREEN_TITLE);
+                mainScreenController.windowManager(event, "/gui/MainScreen.fxml", mainScreenController.MAIN_SCREEN_TITLE);
             }
         } catch (ValidationException e) {
-            ErrorHandling.errorAlert(2, e.getMessage());
+            PopupHandler.errorAlert(2, e.getMessage());
 
         } catch (NumberFormatException e) {
-            ErrorHandling.errorAlert(2);
+            PopupHandler.errorAlert(2);
 
         }
     }
@@ -108,8 +119,8 @@ public class AddPartScreenController implements Initializable {
     public void setAddPartScreenCancelButton(ActionEvent event) {
         System.out.println("Add part screen cancel button clicked");
 
-        if (ErrorHandling.confirmationAlert("cancel all changes and return to the main screen")){
-            mainScreenController.windowManager(event, "MainScreen.fxml", MainScreenController.MAIN_SCREEN_TITLE);
+        if (PopupHandler.confirmationAlert("cancel all changes and return to the main screen")){
+            mainScreenController.windowManager(event, "/gui/MainScreen.fxml", MainScreenController.MAIN_SCREEN_TITLE);
         }
     }
 

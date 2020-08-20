@@ -10,7 +10,7 @@ package controller;
 import static model.Inventory.*;
 import static model.Inventory.searchByPartName;
 
-import model.ErrorHandling;
+import error_handling.PopupHandler;
 import model.Part;
 import model.Product;
 
@@ -30,11 +30,11 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 
-public class AddProductScreenController implements Initializable {
+public class AddProductController implements Initializable {
 
         static final String ADD_PRODUCT_SCREEN_TITLE = "Add Product(s)";
         private String userInput;
-        private Product newProduct;
+        private Product newProduct = new Product();
         private ObservableList<Part> filteredSearchList = FXCollections.observableArrayList();
 
         MainScreenController mainScreenController = new MainScreenController();
@@ -74,8 +74,6 @@ public class AddProductScreenController implements Initializable {
         public void setSaveButton(ActionEvent event) {
 
                 try {
-//                        Product newProduct = new Product();
-
                         newProduct.setProductID(99);
                         newProduct.setProductName(prodNameField.getText());
                         newProduct.setProductInvLevel(Integer.parseInt(prodInvField.getText()));
@@ -87,12 +85,12 @@ public class AddProductScreenController implements Initializable {
                         newProduct.setProductID(idGenerator());
                         addProduct(newProduct);
 
-                        mainScreenController.windowManager(event, "MainScreen.fxml", MainScreenController.MAIN_SCREEN_TITLE);
+                        mainScreenController.windowManager(event, "/gui/MainScreen.fxml", MainScreenController.MAIN_SCREEN_TITLE);
                 } catch (ValidationException e){
-                        ErrorHandling.errorAlert(2, e.getMessage());
+                        PopupHandler.errorAlert(2, e.getMessage());
 
                 } catch (NumberFormatException e){
-                        ErrorHandling.errorAlert(2);
+                        PopupHandler.errorAlert(2);
                 }
         }
 
@@ -121,7 +119,7 @@ public class AddProductScreenController implements Initializable {
                                 partTableView.setItems(searchByPartName(userInput));
                         }
                 } else {
-                        ErrorHandling.errorAlert(2, "Alphanumeric entries only");
+                        PopupHandler.errorAlert(2, "Alphanumeric entries only");
                 }
         }
 
@@ -144,14 +142,14 @@ public class AddProductScreenController implements Initializable {
                                 assocPartTableView.getSelectionModel().clearSelection();
                                 partTableView.getSelectionModel().clearSelection();
                         } else {
-                                ErrorHandling.errorAlert(1);
+                                PopupHandler.errorAlert(1);
                         }
                 } catch (NullPointerException e) {
                         /**
                          * throws exception if nothing is selected
                          * will alert user with popup
                          */
-                        ErrorHandling.errorAlert(1);
+                        PopupHandler.errorAlert(1);
                 }
         }
 
@@ -164,7 +162,7 @@ public class AddProductScreenController implements Initializable {
 
                         Part selection = assocPartTableView.getSelectionModel().getSelectedItem(); // select from associated parts list
 
-                        if (ErrorHandling.confirmationAlert("remove " + selection.getPartName() + " from associated parts")){
+                        if (PopupHandler.confirmationAlert("remove " + selection.getPartName() + " from associated parts")){
 
                                 newProduct.deleteAssociatedPart(selection);
 
@@ -176,13 +174,13 @@ public class AddProductScreenController implements Initializable {
                                 partTableView.getSelectionModel().clearSelection();
                         }
                 }catch (NullPointerException e) {
-                        ErrorHandling.errorAlert(1);
+                        PopupHandler.errorAlert(1);
                 }
         }
 
         public void setCancelButton(ActionEvent event) {
-                if (ErrorHandling.confirmationAlert("cancel all changes and return to the main screen")){
-                        mainScreenController.windowManager(event, "MainScreen.fxml", MainScreenController.MAIN_SCREEN_TITLE);
+                if (PopupHandler.confirmationAlert("cancel all changes and return to the main screen")){
+                        mainScreenController.windowManager(event, "/gui/MainScreen.fxml", MainScreenController.MAIN_SCREEN_TITLE);
                 }
         }
 
@@ -240,11 +238,9 @@ public class AddProductScreenController implements Initializable {
                 assocPartIDTableCol.setStyle("-fx-alignment: CENTER;");
                 assocPartIDTableCol.setResizable(false);
 
-                /**
-                 * Set values for part name column
-                 * set styling to center text for the column
-                 * disable resizability by user
-                 */
+                // Set values for part name column
+                // set styling to center text for the column
+                // disable resizability by user
                 assocPartNameTableCol.setCellValueFactory(new PropertyValueFactory<>("partName"));
                 assocPartNameTableCol.setStyle("-fx-alignment: CENTER;");
                 assocPartNameTableCol.setResizable(false);
@@ -272,8 +268,6 @@ public class AddProductScreenController implements Initializable {
         public void initialize(URL location, ResourceBundle resources) {
                 setPartsTableProperties();
                 setAssocPartsProperties();
-
-                newProduct = new Product();
 
                 filteredSearchList.setAll(getAllParts());
                 partTableView.setItems(filteredSearchList);

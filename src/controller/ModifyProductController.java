@@ -7,7 +7,7 @@
 
 package controller;
 
-import model.ErrorHandling;
+import error_handling.PopupHandler;
 import model.Inventory;
 import model.Part;
 import model.Product;
@@ -29,48 +29,57 @@ import java.util.ResourceBundle;
 
 import static model.Inventory.*;
 
-public class ModifyProductScreenController implements Initializable {
+public class ModifyProductController implements Initializable {
 
-    static final String MOD_PRODUCT_SCREEN_TITLE = "Modify Product(s)";
-    MainScreenController mainScreenController = new MainScreenController();
-
+    public static final String MOD_PRODUCT_SCREEN_TITLE = "Modify Product(s)";
+    private static MainScreenController mainScreenController = new MainScreenController();
     private String userInput;
 
-    /**
-     * eligible parts used to filter search results
-     */
+    // eligible parts used to filter search results
     private ObservableList<Part> eligibleParts = FXCollections.observableArrayList();
 
-    /**
-     * extra list to keep track of changes dynamically in the event the user presses the cancel button
-     */
+    // extra list to keep track of changes dynamically in the event the user presses the cancel button
     private ObservableList<Part> tempList = FXCollections.observableArrayList();
 
-    /**
-     * defines structure for add product screen product table
-     */
-    @FXML private TableView<Part> partTableView;
-    @FXML private TableColumn<Part, Integer> partIDTableCol;
-    @FXML private TableColumn<Part, SimpleStringProperty> partNameTableCol;
-    @FXML private TableColumn<Part, Integer> partInvLvlTableCol;
-    @FXML private TableColumn<Part, Double> partPriceTableCol;
+    // defines structure for add product screen product table
+    @FXML
+    private TableView<Part> partTableView;
+    @FXML
+    private TableColumn<Part, Integer> partIDTableCol;
+    @FXML
+    private TableColumn<Part, SimpleStringProperty> partNameTableCol;
+    @FXML
+    private TableColumn<Part, Integer> partInvLvlTableCol;
+    @FXML
+    private TableColumn<Part, Double> partPriceTableCol;
 
-    /**
-     * defines structure for associated parts table
-     */
-    @FXML private TableView<Part> assocPartTableView;
-    @FXML private TableColumn<Part, Integer> assocPartIDTableCol;
-    @FXML private TableColumn<Part, SimpleStringProperty> assocPartNameTableCol;
-    @FXML private TableColumn<Part, Integer> assocPartInvLvlTableCol;
-    @FXML private TableColumn<Part, Double> assocPartPriceTableCol;
+    // defines structure for associated parts table
+    @FXML
+    private TableView<Part> assocPartTableView;
+    @FXML
+    private TableColumn<Part, Integer> assocPartIDTableCol;
+    @FXML
+    private TableColumn<Part, SimpleStringProperty> assocPartNameTableCol;
+    @FXML
+    private TableColumn<Part, Integer> assocPartInvLvlTableCol;
+    @FXML
+    private TableColumn<Part, Double> assocPartPriceTableCol;
 
-    @FXML private TextField modProductIDTextField;
-    @FXML private TextField modProductNameTextField;
-    @FXML private TextField modProductInventoryTextField;
-    @FXML private TextField modProductPriceTextField;
-    @FXML private TextField modProductInvMaxTextField;
-    @FXML private TextField modProductInvMinTextField;
-    @FXML private TextField searchField;
+    // defines text fields
+    @FXML
+    private TextField modProductIDTextField;
+    @FXML
+    private TextField modProductNameTextField;
+    @FXML
+    private TextField modProductInventoryTextField;
+    @FXML
+    private TextField modProductPriceTextField;
+    @FXML
+    private TextField modProductInvMaxTextField;
+    @FXML
+    private TextField modProductInvMinTextField;
+    @FXML
+    private TextField searchField;
 
     /**
      * method takes a product object from MainScreenController and uses it to fill the text fields
@@ -79,18 +88,14 @@ public class ModifyProductScreenController implements Initializable {
         eligibleParts.setAll(Inventory.getAllParts());
         tempList.setAll(product.getAllAssociatedParts());
 
-        /**
-         * loop through all parts to find matches in associated parts
-         * remove parts from eligibleParts to be filtered out from initial table view population
-         * and subsequent searches
-         */
+        // loop through all parts to find matches in associated parts
+        // remove parts from eligibleParts to be filtered out from initial table view population
+        // and subsequent searches
         for (Part p : tempList){
             eligibleParts.remove(p);
         }
 
-        /**
-         * populate text field with imported product
-         */
+        // populate text field with imported product
         modProductIDTextField.setText(Integer.toString(product.getProductID()));
         modProductNameTextField.setText(product.getProductName());
         modProductInventoryTextField.setText(Integer.toString((product.getProductInvLevel())));
@@ -98,9 +103,7 @@ public class ModifyProductScreenController implements Initializable {
         modProductInvMaxTextField.setText(Integer.toString(product.getProductInvMax()));
         modProductInvMinTextField.setText(Integer.toString(product.getProductInvMin()));
 
-        /**
-         * populate associated parts table with imported product
-         */
+        // populate associated parts table with imported product
         assocPartTableView.setItems(product.getAllAssociatedParts());
         partTableView.setItems(eligibleParts);
 
@@ -109,9 +112,7 @@ public class ModifyProductScreenController implements Initializable {
     public void setModProductSave(ActionEvent event) {
 
         try {
-            /**
-             * set attributes for modified product
-             */
+            // set attributes for modified product
             Product modifiedProduct = new Product();
 
             modifiedProduct.setProductID(Integer.parseInt(modProductIDTextField.getText()));
@@ -121,24 +122,20 @@ public class ModifyProductScreenController implements Initializable {
             modifiedProduct.setProductInvMax(Integer.parseInt(modProductInvMaxTextField.getText()));
             modifiedProduct.setProductInvMin(Integer.parseInt(modProductInvMinTextField.getText()));
 
-            /**
-             * cycle through temp list and add the confirmed changes to the associated parts list
-             */
+            // cycle through temp list and add the confirmed changes to the associated parts list
             for (Part p : tempList) {
                 modifiedProduct.addAssociatedPart(p);
             }
 
-            /**
-             * update unmodified product with newly modified product then exit
-             */
+            // update unmodified product with newly modified product then exit
             modifiedProduct.productValidation();
             Inventory.modifyProduct(modifiedProduct);
-            mainScreenController.windowManager(event, "MainScreen.fxml", mainScreenController.MAIN_SCREEN_TITLE);
+            mainScreenController.windowManager(event, "/gui/MainScreen.fxml", mainScreenController.MAIN_SCREEN_TITLE);
 
         } catch (ValidationException e){
-            ErrorHandling.errorAlert(2, e.getMessage());
+            PopupHandler.errorAlert(2, e.getMessage());
         } catch (NumberFormatException e){
-            ErrorHandling.errorAlert(2);
+            PopupHandler.errorAlert(2);
         }
     }
 
@@ -157,17 +154,15 @@ public class ModifyProductScreenController implements Initializable {
                 eligibleParts.remove(selection); // remove assoc part from eligible parts
                 partTableView.setItems(eligibleParts); // set the new table view with only eligible parts
 
-                /**
-                 * clear selections so the user doesn't accidentally delete multiples
-                 */
+                // clear selections so the user doesn't accidentally delete multiples
                 assocPartTableView.getSelectionModel().clearSelection();
                 partTableView.getSelectionModel().clearSelection();
             } else {
-                ErrorHandling.errorAlert(1);
+                PopupHandler.errorAlert(1);
             }
 
         } catch (NullPointerException e){
-            ErrorHandling.errorAlert(1);
+            PopupHandler.errorAlert(1);
         }
     }
 
@@ -179,41 +174,34 @@ public class ModifyProductScreenController implements Initializable {
         try {
             Part selection = assocPartTableView.getSelectionModel().getSelectedItem(); // select from associated parts list
 
-            if (ErrorHandling.confirmationAlert("remove " + selection.getPartName() + " from associated parts")) {
+            if (PopupHandler.confirmationAlert("remove " + selection.getPartName() + " from associated parts")) {
 
                 tempList.remove(selection);
                 assocPartTableView.setItems(tempList);
                 eligibleParts.add(selection); // add removed part back to the filtered list
                 partTableView.setItems(eligibleParts); // reset display for parts table with filtered list
 
-                /**
-                 * clear selections so the user doesn't accidentally delete multiples
-                 */
+                // clear selections so the user doesn't accidentally delete multiples
                 assocPartTableView.getSelectionModel().clearSelection();
                 partTableView.getSelectionModel().clearSelection();
             }
         } catch (NullPointerException e){
-            /**
-             * throws exception if nothing is selected
-             * will alert user with popup
-             */
-            ErrorHandling.errorAlert(1);
+            // throws exception if nothing is selected
+            PopupHandler.errorAlert(1);
         }
     }
 
     /**
-     * handles parts search button
+     * method handles parts search button click
+     * tries to parse to int
+     * if successful it will search by part ID
+     * if an error is thrown then the catch will run and search by part name
      */
     public void setModProductPartSearch() {
         userInput = searchField.getText();
 
-        /**
-         * tries to parse to int
-         * if successful it will search by part ID
-         * if an error is thrown then the catch will run and search by part name
-         * also checks that input is alphanumeric using regex
-         */
-        if (userInput.matches("^[a-zA-Z0-9]*$") && !userInput.isEmpty()) {
+        // checks that input is alphanumeric using regex
+        if (userInput.matches("^[a-zA-Z0-9]*$")) {
             try {
                 System.out.println("attempting to search by part ID, checking input");
                 int userInputAsInt = Integer.parseInt(userInput); // testing to see if it will throw an error
@@ -229,16 +217,16 @@ public class ModifyProductScreenController implements Initializable {
                 partTableView.setItems(searchByPartName(userInput));
             }
         } else {
-            ErrorHandling.errorAlert(2, "Alphanumeric entries only");
+            PopupHandler.errorAlert(2, "Alphanumeric entries only");
         }
     }
 
     /**
-     * handles cancel button
+     * handles cancel button, returns user to main screen after confirmation
      */
     public void setModProductCancel(ActionEvent event) {
-        if (ErrorHandling.confirmationAlert("cancel all changes and return to the main screen")){
-            mainScreenController.windowManager(event, "MainScreen.fxml", MainScreenController.MAIN_SCREEN_TITLE);
+        if (PopupHandler.confirmationAlert("cancel all changes and return to the main screen")){
+            mainScreenController.windowManager(event, "/gui/MainScreen.fxml", MainScreenController.MAIN_SCREEN_TITLE);
         }
     }
 

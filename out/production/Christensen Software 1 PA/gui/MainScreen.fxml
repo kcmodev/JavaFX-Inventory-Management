@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-         Author: Steven Christensen
+         Author: kcmodev
          Class: C482 Software 1
-         Email: schr206@wgu.edu
+         Email: ****@wgu.edu
          Date Submitted: 7/21/2020
 -->
 
@@ -16,11 +16,11 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="anchor" stylesheets="@Stylesheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View_Controller.MainScreenController">
+<AnchorPane id="anchor" stylesheets="@../controller/Stylesheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainScreenController">
    <children>
       <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="850.0">
          <children>
-            <Button id="button" fx:id="exitButton" layoutX="763.0" layoutY="392.0" mnemonicParsing="false" onAction="#setExitButtonClicked" prefHeight="33.0" prefWidth="70.0" stylesheets="@Stylesheet.css" text="Exit" />
+            <Button id="button" fx:id="exitButton" layoutX="763.0" layoutY="392.0" mnemonicParsing="false" onAction="#setExitButtonClicked" prefHeight="33.0" prefWidth="70.0" stylesheets="@../controller/Stylesheet.css" text="Exit" />
             <Label layoutX="14.0" layoutY="28.0" prefHeight="33.0" prefWidth="282.0" text="Inventory Management System">
                <font>
                   <Font name="System Bold" size="18.0" />
@@ -29,21 +29,21 @@
             <AnchorPane layoutX="14.0" layoutY="72.0" prefHeight="302.0" prefWidth="407.0">
                <children>
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DARKGRAY" height="300.0" stroke="BLACK" strokeType="OUTSIDE" styleClass="rectangle" width="410.0" />
-                  <Button id="button" fx:id="searchByPartButton" layoutX="338.0" layoutY="11.0" mnemonicParsing="false" onAction="#setSearchByPartButton" prefHeight="33.0" prefWidth="59.0" stylesheets="@Stylesheet.css" text="Search" />
+                  <Button id="button" fx:id="searchByPartButton" layoutX="338.0" layoutY="11.0" mnemonicParsing="false" onAction="#setSearchByPartButton" prefHeight="33.0" prefWidth="59.0" stylesheets="@../controller/Stylesheet.css" text="Search" />
                   <Label id="textLabel" layoutX="14.0" layoutY="14.0" prefHeight="22.0" prefWidth="76.0" text="Parts">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <TextField id="textField" fx:id="mainScreenSearchByPart" layoutX="143.0" layoutY="11.0" prefHeight="33.0" prefWidth="184.0" promptText="Search by part" stylesheets="@Stylesheet.css">
+                  <TextField id="textField" fx:id="mainScreenSearchByPart" layoutX="143.0" layoutY="11.0" prefHeight="33.0" prefWidth="184.0" promptText="Search by part" stylesheets="@../controller/Stylesheet.css">
                      <font>
                         <Font name="System Italic" size="14.0" />
                      </font>
                   </TextField>
-                  <Button id="button" fx:id="deletePartButton" layoutX="328.0" layoutY="242.0" mnemonicParsing="false" onAction="#setDeletePartClicked" prefHeight="33.0" prefWidth="59.0" stylesheets="@Stylesheet.css" text="Delete" />
-                  <Button id="button" fx:id="addPartButton" layoutX="14.0" layoutY="242.0" mnemonicParsing="false" onAction="#setAddPartClicked" prefHeight="33.0" prefWidth="59.0" stylesheets="@Stylesheet.css" text="Add" />
-                  <Button id="button" fx:id="modifyPartButton" layoutX="246.0" layoutY="242.0" mnemonicParsing="false" onAction="#setModifyPartClicked" prefHeight="33.0" prefWidth="59.0" stylesheets="@Stylesheet.css" text="Modify" />
-                  <TableView fx:id="partTableView" layoutX="9.0" layoutY="58.0" prefHeight="166.0" prefWidth="393.0" styleClass="TableView" stylesheets="@Stylesheet.css">
+                  <Button id="button" fx:id="deletePartButton" layoutX="328.0" layoutY="242.0" mnemonicParsing="false" onAction="#setDeletePartClicked" prefHeight="33.0" prefWidth="59.0" stylesheets="@../controller/Stylesheet.css" text="Delete" />
+                  <Button id="button" fx:id="addPartButton" layoutX="14.0" layoutY="242.0" mnemonicParsing="false" onAction="#setAddPartClicked" prefHeight="33.0" prefWidth="59.0" stylesheets="@../controller/Stylesheet.css" text="Add" />
+                  <Button id="button" fx:id="modifyPartButton" layoutX="246.0" layoutY="242.0" mnemonicParsing="false" onAction="#setModifyPartClicked" prefHeight="33.0" prefWidth="59.0" stylesheets="@../controller/Stylesheet.css" text="Modify" />
+                  <TableView fx:id="partTableView" layoutX="9.0" layoutY="58.0" prefHeight="166.0" prefWidth="393.0" styleClass="TableView" stylesheets="@../controller/Stylesheet.css">
                     <columns>
                       <TableColumn fx:id="partIDTableCol" prefWidth="63.0" text="Part ID" />
                       <TableColumn fx:id="partNameTableCol" prefWidth="119.0" text="Part Name" />
@@ -59,20 +59,20 @@
             <AnchorPane layoutX="433.0" layoutY="72.0" prefHeight="302.0" prefWidth="407.0">
                <children>
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DARKGRAY" height="300.0" stroke="BLACK" strokeType="OUTSIDE" styleClass="rectangle" width="410.0" />
-                  <Button id="button" fx:id="searchByProductButton" layoutX="338.0" layoutY="11.0" mnemonicParsing="false" onAction="#setSearchByProductButton" prefHeight="33.0" prefWidth="59.0" stylesheets="@Stylesheet.css" text="Search" />
+                  <Button id="button" fx:id="searchByProductButton" layoutX="338.0" layoutY="11.0" mnemonicParsing="false" onAction="#setSearchByProductButton" prefHeight="33.0" prefWidth="59.0" stylesheets="@../controller/Stylesheet.css" text="Search" />
                   <Label id="textLabel" layoutX="14.0" layoutY="14.0" prefHeight="27.0" prefWidth="87.0" text="Products">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <TextField id="textField" fx:id="mainScreenSearchByProduct" layoutX="143.0" layoutY="11.0" prefHeight="33.0" prefWidth="184.0" promptText="Search by product" styleClass="TextField" stylesheets="@Stylesheet.css">
+                  <TextField id="textField" fx:id="mainScreenSearchByProduct" layoutX="143.0" layoutY="11.0" prefHeight="33.0" prefWidth="184.0" promptText="Search by product" styleClass="TextField" stylesheets="@../controller/Stylesheet.css">
                      <font>
                         <Font name="System Italic" size="14.0" />
                      </font>
                   </TextField>
-                  <Button id="button" fx:id="deleteProductButton" layoutX="328.0" layoutY="242.0" mnemonicParsing="false" onAction="#setDeleteProductButton" prefHeight="33.0" prefWidth="59.0" stylesheets="@Stylesheet.css" text="Delete" />
-                  <Button id="button" fx:id="addProductButton" layoutX="14.0" layoutY="242.0" mnemonicParsing="false" onAction="#setAddProductButtonClicked" prefHeight="33.0" prefWidth="59.0" stylesheets="@Stylesheet.css" text="Add" />
-                  <Button id="button" fx:id="modifyProductButton" layoutX="247.0" layoutY="242.0" mnemonicParsing="false" onAction="#setModifyProductButton" prefHeight="33.0" prefWidth="59.0" stylesheets="@Stylesheet.css" text="Modify" />
+                  <Button id="button" fx:id="deleteProductButton" layoutX="328.0" layoutY="242.0" mnemonicParsing="false" onAction="#setDeleteProductButton" prefHeight="33.0" prefWidth="59.0" stylesheets="@../controller/Stylesheet.css" text="Delete" />
+                  <Button id="button" fx:id="addProductButton" layoutX="14.0" layoutY="242.0" mnemonicParsing="false" onAction="#setAddProductButtonClicked" prefHeight="33.0" prefWidth="59.0" stylesheets="@../controller/Stylesheet.css" text="Add" />
+                  <Button id="button" fx:id="modifyProductButton" layoutX="247.0" layoutY="242.0" mnemonicParsing="false" onAction="#setModifyProductButton" prefHeight="33.0" prefWidth="59.0" stylesheets="@../controller/Stylesheet.css" text="Modify" />
                   <TableView fx:id="productTableView" layoutX="9.0" layoutY="58.0" prefHeight="166.0" prefWidth="393.0">
                      <columns>
                         <TableColumn fx:id="productIDTableCol" prefWidth="91.0" text="Product ID" />

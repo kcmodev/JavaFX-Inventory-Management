@@ -1,5 +1,5 @@
 /**
- * Author: kcmodev
+ * @Author: kcmodev
  * Class: C482 Software 1
  * Email: ****@wgu.edu
  * Date Submitted: 7/21/2020
@@ -7,6 +7,7 @@
 
 package controller;
 
+import error_handling.PopupHandler;
 import model.*;
 
 import javafx.event.ActionEvent;
@@ -18,33 +19,37 @@ import javafx.scene.control.ToggleGroup;
 
 import javax.xml.bind.ValidationException;
 
-public class ModifyPartScreenController {
-    /**
-     * title to pass when switching screens
-     */
-    static final String MOD_PART_SCREEN_TITLE = "Modify Part(s)";
-    MainScreenController mainScreenController = new MainScreenController();
+public class ModifyPartController {
 
-    /**
-     * initialize label and text fields for modify product screen
-     */
-    @FXML private TextField modPartIDTextField;
-    @FXML private TextField modPartNameTextField;
-    @FXML private TextField modPartInvTextField;
-    @FXML private TextField modPartPriceTextField;
-    @FXML private TextField modPartInvMaxTextField;
-    @FXML private TextField modPartInvMinTextField;
+    //title to pass when switching screens
+    public static final String MOD_PART_SCREEN_TITLE = "Modify Part(s)";
+    private static final MainScreenController mainScreenController = new MainScreenController();
 
-    @FXML private TextField modPartChangedTextField;
-    @FXML private Label modPartChangedLabel;
+    // initialize label and text fields for modify product screen
+    @FXML
+    private TextField modPartIDTextField;
+    @FXML
+    private TextField modPartNameTextField;
+    @FXML
+    private TextField modPartInvTextField;
+    @FXML
+    private TextField modPartPriceTextField;
+    @FXML
+    private TextField modPartInvMaxTextField;
+    @FXML
+    private TextField modPartInvMinTextField;
+    @FXML
+    private TextField modPartChangedTextField;
+    @FXML
+    private Label modPartChangedLabel;
 
-    /**
-     * used to set a default selection for the radio buttons
-     * depending on the type of object
-     */
-    @FXML private RadioButton inHouseRadio;
-    @FXML private RadioButton outsourcedRadio;
-    @FXML private ToggleGroup modPartToggleGroup;
+    // used to set a default selection for the radio buttons depending on the type of object
+    @FXML
+    private RadioButton inHouseRadio;
+    @FXML
+    private RadioButton outsourcedRadio;
+    @FXML
+    private ToggleGroup modPartToggleGroup;
 
     /**
      * takes passed object and instantiates text fields with their appropriate values
@@ -74,14 +79,13 @@ public class ModifyPartScreenController {
     }
 
     /**
-     * save button handler
+     * save button click handler
+     * differentiates between in house and outsourced
+     * creates the appropriate object, updates the infor and then
+     * modifies the existing object with the matching part ID
      */
     public void setModPartSaveButton(ActionEvent event) {
-        /**
-         * differentiates between in house and outsourced
-         * creates the appropriate object, updates the infor and then
-         * modifies the existing object with the matching part ID
-         */
+
         try {
             if (inHouseRadio.isSelected()) {
                 InHousePart inHouseMod = new InHousePart();
@@ -96,7 +100,7 @@ public class ModifyPartScreenController {
 
                 inHouseMod.partValidation();
                 Inventory.modifyPart(inHouseMod);
-                mainScreenController.windowManager(event, "MainScreen.fxml", mainScreenController.MAIN_SCREEN_TITLE);
+                mainScreenController.windowManager(event, "/gui/MainScreen.fxml", mainScreenController.MAIN_SCREEN_TITLE);
 
             } else if (outsourcedRadio.isSelected()) {
                 OutsourcedPart outsourceMod = new OutsourcedPart();
@@ -111,23 +115,23 @@ public class ModifyPartScreenController {
 
                 outsourceMod.partValidation();
                 Inventory.modifyPart(outsourceMod);
-                mainScreenController.windowManager(event, "MainScreen.fxml", mainScreenController.MAIN_SCREEN_TITLE);
+                mainScreenController.windowManager(event, "/gui/MainScreen.fxml", mainScreenController.MAIN_SCREEN_TITLE);
             }
         } catch (ValidationException e){
-                ErrorHandling.errorAlert(2, e.getMessage());
+                PopupHandler.errorAlert(2, e.getMessage());
         } catch (NumberFormatException e){
-                ErrorHandling.errorAlert(2);
-                e.getStackTrace();
+                PopupHandler.errorAlert(2);
+                e.printStackTrace();
         }
     }
 
     /**
      * cancel button handler
-     * returns user to main screen without any changes
+     * returns user to main screen without any changes after confirmation
      */
     public void setModPartCancelButton(ActionEvent event) {
-        if (ErrorHandling.confirmationAlert("cancel all changes and return to the main screen")){
-            mainScreenController.windowManager(event, "MainScreen.fxml", MainScreenController.MAIN_SCREEN_TITLE);
+        if (PopupHandler.confirmationAlert("cancel all changes and return to the main screen")){
+            mainScreenController.windowManager(event, "/gui/MainScreen.fxml", MainScreenController.MAIN_SCREEN_TITLE);
         }
     }
 
@@ -157,9 +161,7 @@ public class ModifyPartScreenController {
         modPartChangedTextField.setPromptText(textField);
     }
 
-    /**
-     * makes remaining text fields editable
-     */
+    // makes remaining text fields editable
     public void setModifyRemainingTextFields() {
         modPartNameTextField.setDisable(false);
         modPartInvTextField.setDisable(false);

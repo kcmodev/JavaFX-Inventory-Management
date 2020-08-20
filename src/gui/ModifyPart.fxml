@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="480.0" prefWidth="440.0" style="-fx-background-color: a9a9a9;" stylesheets="@../controller/Stylesheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ModifyPartScreenController">
+<AnchorPane prefHeight="480.0" prefWidth="440.0" style="-fx-background-color: a9a9a9;" stylesheets="@../controller/Stylesheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ModifyPartController">
     <children>
         <Label id="textLabel" layoutX="17.0" layoutY="48.0" prefHeight="30.0" prefWidth="102.0" text="Modify Part">
             <font>
