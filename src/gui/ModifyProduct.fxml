@@ -16,7 +16,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="493.0" prefWidth="683.0" style="-fx-background-color: a9a9a9;" stylesheets="@../controller/Stylesheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ModifyProductController">
+<AnchorPane prefHeight="493.0" prefWidth="683.0" style="-fx-background-color: a9a9a9;" stylesheets="@../controller/Stylesheet.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ModifyProductController">
     <children>
         <Label id="textLabel" layoutX="14.0" layoutY="14.0" prefHeight="39.0" prefWidth="158.0" text="Modify Product">
             <font>
@@ -107,12 +107,12 @@
         </AnchorPane>
         <AnchorPane layoutX="308.0" layoutY="60.0" prefHeight="204.0" prefWidth="347.0">
             <children>
-                <TableView fx:id="partTableView" prefHeight="157.0" prefWidth="341.0">
+                <TableView fx:id="partTableView" prefHeight="157.0" prefWidth="341.0" stylesheets="@Stylesheet.css">
                     <columns>
-                        <TableColumn fx:id="partIDTableCol" prefWidth="75.0" text="Part ID" />
-                        <TableColumn fx:id="partNameTableCol" prefWidth="106.0" text="Part Name" />
-                        <TableColumn fx:id="partInvLvlTableCol" prefWidth="78.0" text="Inv. Level" />
-                        <TableColumn fx:id="partPriceTableCol" prefWidth="81.0" text="Price / Unit" />
+                        <TableColumn id="partIDTableCol" fx:id="partIDTableCol" prefWidth="75.0" text="Part ID" />
+                        <TableColumn id="partNameTableCol" fx:id="partNameTableCol" prefWidth="106.0" text="Part Name" />
+                        <TableColumn id="partInvLvlTableCol" fx:id="partInvLvlTableCol" prefWidth="78.0" text="Inv. Level" />
+                        <TableColumn id="partPriceTableCol" fx:id="partPriceTableCol" prefWidth="81.0" text="Price / Unit" />
                     </columns>
                 </TableView>
               <Button id="button" fx:id="modProductAdd" layoutX="271.0" layoutY="165.0" mnemonicParsing="false" onAction="#setModProductAdd" prefHeight="32.0" prefWidth="70.0" text="Add" />
@@ -120,12 +120,12 @@
         </AnchorPane>
         <AnchorPane layoutX="305.0" layoutY="264.0" prefHeight="204.0" prefWidth="347.0">
             <children>
-                <TableView fx:id="assocPartTableView" layoutX="3.0" layoutY="24.0" prefHeight="157.0" prefWidth="341.0">
+                <TableView fx:id="assocPartTableView" layoutX="3.0" layoutY="24.0" prefHeight="157.0" prefWidth="341.0" stylesheets="@Stylesheet.css">
                     <columns>
-                        <TableColumn fx:id="assocPartIDTableCol" prefWidth="75.0" text="Part ID" />
-                        <TableColumn fx:id="assocPartNameTableCol" prefWidth="106.0" text="Part Name" />
-                        <TableColumn fx:id="assocPartInvLvlTableCol" prefWidth="78.0" text="Inv. Level" />
-                        <TableColumn fx:id="assocPartPriceTableCol" prefWidth="81.0" text="Price / Unit" />
+                        <TableColumn id="partIDTableCol" fx:id="assocPartIDTableCol" prefWidth="75.0" text="Part ID" />
+                        <TableColumn id="partNameTableCol" fx:id="assocPartNameTableCol" prefWidth="106.0" text="Part Name" />
+                        <TableColumn id="partInvLvlTableCol" fx:id="assocPartInvLvlTableCol" prefWidth="78.0" text="Inv. Level" />
+                        <TableColumn id="partPriceTableCol" fx:id="assocPartPriceTableCol" prefWidth="81.0" text="Price / Unit" />
                     </columns>
                 </TableView>
             <Label layoutX="2.0" layoutY="1.0" prefHeight="24.0" prefWidth="158.0" text="Current Assoc Parts:">

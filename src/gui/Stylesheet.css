@@ -1,0 +1,15 @@
+#partIDTableCol{
+    -fx-alignment: CENTER;
+}
+
+#partNameTableCol{
+    -fx-alignment: CENTER;
+}
+
+#partInvLvlTableCol{
+    -fx-alignment: CENTER;
+}
+
+#partPriceTableCol{
+    -fx-alignment: CENTER;
+}

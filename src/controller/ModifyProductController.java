@@ -1,5 +1,5 @@
 /**
- * Author: kcmodev
+ * @Author kcmodev
  * Class: C482 Software 1
  * Email: *****@wgu.edu
  * Date Submitted: 7/21/2020
@@ -33,7 +33,7 @@ public class ModifyProductController implements Initializable {
 
     public static final String MOD_PRODUCT_SCREEN_TITLE = "Modify Product(s)";
     private static MainScreenController mainScreenController = new MainScreenController();
-    private String userInput;
+    private static String userInput;
 
     // eligible parts used to filter search results
     private ObservableList<Part> eligibleParts = FXCollections.observableArrayList();
@@ -109,6 +109,10 @@ public class ModifyProductController implements Initializable {
 
     }
 
+    /**
+     * method handles save button clicks and returns user to main screen
+     * @param event
+     */
     public void setModProductSave(ActionEvent event) {
 
         try {
@@ -210,10 +214,7 @@ public class ModifyProductController implements Initializable {
             } catch (NumberFormatException e) {
                 System.out.println("Not an int, searching by part name instead of ID");
 
-                /**
-                 * error thrown when attempting to parse input aas an int
-                 * searching via name with string as input instead
-                 */
+                // runs when error thrown attempting to parse input aas an int searches via name with string as input instead
                 partTableView.setItems(searchByPartName(userInput));
             }
         } else {
@@ -231,82 +232,78 @@ public class ModifyProductController implements Initializable {
     }
 
     public void setPartsTableProperties(){
-        /**
-         * Set values for part id column
-         * set styling to center text for the column
-         * disable resizability by user
-         */
+//        /**
+//         * Set values for part id column
+//         * set styling to center text for the column
+//         * disable resizability by user
+//         */
         partIDTableCol.setCellValueFactory(new PropertyValueFactory<>("partID"));
-        partIDTableCol.setStyle("-fx-alignment: CENTER;");
-        partIDTableCol.setResizable(false);
-
-        /**
-         * Set values for part name column
-         * set styling to center text for the column
-         * disable resizability by user
-         */
+//        partIDTableCol.setResizable(false);
+//
+//        /**
+//         * Set values for part name column
+//         * set styling to center text for the column
+//         * disable resizability by user
+//         */
         partNameTableCol.setCellValueFactory(new PropertyValueFactory<>("partName"));
-        partNameTableCol.setStyle("-fx-alignment: CENTER;");
-        partNameTableCol.setResizable(false);
-
-        /**
-         * Set values for part inventory level column
-         * set styling to center text for the column
-         * disable resizability by user
-         */
+//        partNameTableCol.setResizable(false);
+//
+//        /**
+//         * Set values for part inventory level column
+//         * set styling to center text for the column
+//         * disable resizability by user
+//         */
         partInvLvlTableCol.setCellValueFactory(new PropertyValueFactory<>("partStock"));
-        partInvLvlTableCol.setStyle("-fx-alignment: CENTER;");
-        partInvLvlTableCol.setResizable(false);
-
-        /**
-         * Set values for part price column
-         * set styling to center text for the column
-         * disable resizability by user
-         */
+//        partInvLvlTableCol.setResizable(false);
+//
+//        /**
+//         * Set values for part price column
+//         * set styling to center text for the column
+//         * disable resizability by user
+//         */
         partPriceTableCol.setCellValueFactory(new PropertyValueFactory<>("partPrice"));
-        partPriceTableCol.setStyle("-fx-alignment: CENTER;");
-        partPriceTableCol.setResizable(false);
+//        partPriceTableCol.setResizable(false);
     }
 
     /**
      * set parts for associated parts table
      */
     public void setAssocPartsProperties(){
-        /**
-         * Set values for part id column
-         * set styling to center text for the column
-         * disable resizability by user
-         */
+//        /**
+//         * Set values for part id column
+//         * set styling to center text for the column
+//         * disable resizability by user
+//         */
         assocPartIDTableCol.setCellValueFactory(new PropertyValueFactory<>("partID"));
-        assocPartIDTableCol.setStyle("-fx-alignment: CENTER;");
-        assocPartIDTableCol.setResizable(false);
-
-        /**
-         * Set values for part name column
-         * set styling to center text for the column
-         * disable resizability by user
-         */
+//        assocPartIDTableCol.setStyle("-fx-alignment: CENTER;");
+//        assocPartIDTableCol.setResizable(false);
+//
+//        /**
+//         * Set values for part name column
+//         * set styling to center text for the column
+//         * disable resizability by user
+//         */
         assocPartNameTableCol.setCellValueFactory(new PropertyValueFactory<>("partName"));
-        assocPartNameTableCol.setStyle("-fx-alignment: CENTER;");
-        assocPartNameTableCol.setResizable(false);
-
-        /**
-         * Set values for part inventory level column
-         * set styling to center text for the column
-         * disable resizability by user
-         */
+//        assocPartNameTableCol.setStyle("-fx-alignment: CENTER;");
+//        assocPartNameTableCol.setResizable(false);
+//
+//        /**
+//         * Set values for part inventory level column
+//         * set styling to center text for the column
+//         * disable resizability by user
+//         */
         assocPartInvLvlTableCol.setCellValueFactory(new PropertyValueFactory<>("partStock"));
-        assocPartInvLvlTableCol.setStyle("-fx-alignment: CENTER;");
-        assocPartInvLvlTableCol.setResizable(false);
-
-        /**
-         * Set values for part price column
-         * set styling to center text for the column
-         * disable resizability by user
-         */
+//        assocPartInvLvlTableCol.setStyle("-fx-alignment: CENTER;");
+//        assocPartInvLvlTableCol.setResizable(false);
+//
+//        /**
+//         * Set values for part price column
+//         * set styling to center text for the column
+//         * disable resizability by user
+//         */
         assocPartPriceTableCol.setCellValueFactory(new PropertyValueFactory<>("partPrice"));
-        assocPartPriceTableCol.setStyle("-fx-alignment: CENTER;");
-        assocPartPriceTableCol.setResizable(false);
+//        assocPartPriceTableCol.setStyle("-fx-alignment: CENTER;");
+//        assocPartPriceTableCol.setResizable(false);
     }
 
     @Override
